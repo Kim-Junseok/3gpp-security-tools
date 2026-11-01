@@ -83,6 +83,7 @@ PYTHONPATH=src python3 -m security_tools.gui
 
 특정 suite는 `--suite Cip2 --suite Itg2`처럼 지정한다.
 공식 expected는 원문 전사 파일이며 실행 중 생성하거나 갱신하지 않는다.
+알고리즘 정확성은 계산 결과를 공식 테스트의 기대값과 비교해 검증한다.
 공식 실행기는 원문의 LENGTH를 읽는다.
 사용자 Hex 입력의 자동 byte 길이 규칙을 공식 벡터에 적용하지 않는다.
 마지막 byte/word의 유효 길이 이후 하위 bit만 비교에서 제외한다.
@@ -153,12 +154,14 @@ assert received["authentication"] == "passed"
 
 ## 저장소와 제한
 
-`src/`는 코어·GUI·공식 실행기, `tests/`는 자체 검증 코드이다.
-`testdata/manifest.json`, `inputs.json`, `expected.json`은 Git으로 추적한다.
-`validation/`은 actual과 구분된 검증 보고서, `packaging/`은 Windows 빌드·시험 스크립트이다.
-표준 원문 `local-specs/`와 개발 런타임 `.build/`는 Git에서 제외한다.
+- `src/`: 계산 코어·GUI·공식 테스트 실행기
+- `tests/`: 통합·경계값 테스트
+- `testdata/`: 공식 테스트 목록·입력값·기대값
+- `validation/`: 계산 결과·검증 보고서
+- `packaging/`: Windows 빌드·배포 검증 스크립트
+- `tools/`: 데이터 전사·배포물 생성 도구
+- `docs/`: 출처·검증 결과·릴리스 기록·후속 계획
 
 이 도구는 입력 데이터 전체를 MAC 대상으로 삼고, 결합 처리에서는 Data || MAC-I 전체를 ciphering 대상으로 삼는다.
 실제 NAS/PDCP PDU를 파싱하거나 PDCP/SDAP header의 보호 영역을 자동 구성하지 않는다.
-왕복 성공만으로 알고리즘 정확성을 판정하지 않는다.
 256-bit NEA/NIA는 [후속 목록](docs/FOLLOW_UP.md)이며 AEAD/NCA는 제외한다.
