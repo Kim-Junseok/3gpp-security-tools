@@ -1,0 +1,243 @@
+"""Tkinter transmit/receive interface; all calculations go through adapter/Core."""
+
+import tkinter as tk
+from tkinter import ttk
+from tkinter.scrolledtext import ScrolledText
+from .adapter import execute
+from .bits import Bits, from_result
+from .errors import SecurityToolsError
+
+ALGORITHMS = ["0 — Null (보호 없음)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)"]
+
+
+class Panel(ttk.Frame):
+    def __init__(self, parent, receiving=False):
+        super().__init__(parent, padding=16)
+        self.receiving = receiving
+        self.result = None
+        self.variables = {}
+        self.columnconfigure(1, weight=1)
+        for name, default in [("cipher_enabled", True), ("integrity_enabled", True)]:
+            self.variables[name] = tk.BooleanVar(value=default)
+        defaults = dict(ciphering=ALGORITHMS[2], integrity=ALGORITHMS[2], enc_key="", int_key="",
+                        enc_format="Hex", int_format="Hex", count="00000000", bearer="0", direction="0 — UL",
+                        data_format="Hex", received_mac="", mac_format="Hex", output_format="Hex")
+        for name, default in defaults.items():
+            self.variables[name] = tk.StringVar(value=default)
+        self.cip_check = ttk.Checkbutton(self, text="Ciphering 사용", variable=self.variables["cipher_enabled"], command=self.refresh)
+        self.cip_check.grid(row=0, column=0, sticky="w", pady=3)
+        self.cip_combo = ttk.Combobox(self, textvariable=self.variables["ciphering"], values=ALGORITHMS, state="readonly", width=30)
+        self.cip_combo.grid(row=0, column=1, sticky="ew", pady=3)
+        self.itg_check = ttk.Checkbutton(self, text="Integrity 사용", variable=self.variables["integrity_enabled"], command=self.refresh)
+        self.itg_check.grid(row=1, column=0, sticky="w", pady=3)
+        self.itg_combo = ttk.Combobox(self, textvariable=self.variables["integrity"], values=ALGORITHMS, state="readonly", width=30)
+        self.itg_combo.grid(row=1, column=1, sticky="ew", pady=3)
+        self.enc_entry, self.enc_fmt = self.entry_row(2, "K_enc", "enc_key", "enc_format")
+        self.int_entry, self.int_fmt = self.entry_row(3, "K_int", "int_key", "int_format")
+        self.count_entry, _ = self.entry_row(4, "COUNT (Hex, 0–FFFFFFFF)", "count")
+        self.bearer_entry, _ = self.entry_row(5, "BEARER (10진수, 0–31)", "bearer")
+        ttk.Label(self, text="무선 DIRECTION").grid(row=6, column=0, sticky="w", padx=(0, 12), pady=3)
+        self.direction_combo = ttk.Combobox(self, textvariable=self.variables["direction"], values=["0 — UL", "1 — DL"], state="readonly")
+        self.direction_combo.grid(row=6, column=1, sticky="ew", pady=3)
+        ttk.Label(self, text="입력 데이터").grid(row=7, column=0, sticky="w", pady=(10, 3))
+        formats = ttk.Frame(self)
+        formats.grid(row=7, column=1, sticky="e")
+        self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
+        self.data_combo.pack(side="left", padx=4)
+        ttk.Button(formats, text="Hex ↔ Bit 변환", command=self.convert_input).pack(side="left")
+        self.input = ScrolledText(self, height=5, wrap="word", font=("Consolas", 10), undo=True)
+        self.input.grid(row=8, column=0, columnspan=3, sticky="nsew", pady=4)
+        self.rowconfigure(8, weight=1)
+        self.input.bind("<<Modified>>", self.input_changed)
+        self.length_label = ttk.Label(self, text="유효 길이: 0 bit")
+        self.length_label.grid(row=9, column=0, columnspan=3, sticky="w")
+        self.mac_entry, self.mac_fmt = self.entry_row(10, "수신 MAC-I (32-bit)", "received_mac", "mac_format")
+        self.execute_button = ttk.Button(self, command=self.calculate)
+        self.execute_button.grid(row=11, column=0, columnspan=3, sticky="ew", pady=10)
+        self.status = ttk.Label(self, text="", wraplength=780)
+        self.status.grid(row=12, column=0, columnspan=3, sticky="w")
+        self.output_title = ttk.Label(self, text="최종 결과")
+        self.output_title.grid(row=13, column=0, sticky="w", pady=(8, 4))
+        output_controls = ttk.Frame(self)
+        output_controls.grid(row=13, column=1, sticky="e")
+        self.output_combo = ttk.Combobox(output_controls, textvariable=self.variables["output_format"], values=["Hex", "Bit"], state="readonly", width=6)
+        self.output_combo.pack(side="left", padx=4)
+        self.copy_button = ttk.Button(output_controls, text="결과 복사", command=self.copy_output, state="disabled")
+        self.copy_button.pack(side="left")
+        self.output = ScrolledText(self, height=5, wrap="word", font=("Consolas", 10), state="disabled")
+        self.output.grid(row=14, column=0, columnspan=3, sticky="nsew")
+        self.rowconfigure(14, weight=1)
+        self.details = ScrolledText(self, height=4, wrap="word", font=("Consolas", 9), state="disabled")
+        self.details.grid(row=15, column=0, columnspan=3, sticky="ew", pady=(6, 0))
+        self.cip_combo.bind("<<ComboboxSelected>>", lambda _: self.refresh())
+        self.itg_combo.bind("<<ComboboxSelected>>", lambda _: self.refresh())
+        self.data_combo.bind("<<ComboboxSelected>>", lambda _: self.update_length())
+        self.output_combo.bind("<<ComboboxSelected>>", lambda _: self.render())
+        self.refresh()
+
+    def entry_row(self, row, label, name, fmt=None):
+        ttk.Label(self, text=label).grid(row=row, column=0, sticky="w", padx=(0, 12), pady=3)
+        entry = ttk.Entry(self, textvariable=self.variables[name], font=("Consolas", 10))
+        entry.grid(row=row, column=1, sticky="ew", pady=3)
+        combo = None
+        if fmt:
+            combo = ttk.Combobox(self, textvariable=self.variables[fmt], values=["Hex", "Bit"], width=6, state="readonly")
+            combo.grid(row=row, column=2, padx=(6, 0))
+        return entry, combo
+
+    def selection(self):
+        v = self.variables
+        return (int(v["ciphering"].get()[0]) if v["cipher_enabled"].get() else None,
+                int(v["integrity"].get()[0]) if v["integrity_enabled"].get() else None)
+
+    def refresh(self):
+        c, i = self.selection()
+        for combo, enabled in [(self.cip_combo, c is not None), (self.itg_combo, i is not None)]:
+            combo.configure(state="readonly" if enabled else "disabled")
+        for entry, combo, needed in [(self.enc_entry, self.enc_fmt, c not in (None, 0)), (self.int_entry, self.int_fmt, i not in (None, 0)),
+                                     (self.mac_entry, self.mac_fmt, self.receiving and c is None and i is not None)]:
+            entry.configure(state="normal" if needed else "disabled")
+            combo.configure(state="readonly" if needed else "disabled")
+        needs_params = c not in (None, 0) or i not in (None, 0)
+        for entry in (self.count_entry, self.bearer_entry):
+            entry.configure(state="normal" if needs_params else "disabled")
+        self.direction_combo.configure(state="readonly" if needs_params else "disabled")
+        if c is not None and i is not None:
+            action = "복호화 → MAC-I 분리 → 검증" if self.receiving else "MAC-I 생성 → 추가 → 암호화"
+        elif c is not None:
+            action = "복호화" if self.receiving else "암호화"
+        elif i is not None:
+            action = "MAC-I 검증" if self.receiving else "MAC-I 생성"
+        else:
+            action = "Ciphering 또는 Integrity를 선택하세요"
+        self.execute_button.configure(text=action, state="disabled" if c is None and i is None else "normal")
+        self.result = None
+        self.copy_button.configure(state="disabled")
+        self.set_text(self.output, "")
+        self.set_text(self.details, "")
+        if i == 0:
+            self.status.configure(text="Null Integrity — 인증 보호 없음. MAC 비교는 인증 성공을 뜻하지 않습니다.")
+        elif c == 0:
+            self.status.configure(text="Null Ciphering — 암호화 보호 없음.")
+        else:
+            self.status.configure(text="송신/수신 탭을 바꿔도 무선 DIRECTION은 반전되지 않습니다.")
+
+    def fields(self):
+        result = {name: var.get() for name, var in self.variables.items()}
+        result["ciphering"] = int(result["ciphering"][0])
+        result["integrity"] = int(result["integrity"][0])
+        result["direction"] = int(result["direction"][0])
+        result["data"] = self.input.get("1.0", "end-1c")
+        return result
+
+    def input_changed(self, _=None):
+        if self.input.edit_modified():
+            self.update_length()
+            self.input.edit_modified(False)
+
+    def update_length(self):
+        try:
+            bits = Bits.parse(self.input.get("1.0", "end-1c"), self.variables["data_format"].get())
+            self.length_label.configure(text=f"유효 길이: {bits.length} bit")
+        except SecurityToolsError as e:
+            self.length_label.configure(text=f"입력 오류: {e}")
+
+    def convert_input(self):
+        try:
+            current = self.variables["data_format"].get()
+            bits = Bits.parse(self.input.get("1.0", "end-1c"), current)
+            target = "Bit" if current == "Hex" else "Hex"
+            text = bits.format(target)
+            self.variables["data_format"].set(target)
+            self.input.delete("1.0", "end")
+            self.input.insert("1.0", text)
+            self.update_length()
+        except SecurityToolsError as e:
+            self.status.configure(text=f"입력 오류: {e}")
+
+    def calculate(self):
+        try:
+            self.result = execute(self.fields(), self.receiving)
+            if self.result["data"]["bit_length"] % 8:
+                self.variables["output_format"].set("Bit")
+            self.render()
+            state = self.result["authentication"]
+            messages = {"passed": "MAC-I 검증 성공", "failed": "MAC-I 검증 실패 — 아래 결과는 검증 실패 데이터입니다.",
+                        "unprotected": "인증 보호 없음", "generated": "MAC-I 생성 완료"}
+            self.status.configure(text=messages[state] + (" / 암호화 보호 없음" if self.result["ciphering"] == 0 else ""))
+            self.copy_button.configure(state="normal")
+        except SecurityToolsError as e:
+            self.result = None
+            self.set_text(self.output, "")
+            self.set_text(self.details, "")
+            self.copy_button.configure(state="disabled")
+            self.status.configure(text=f"입력 오류 ({e.code}): {e}")
+        except Exception:
+            self.result = None
+            self.set_text(self.output, "")
+            self.set_text(self.details, "")
+            self.copy_button.configure(state="disabled")
+            self.status.configure(text="실행 오류: 계산을 완료하지 못했습니다.")
+
+    @staticmethod
+    def set_text(widget, text):
+        widget.configure(state="normal")
+        widget.delete("1.0", "end")
+        widget.insert("1.0", text)
+        widget.configure(state="disabled")
+
+    def render(self):
+        if self.result is None:
+            return
+        r = self.result
+        data = from_result(r["data"])
+        if data.length % 8:
+            self.variables["output_format"].set("Bit")
+            self.output_combo.configure(values=["Bit"])
+        else:
+            self.output_combo.configure(values=["Hex", "Bit"])
+        self.set_text(self.output, data.format(self.variables["output_format"].get()))
+        title = "검증 실패 데이터" if r["authentication"] == "failed" else ("Plaintext" if self.receiving else "Ciphertext")
+        if r["ciphering"] is None:
+            title = "원본 데이터"
+        self.output_title.configure(text=f"{title} — {data.length} bit")
+        details = [f"입력 길이: {r['input_bit_length']} bit / 최종 데이터: {data.length} bit"]
+        if "cipher_bit_length" in r:
+            details.append(f"암호화 입력 길이 (MAC-I 포함 시 +32): {r['cipher_bit_length']} bit")
+        for key, label in [("mac_i", "생성 MAC-I (검증용 중간 결과)"), ("received_mac", "수신 MAC-I"), ("calculated_mac", "재계산 MAC-I")]:
+            if key in r:
+                details.append(f"{label}: {r[key]['hex']} (32 bit)")
+        self.set_text(self.details, "\n".join(details))
+
+    def copy_output(self):
+        if self.result is not None:
+            text = from_result(self.result["data"]).format(self.variables["output_format"].get())
+            self.clipboard_clear()
+            self.clipboard_append(text)
+
+
+class Application(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("3GPP Security Tools")
+        self.geometry("940x900")
+        self.minsize(800, 780)
+        style = ttk.Style(self)
+        if "vista" in style.theme_names():
+            style.theme_use("vista")
+        ttk.Label(self, text="3GPP Security Tools", font=("Segoe UI", 18, "bold"), padding=(16, 12)).pack(anchor="w")
+        notebook = ttk.Notebook(self)
+        notebook.pack(fill="both", expand=True, padx=12)
+        self.tx, self.rx = Panel(notebook), Panel(notebook, receiving=True)
+        notebook.add(self.tx, text="  송신  ")
+        notebook.add(self.rx, text="  수신  ")
+        self.notebook = notebook
+        ttk.Label(self, text="Legacy 0–3 · 256-bit NEA/NIA는 후속 지원 · 데이터 전체 계산 도구 (NAS/PDCP PDU 자동 해석 없음)", padding=(12, 8)).pack(anchor="w")
+
+
+def main():
+    Application().mainloop()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,20 @@
+"""SNOW 3G SQ table: SAGE Document 2 v1.1, section 5.2 / Annex 4."""
+
+SQ = bytes.fromhex(
+    "25247367d7ae5c30a4ee6ecb7db582db"
+    "e48e48494f5d6a787088e85f5e8465e2"
+    "d8e9cced402f112857d2ace34a151bb9"
+    "b28085a62e024729074b0ec151aa89d4"
+    "ca0146b3efdd447bc27fbec39f204c64"
+    "83a2684213b441cdbac6bb6d4d7121f4"
+    "8db0e593fe8fe6cf43453122373696fa"
+    "bc0f08521d551ac54e23697a92ff5b5a"
+    "eb9a1ca9d17e0dfc508ab662f50af8dc"
+    "033c0c39f1b8f33df2d597668132a000"
+    "06cef6eab717f78c79d6a7bf8b3f1f53"
+    "6375352c60fd27d394a57ca105582dbd"
+    "d9c7af6b540be03804c89de714b1879c"
+    "df6ff9da2ac459167491ab266176342b"
+    "ad99fb72ec3312de983bc09b3e18103a"
+    "56e177c91e9e95a39019a86c09d0f086"
+)

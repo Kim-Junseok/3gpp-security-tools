@@ -1,0 +1,8 @@
+local-specs/
+.build/
+.venv/
+__pycache__/
+*.pyc
+build/
+dist/
+*.spec
