@@ -10,10 +10,14 @@ root = Path(__file__).resolve().parents[1]
 dist = root / "dist"
 name = "3GPP-Security-Tools-0.1.0-windows-x64"
 stage = root / ".build" / name
-stage.mkdir(parents=True, exist_ok=True)
+if stage.exists():
+    shutil.rmtree(stage)
+stage.mkdir(parents=True)
 shutil.copy2(dist / "3GPP-Security-Tools.exe", stage / "3GPP-Security-Tools.exe")
 shutil.copy2(root / "README.md", stage / "README.md")
-shutil.copytree(root / "docs", stage / "docs", dirs_exist_ok=True)
+(stage / "docs").mkdir()
+for document in ("FOLLOW_UP.md", "RELEASE_NOTES.md", "SOURCES.md", "VALIDATION.md"):
+    shutil.copy2(root / "docs" / document, stage / "docs" / document)
 shutil.copytree(root / "validation/v0.1", stage / "validation/v0.1", dirs_exist_ok=True)
 shutil.copytree(root / "packaging/licenses", stage / "licenses", dirs_exist_ok=True)
 (stage / "실행방법.txt").write_text(

@@ -83,7 +83,7 @@ AEAD/NCA는 제외한다.
 
 ## 승인 후 원문 확보 기록
 
-PDF 표지를 직접 읽어 실제 버전을 확인했다. 전체 표지 문자열·요청 URL·최종 URL은 [source-acquisition.json](source-acquisition.json)에 보존했다.
+PDF 표지를 직접 읽어 실제 버전을 확인했다. 표지 버전·최종 URL·로컬 경로·SHA-256은 아래 표에 기록했다.
 로컬 경로는 프로젝트 루트 기준이며 원문은 Git에서 제외한다.
 
 | 표지 버전 | 최종 URL | 로컬 경로 | SHA-256 |
@@ -99,7 +99,7 @@ PDF 표지를 직접 읽어 실제 버전을 확인했다. 전체 표지 문자�
 
 이 표가 앞선 사전 조사 시점의 미확보 상태를 갱신한다.
 EEA3/EIA3 Document 1은 TS wrapper 참조 v1.7과 달리 실제 확보 표지가 v1.8이다.
-변경 이력은 integrity 최대 데이터 길이 증가를 명시한다. CONTRACT CHANGE 기록은 [TASK_CONTRACT.md](TASK_CONTRACT.md)를 따른다.
+변경 이력은 integrity 최대 데이터 길이 증가를 명시한다. 구현 명세는 확보한 v1.8을 사용하고, 공식 테스트 기준은 Document 3 v1.1을 유지했다.
 
 ### Cip1 입력 매핑과 원문 정규화
 
