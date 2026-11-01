@@ -2,7 +2,7 @@
 
 - 조사일: 2026-11-01 (Asia/Seoul)
 - 문서 profile: TECHNICAL_NOTE
-- 현재 상태: 버전 및 지정 알고리즘 test set 목록 확인. 전체 벡터 전사·검증 실행 전.
+- 현재 상태: 원문 확보·공식 벡터 전사 완료. legacy 공식 36건 개발 실행 PASS. 상세 결과는 VALIDATION.md 참조.
 
 ## 버전 탐색
 
@@ -22,17 +22,17 @@ ETSI 공개 디렉터리에서 확인한 가장 높은 버전은 다음과 같�
 | TS 35.223 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135223/19.00.00_60/ts_135223v190000p.pdf) |
 
 위 PDF는 온라인 열람으로 버전을 확인했다.
-그중 TS 33.401은 로컬에도 저장했다.
+TS 33.401·33.501과 상세 SAGE 명세·테스트 원문을 로컬에 저장했다.
 TS 35.xxx PDF들은 §2의 SAGE 문서를 참조하며 §4가 그 문서에 기술 내용을 위임한다.
 wrapper PDF 확보와 상세 알고리즘·벡터 확보를 구분한다.
 
 | TS wrapper | 참조 SAGE 문서 버전 | 상세 원문 확보 상태 |
 |---|---|---|
-| 35.215 | UEA2/UIA2 Document 1 v2.1 | 미확보; 해당 구현 전 필요 |
-| 35.216 | SNOW 3G Document 2 v1.1 (2006-09-06) | 링크 발견, 로컬 미확보 |
+| 35.215 | UEA2/UIA2 Document 1 v2.1 | 로컬 확보, 표지 v2.1 확인 |
+| 35.216 | SNOW 3G Document 2 v1.1 (2006-09-06) | 로컬 확보, 표지 v1.1 확인 |
 | 35.217 | UEA2/UIA2 Document 3 v1.1 (2012-10-25) | 로컬 확보; §4 UEA2 5개 목록 대조 |
-| 35.221 | EEA3/EIA3 Document 1 v1.7 | 미확보; 해당 구현 전 필요 |
-| 35.222 | ZUC Document 2 v1.6 | 미확보; 해당 구현 전 필요 |
+| 35.221 | EEA3/EIA3 Document 1 v1.7 | 공식 GSMA 원문은 표지 v1.8; CONTRACT CHANGE 기록 후 사용 |
+| 35.222 | ZUC Document 2 v1.6 | 로컬 확보, 표지 v1.6 확인 |
 | 35.223 | EEA3/EIA3 Document 3 v1.1 (2011-01-04) | 로컬 확보; §4/§5 각 5개 목록 대조 |
 
 SNOW 3G 상세 명세의 발견 링크: [GSMA PDF](https://www.gsma.com/security/wp-content/uploads/2019/05/snow3gspec.pdf).
@@ -65,9 +65,9 @@ SAGE UEA2/UIA2 Document 3 §4 5개와 EEA3/EIA3 Document 3 §4·§5 각 5개의 
 합계 36개는 요구사항 문서가 지정한 알고리즘 입출력 suite의 필수 수이다.
 SNOW 3G/ZUC primitive 내부 상태 자료는 이 수에 포함하지 않는다.
 UEA2의 EEA1 입력 매핑은 TS 33.401 C.3의 설명에 근거한다.
-정확한 매개변수 매핑과 각 벡터 값 대조는 전사 단계에서 수행한다.
+매개변수 매핑을 문서화했고 전사한 다섯 벡터가 공식 출력과 일치했다.
 
-Null 공식 벡터 유무 확인과 정의 기반 테스트 설계가 남았다.
+고정 원문의 목록에서 Null 전용 공식 suite는 발견하지 못했고, 정의 기반 자체 테스트를 실행했다.
 256-bit TS 35.240~35.248의 버전·명세·NEA/NIA 목록 확보는 후속 작업으로 남긴다.
 AEAD/NCA는 제외한다.
 

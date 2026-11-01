@@ -4,9 +4,12 @@ Windows GUI에서 LTE/NR legacy Ciphering·Integrity 0~3을 계산한다.
 송신·수신 탭에서 두 기능의 사용 여부와 알고리즘을 각각 선택한다.
 GUI와 공식 테스트 실행기는 동일한 Pure Python 코어를 사용한다.
 
-문서 profile: README_DOC. 이 버전은 공개 배포 조건 검토 중인 로컬 배포 후보이다.
+문서 profile: README_DOC. 이 버전은 검증 결과와 남은 항목을 공개하는 연구용 배포 후보이다.
 
 ## 실행
+
+[Windows 배포 후보 다운로드](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc1)에서 ZIP을 받아 압축을 푼다.
+
 
 배포 폴더의 `3GPP-Security-Tools.exe`를 실행한다.
 사용자 환경에는 Python·pip·외부 라이브러리 설치가 필요 없다.

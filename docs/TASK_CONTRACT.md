@@ -169,7 +169,6 @@ powershell -NoProfile -File packaging/verify-windows.ps1
 Cip1은 TS 33.401 C.3의 CK/COUNT-C/BEARER/DIRECTION/LENGTH 및 bit 순서 대응을 문서화하고 검증한다.
 manifest·입력·expected 파일을 Git으로 추적한다.
 Markdown의 중첩 링크와 깨진 로컬 링크를 검사하고 수정한다.
-현재 대화에 별도로 보이지 않는 과거 수정사항은 추정해 추가하지 않는다.
 
 ## CONTRACT CHANGE — 상세 원문 버전 확인 (2026-11-01)
 
