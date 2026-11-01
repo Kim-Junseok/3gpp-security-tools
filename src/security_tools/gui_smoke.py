@@ -139,6 +139,11 @@ def run(output):
                 panel.calculate()
                 ref = Bits(bytes.fromhex(expected[case]["buffer_hex"]), expected[case]["bit_length"])
                 check("gui-official-" + case, lambda: equal(panel.primary_output(), ref))
+            v["data_format"].set("Hex")
+            panel.input.delete("1.0", "end")
+            panel.input.insert("1.0", "0")
+            panel.calculate()
+            check("odd-hex-input-error", lambda: equal(panel.result, None))
         except Exception:
             cases.append({"id": "smoke-driver", "status": "FAIL", "error": traceback.format_exc()})
         finally:
