@@ -71,12 +71,11 @@ UEA2의 EEA1 입력 매핑은 TS 33.401 C.3의 설명에 근거한다.
 256-bit TS 35.240~35.248의 버전·명세·NEA/NIA 목록 확보는 후속 작업으로 남긴다.
 AEAD/NCA는 제외한다.
 
-## 공개 조건과 패키징 참고
+## 원문 이용 안내와 패키징 참고
 
-원문에는 저작권과 알고리즘 사용 조건 안내가 있다.
-이번 조사는 공개 가능한 벡터 범위나 알고리즘 사용 권한을 확정하지 않았다.
-원문 전체와 참조 코드는 공개 저장소에 복사하지 않는다.
-요구사항에 따라 공개용 벡터·구현의 조건을 확인한 후 해당 근거를 기록한다.
+원문의 이용 조건 안내는 [ETSI](https://www.etsi.org/expertise/algorithms-codes/)와
+[GSMA](https://www.gsma.com/solutions-and-impact/technologies/security/security-algorithms/)에서 확인할 수 있다.
+이 저장소에는 원문 PDF와 참조 C 코드 전체를 포함하지 않는다.
 
 패키징 방식은 [PyInstaller 공식 설명](https://www.pyinstaller.org/en/stable/operating-mode.html)을 확인했다.
 조회된 문서 버전은 6.22.3이다.

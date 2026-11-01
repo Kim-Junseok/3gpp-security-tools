@@ -14,6 +14,8 @@ GUI와 공식 테스트 실행기는 동일한 Pure Python 코어를 사용한�
 배포 폴더의 `3GPP-Security-Tools.exe`를 실행한다.
 사용자 환경에는 Python·pip·외부 라이브러리 설치가 필요 없다.
 단일 EXE에 CPython, Tcl/Tk, 계산 코어와 공식 검증 데이터를 포함한다.
+배포 ZIP의 `licenses/`에 포함 런타임의 라이선스 문서를 제공한다.
+해당 문서는 저장소의 [packaging/licenses/](packaging/licenses/)에서도 확인할 수 있다.
 다른 작업 폴더에서 실행할 수 있다.
 서버 연결이나 계정 로그인이 필요하지 않다.
 
@@ -160,4 +162,3 @@ assert received["authentication"] == "passed"
 실제 NAS/PDCP PDU를 파싱하거나 PDCP/SDAP header의 보호 영역을 자동 구성하지 않는다.
 왕복 성공만으로 알고리즘 정확성을 판정하지 않는다.
 256-bit NEA/NIA는 [후속 목록](docs/FOLLOW_UP.md)이며 AEAD/NCA는 제외한다.
-공개 배포의 출처 조건은 [출처·배포 조건 기록](docs/DISTRIBUTION.md)에서 관리한다.

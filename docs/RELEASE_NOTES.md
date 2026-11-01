@@ -27,6 +27,5 @@ ZIP은 실행 파일·사용법·검증 보고서·런타임 license notice를 �
 256-bit NEA/NIA는 후속이며 AEAD/NCA는 제외한다.
 NAS/PDCP PDU 파싱·보호 영역 자동 구성은 포함하지 않는다.
 표준 원문 PDF와 참조 C 코드 전체는 포함하지 않는다.
-공식 출처의 알고리즘 사용 조건 안내와 이번 공개 범위의 법적 확인 상태는 DISTRIBUTION.md에 기록했다.
 
 고정 표준·SAGE 실제 버전·URL·해시·Cip1 매핑은 SOURCES.md, 상세 결과는 VALIDATION.md를 참조한다.

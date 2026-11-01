@@ -84,7 +84,6 @@ EXE에 포함한 src·testdata 각 파일의 SHA-256을 [build-info.json](../val
 
 ## 남은 항목
 
-- 알고리즘 사용 조건의 법적 적용 범위는 이 검증에서 판단하지 않았다. 공개 범위와 출처 안내는 DISTRIBUTION.md에 기록했다.
 - 새 Windows 환경에서 Python·WSL·개발 도구 없는 상태의 시험.
 - Windows 10·ARM64는 지원 검증 범위 밖이다.
 - 256-bit NEA/NIA는 후속이며 AEAD/NCA는 제외한다.
