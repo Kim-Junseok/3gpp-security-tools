@@ -2,7 +2,7 @@
 
 - 기준일: 2026-11-01 (Asia/Seoul)
 - 문서 profile: TECHNICAL_NOTE
-- 상태: legacy GUI·단일 Windows EXE 로컬 배포 후보 준비. 공개 저장소·Release 후보 게시 준비. 새 Windows 환경 시험은 남음.
+- 상태: legacy GUI·단일 Windows EXE 로컬 배포 후보 준비. 공개 저장소·사전 릴리스 후보 게시 완료. 새 Windows 환경 시험은 남음.
 
 | 단계 | 상태 | 근거 |
 |---|---|---|
@@ -16,7 +16,7 @@
 | Windows 통제된 격리 실행 | DONE | EXE만 복사, 다른 CWD, 개발 런타임·환경변수 배제. 공식 36/36, GUI 30/30. |
 | 문서·README·로컬 배포물 | DONE | 검증 결과·원문·API·실행·빌드·제약 기록. EXE/ZIP/checksum 준비. |
 | 새 Windows PC/VM 시험 | NOT VERIFIED | Python·WSL·개발 도구를 설치한 적 없는 환경 미확보. 해당 VM에서 동일 verify 스크립트 실행 필요. |
-| 공개 GitHub 저장소·Release | IN PROGRESS | 독립 작성 코드·벡터·EXE를 연구용 후보로 준비. 원문 PDF와 참조 C 코드 전체 제외. |
+| 공개 GitHub 저장소·Release | DONE | [공개 저장소](https://github.com/Kim-Junseok/3gpp-security-tools)와 [v0.1.0-rc1](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc1) 게시. EXE/Windows ZIP/소스 ZIP/SHA256SUMS 첨부. |
 
 ## 근거와 제한
 
@@ -31,3 +31,6 @@ Windows 빌드 중 GUI 오류 검사를 추가한 뒤 진행 중인 빌드를 �
 
 요구사항 §7의 모든 배포·공개 조건이 충족된 최종 공개 릴리스로 표시하지 않는다.
 256-bit 후속 목록은 [FOLLOW_UP.md](FOLLOW_UP.md)로 분리한다.
+
+릴리스 소스 ZIP은 릴리스 생성 시점 commit `c585272`의 snapshot이다.
+게시 이후 진행 기록은 main 브랜치에서 갱신한다. 계산·GUI 코드와 고정 데이터는 검증한 EXE의 fingerprint와 일치한다.

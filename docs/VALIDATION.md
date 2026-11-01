@@ -2,7 +2,7 @@
 
 - 문서 profile: TECHNICAL_NOTE
 - 실행일: 2026-11-01 (Asia/Seoul)
-- 상태: 로컬 Windows 배포 후보 검증 완료. 공개 Release 후보 게시 준비. 새 Windows VM 검증은 미완료.
+- 상태: 로컬 Windows 배포 후보 검증 완료. 공개 v0.1.0-rc1 게시 완료. 새 Windows VM 검증은 미완료.
 
 ## 공식 알고리즘 결과
 
