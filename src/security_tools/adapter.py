@@ -22,9 +22,10 @@ def execute(fields, receiving=False):
 
     cip = fields["ciphering"] if fields["cipher_enabled"] else None
     itg = fields["integrity"] if fields["integrity_enabled"] else None
+    needs_params = cip not in (None, 0) or itg not in (None, 0)
     args = dict(ciphering=cip, integrity=itg, enc_key=key("enc_key", "enc_format", cip),
-                int_key=key("int_key", "int_format", itg), count=number("count", 16),
-                bearer=number("bearer", 10), direction=fields["direction"])
+                int_key=key("int_key", "int_format", itg), count=number("count", 16) if needs_params else 0,
+                bearer=number("bearer", 10) if needs_params else 0, direction=fields["direction"] if needs_params else 0)
     data = Bits.parse(fields["data"], fields["data_format"])
     if receiving:
         if itg is not None and cip is None:

@@ -190,18 +190,25 @@ class Panel(ttk.Frame):
         if self.result is None:
             return
         r = self.result
-        data = from_result(r["data"])
+        data = self.primary_output()
         if data.length % 8:
             self.variables["output_format"].set("Bit")
             self.output_combo.configure(values=["Bit"])
         else:
             self.output_combo.configure(values=["Hex", "Bit"])
         self.set_text(self.output, data.format(self.variables["output_format"].get()))
-        title = "검증 실패 데이터" if r["authentication"] == "failed" else ("Plaintext" if self.receiving else "Ciphertext")
-        if r["ciphering"] is None:
+        title = "Plaintext" if self.receiving else "Ciphertext"
+        if not self.receiving and r["ciphering"] is None and "mac_i" in r:
+            title = "MAC-I"
+        elif r["ciphering"] is None:
             title = "원본 데이터"
+        if r["authentication"] == "failed":
+            title = "검증 실패 데이터"
         self.output_title.configure(text=f"{title} — {data.length} bit")
-        details = [f"입력 길이: {r['input_bit_length']} bit / 최종 데이터: {data.length} bit"]
+        details = [f"입력 길이: {r['input_bit_length']} bit / 출력 길이: {data.length} bit"]
+        if not self.receiving and r["ciphering"] is None and "mac_i" in r:
+            original = from_result(r["data"])
+            details.append(f"원본 데이터 ({original.length} bit): {original.format('Bit' if original.length % 8 else 'Hex')}")
         if "cipher_bit_length" in r:
             details.append(f"암호화 입력 길이 (MAC-I 포함 시 +32): {r['cipher_bit_length']} bit")
         for key, label in [("mac_i", "생성 MAC-I (검증용 중간 결과)"), ("received_mac", "수신 MAC-I"), ("calculated_mac", "재계산 MAC-I")]:
@@ -211,9 +218,13 @@ class Panel(ttk.Frame):
 
     def copy_output(self):
         if self.result is not None:
-            text = from_result(self.result["data"]).format(self.variables["output_format"].get())
+            text = self.primary_output().format(self.variables["output_format"].get())
             self.clipboard_clear()
             self.clipboard_append(text)
+
+    def primary_output(self):
+        r = self.result
+        return from_result(r["mac_i"] if not self.receiving and r["ciphering"] is None and "mac_i" in r else r["data"])
 
 
 class Application(tk.Tk):

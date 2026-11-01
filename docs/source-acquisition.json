@@ -4,34 +4,71 @@
     "requested_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/uea2uia2d1v21.pdf",
     "final_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/uea2uia2d1v21.pdf",
     "sha256": "d2671f7821e8971e8bf4245ff50f28fa7a1ec71be29927f60ef2f436b8edf438",
-    "cover": "ETSI/SAGE                                    Version: 2.1\nSpecification                                Date: 16th March 2009\n\n       Specification of the 3GPP Confidentiality and\n           Integrity Algorithms UEA2 & UIA2.\n        Document 1: UEA2 and UIA2 Specification\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms UEA2&UIA2      page 1 of 27\nUEA2 and UIA2 Specification Version 2.1"
+    "cover": "ETSI/SAGE                                    Version: 2.1\nSpecification                                Date: 16th March 2009\n\n       Specification of the 3GPP Confidentiality and\n           Integrity Algorithms UEA2 & UIA2.\n        Document 1: UEA2 and UIA2 Specification\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms UEA2&UIA2      page 1 of 27\nUEA2 and UIA2 Specification Version 2.1",
+    "cover_version": "2.1",
+    "acquired_date": "2026-11-01"
   },
   {
     "file": "local-specs/snow3g-spec-v11.pdf",
     "requested_url": "https://www.gsma.com/security/wp-content/uploads/2019/05/snow3gspec.pdf",
     "final_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/snow3gspec.pdf",
     "sha256": "a4dc79f2dcf3a1d91a0c5efbae317ffc50cbf90a9bb53da0edb52b4e86b989b5",
-    "cover": "ETSI/SAGE                                     Version: 1.1\nSpecification                                 Date: 6th September 2006\n\n       Specification of the 3GPP Confidentiality and\n           Integrity Algorithms UEA2 & UIA2.\n          Document 2: SNOW 3G Specification\n\n\n\n\n      The SNOW 3G algorithm is the core of the standardised 3GPP\n       Confidentiality and Integrity algorithms UEA2 & UIA2.\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms UEA2 & UIA2.    page 1 of 37\nSNOW 3G Algorithm Specification Version 1.1"
+    "cover": "ETSI/SAGE                                     Version: 1.1\nSpecification                                 Date: 6th September 2006\n\n       Specification of the 3GPP Confidentiality and\n           Integrity Algorithms UEA2 & UIA2.\n          Document 2: SNOW 3G Specification\n\n\n\n\n      The SNOW 3G algorithm is the core of the standardised 3GPP\n       Confidentiality and Integrity algorithms UEA2 & UIA2.\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms UEA2 & UIA2.    page 1 of 37\nSNOW 3G Algorithm Specification Version 1.1",
+    "cover_version": "1.1",
+    "acquired_date": "2026-11-01"
   },
   {
     "file": "local-specs/zuc-spec-v16.pdf",
     "requested_url": "https://www.gsma.com/aboutus/wp-content/uploads/2014/12/eea3eia3zucv16.pdf",
     "final_url": "https://www.gsma.com/about-us/wp-content/uploads/2014/12/eea3eia3zucv16.pdf",
     "sha256": "07db149438c92b6931eb34708df81134c4fa9a89cb2e0802cb3dd2d59f8907ae",
-    "cover": "ETSI/SAGE                                     Version: 1.6\nSpecification                                 Date: 28th June 2011\n\n       Specification of the 3GPP Confidentiality and\n       Integrity Algorithms 128-EEA3 & 128-EIA3.\n              Document 2: ZUC Specification\n\n\n\n\n          The ZUC algorithm is the core of the\n  standardised 3GPP Confidentiality and Integrity\n          algorithms 128-EEA3 & 128-EIA3.\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms 128-EEA3 & 128-EIA3.   page 1 of 18\nZUC Algorithm Specification Version 1.6"
+    "cover": "ETSI/SAGE                                     Version: 1.6\nSpecification                                 Date: 28th June 2011\n\n       Specification of the 3GPP Confidentiality and\n       Integrity Algorithms 128-EEA3 & 128-EIA3.\n              Document 2: ZUC Specification\n\n\n\n\n          The ZUC algorithm is the core of the\n  standardised 3GPP Confidentiality and Integrity\n          algorithms 128-EEA3 & 128-EIA3.\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms 128-EEA3 & 128-EIA3.   page 1 of 18\nZUC Algorithm Specification Version 1.6",
+    "cover_version": "1.6",
+    "acquired_date": "2026-11-01"
   },
   {
     "file": "local-specs/ts_133501v190700p.pdf",
     "requested_url": "https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/19.07.00_60/ts_133501v190700p.pdf",
     "final_url": "https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/19.07.00_60/ts_133501v190700p.pdf",
     "sha256": "a9331407330f3aaae79c3c990f1423a330a69ea0bd4fde68e52173ac6c41ac0f",
-    "cover": "ETSI TS 133 501 V19.7.0 (2026-08)\n\n\n\n\nTECHNICAL SPECIFICATION\n\n\n\n                             5G;\n     Security architecture and procedures for 5G System\n         (3GPP TS 33.501 version 19.7.0 Release 19)"
+    "cover": "ETSI TS 133 501 V19.7.0 (2026-08)\n\n\n\n\nTECHNICAL SPECIFICATION\n\n\n\n                             5G;\n     Security architecture and procedures for 5G System\n         (3GPP TS 33.501 version 19.7.0 Release 19)",
+    "cover_version": "19.7.0",
+    "acquired_date": "2026-11-01"
   },
   {
-    "file": "local-specs/eea3-eia3-4.pdf",
+    "file": "local-specs/eea3-eia3-spec-v18.pdf",
     "requested_url": "https://www.gsma.com/security/wp-content/uploads/2019/05/EEA3_EIA3_specification_v1_8.pdf?download=1",
     "final_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/EEA3_EIA3_specification_v1_8.pdf",
     "sha256": "b65d11ffa74c87ae6c898b48df5b36fe838297aede9c819bacb782c43695b974",
-    "cover": "ETSI/SAGE                                    Version: 1.8\nSpecification                                Date: 24th Jan, 2019\n\n    Specification of the 3GPP Confidentiality and\n    Integrity Algorithms 128-EEA3 & 128-EIA3.\n  Document 1: 128-EEA3 and 128-EIA3 Specification\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms 128-EEA3&128-EIA3   page 1 of 16\n128-EEA3 and 128-EIA3 Specification Version 1.8"
+    "cover": "ETSI/SAGE                                    Version: 1.8\nSpecification                                Date: 24th Jan, 2019\n\n    Specification of the 3GPP Confidentiality and\n    Integrity Algorithms 128-EEA3 & 128-EIA3.\n  Document 1: 128-EEA3 and 128-EIA3 Specification\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms 128-EEA3&128-EIA3   page 1 of 16\n128-EEA3 and 128-EIA3 Specification Version 1.8",
+    "cover_version": "1.8",
+    "acquired_date": "2026-11-01"
+  },
+  {
+    "file": "local-specs/ts_133401v190200p.pdf",
+    "requested_url": "https://www.etsi.org/deliver/etsi_ts/133400_133499/133401/19.02.00_60/ts_133401v190200p.pdf",
+    "final_url": "https://www.etsi.org/deliver/etsi_ts/133400_133499/133401/19.02.00_60/ts_133401v190200p.pdf",
+    "sha256": "39f5979a20979c00d6041a27100d1f598c60081d346d0771e0e3db50d5c66006",
+    "cover": "ETSI TS 133 401 V19.2.0 (2026-02)\n\n\n\n\nTECHNICAL SPECIFICATION\n\n\n\n Digital cellular telecommunications system (Phase 2+) (GSM);\n    Universal Mobile Telecommunications System (UMTS);\n                                LTE;\n           3GPP System Architecture Evolution (SAE);\n                        Security architecture\n           (3GPP TS 33.401 version 19.2.0 Release 19)",
+    "cover_version": "19.2.0",
+    "acquired_date": "2026-11-01"
+  },
+  {
+    "file": "local-specs/uea2-uia2-test-v11.pdf",
+    "requested_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/Doc3-UEA2-UIA2-Spec-Implementors-Test-Data.pdf",
+    "final_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/Doc3-UEA2-UIA2-Spec-Implementors-Test-Data.pdf",
+    "sha256": "fdf3281aacb8098f7cee4461851910aeff84f8c6cbdaadca95ee9a5d63d1c677",
+    "cover": "ETSI/SAGE                                  Version: 1.1\nSpecification                              Date: 25th October 2012\n\n       Specification of the 3GPP Confidentiality and\n           Integrity Algorithms UEA2 & UIA2\n\n            Document 3: Implementors’ Test Data\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms UEA2&UIA2      page 1 of 20\nImplementors’ Test Data",
+    "cover_version": "1.1",
+    "acquired_date": "2026-11-01"
+  },
+  {
+    "file": "local-specs/eea3-eia3-test-v11.pdf",
+    "requested_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/eea3eia3testdatav11.pdf",
+    "final_url": "https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/eea3eia3testdatav11.pdf",
+    "sha256": "65b461c84daac4f9c7e831b739ca33792e25fdcbcf67e2e6befa60e4a58eea82",
+    "cover": "ETSI/SAGE                                   Version: 1.1\nSpecification                               Date: 4th Jan. 2011\n\nSpecification of the 3GPP Confidentiality and Integrity\n          Algorithms 128-EEA3 & 128-EIA3\n             Document 3: Implementor’s Test Data\n\n\n\n\n3GPP Confidentiality and Integrity Algorithms 128-EEA3 & 128-EIA3   page 1 of 21\nImplementor’s Test Data",
+    "cover_version": "1.1",
+    "acquired_date": "2026-11-01"
   }
 ]

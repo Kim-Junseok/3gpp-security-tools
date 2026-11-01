@@ -52,13 +52,15 @@ def verify(algorithm, key, count, bearer, direction, data, received_mac):
             "authentication": "unprotected" if algorithm == 0 else ("passed" if matches else "failed")}
 
 
-def _options(ciphering, integrity):
+def _options(ciphering, integrity, data):
     if ciphering is None and integrity is None:
         raise SecurityToolsError("Enable Ciphering or Integrity.")
+    if not isinstance(data, Bits):
+        raise SecurityToolsError("Core data must include its valid bit length (Bits).")
 
 
 def transmit(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", count=0, bearer=0, direction=0):
-    _options(ciphering, integrity)
+    _options(ciphering, integrity, data)
     result = {"operation": "transmit", "input_bit_length": data.length, "ciphering": ciphering, "integrity": integrity,
               "authentication": "unprotected" if integrity in (None, 0) else "generated"}
     payload = data
@@ -75,7 +77,7 @@ def transmit(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", 
 
 
 def receive(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", count=0, bearer=0, direction=0, received_mac=None):
-    _options(ciphering, integrity)
+    _options(ciphering, integrity, data)
     result = {"operation": "receive", "input_bit_length": data.length, "ciphering": ciphering, "integrity": integrity,
               "authentication": "unprotected"}
     payload = data

@@ -37,9 +37,13 @@ def identity():
         h.update(path.read_bytes())
     build_file = (Path(sys._MEIPASS) if getattr(sys, "frozen", False) else root) / "build-info.json"
     build = json.loads(build_file.read_text()) if build_file.exists() else None
+    if getattr(sys, "frozen", False) and build:
+        commit, dirty = build.get("commit"), build.get("dirty")
+        h = hashlib.sha256(json.dumps(build["files"], sort_keys=True).encode())
     return {"version": __version__, "commit": commit, "dirty": dirty,
             "source_sha256": h.hexdigest(), "build": build,
             "frozen": bool(getattr(sys, "frozen", False)), "python": sys.version,
+            "executable": sys.executable, "bundle_root": getattr(sys, "_MEIPASS", None),
             "platform": platform.platform(), "utc": datetime.now(timezone.utc).isoformat()}
 
 

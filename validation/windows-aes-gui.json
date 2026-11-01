@@ -1,0 +1,67 @@
+{
+  "category": "gui_widgets",
+  "cases": [
+    {
+      "id": "tx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "hex-to-bit-leading-zero",
+      "status": "PASS"
+    },
+    {
+      "id": "bit-to-hex-round-trip",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-conversion-rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-output",
+      "status": "PASS"
+    },
+    {
+      "id": "clipboard-exact-bits",
+      "status": "PASS"
+    },
+    {
+      "id": "null-keys-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "null-not-authenticated",
+      "status": "PASS"
+    }
+  ],
+  "passed": 15,
+  "total": 15
+}

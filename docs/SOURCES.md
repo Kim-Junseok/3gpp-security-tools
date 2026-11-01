@@ -81,3 +81,53 @@ AEAD/NCA는 제외한다.
 패키징 방식은 [PyInstaller 공식 설명](https://www.pyinstaller.org/en/stable/operating-mode.html)을 확인했다.
 조회된 문서 버전은 6.22.3이다.
 빌드 성공과 깨끗한 Windows 환경에서의 실제 실행은 별도로 검증한다.
+
+## 승인 후 원문 확보 기록
+
+PDF 표지를 직접 읽어 실제 버전을 확인했다. 전체 표지 문자열·요청 URL·최종 URL은 [source-acquisition.json](source-acquisition.json)에 보존했다.
+로컬 경로는 프로젝트 루트 기준이며 원문은 Git에서 제외한다.
+
+| 표지 버전 | 최종 URL | 로컬 경로 | SHA-256 |
+|---|---|---|---|
+| 2.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/uea2uia2d1v21.pdf) | `local-specs/uea2-uia2-spec-v21.pdf` | `d2671f7821e8971e8bf4245ff50f28fa7a1ec71be29927f60ef2f436b8edf438` |
+| 1.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/snow3gspec.pdf) | `local-specs/snow3g-spec-v11.pdf` | `a4dc79f2dcf3a1d91a0c5efbae317ffc50cbf90a9bb53da0edb52b4e86b989b5` |
+| 1.6 | [PDF](https://www.gsma.com/about-us/wp-content/uploads/2014/12/eea3eia3zucv16.pdf) | `local-specs/zuc-spec-v16.pdf` | `07db149438c92b6931eb34708df81134c4fa9a89cb2e0802cb3dd2d59f8907ae` |
+| 19.7.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/19.07.00_60/ts_133501v190700p.pdf) | `local-specs/ts_133501v190700p.pdf` | `a9331407330f3aaae79c3c990f1423a330a69ea0bd4fde68e52173ac6c41ac0f` |
+| 1.8 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/EEA3_EIA3_specification_v1_8.pdf) | `local-specs/eea3-eia3-spec-v18.pdf` | `b65d11ffa74c87ae6c898b48df5b36fe838297aede9c819bacb782c43695b974` |
+| 19.2.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/133400_133499/133401/19.02.00_60/ts_133401v190200p.pdf) | `local-specs/ts_133401v190200p.pdf` | `39f5979a20979c00d6041a27100d1f598c60081d346d0771e0e3db50d5c66006` |
+| 1.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/Doc3-UEA2-UIA2-Spec-Implementors-Test-Data.pdf) | `local-specs/uea2-uia2-test-v11.pdf` | `fdf3281aacb8098f7cee4461851910aeff84f8c6cbdaadca95ee9a5d63d1c677` |
+| 1.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/eea3eia3testdatav11.pdf) | `local-specs/eea3-eia3-test-v11.pdf` | `65b461c84daac4f9c7e831b739ca33792e25fdcbcf67e2e6befa60e4a58eea82` |
+
+이 표가 앞선 사전 조사 시점의 미확보 상태를 갱신한다.
+EEA3/EIA3 Document 1은 TS wrapper 참조 v1.7과 달리 실제 확보 표지가 v1.8이다.
+변경 이력은 integrity 최대 데이터 길이 증가를 명시한다. CONTRACT CHANGE 기록은 [TASK_CONTRACT.md](TASK_CONTRACT.md)를 따른다.
+
+### Cip1 입력 매핑과 원문 정규화
+
+TS 33.401 C.3은 UEA2 테스트를 EEA1에 일대일로 대응시킨다.
+
+| UEA2 | EEA1 Core | 대응 규칙 |
+|---|---|---|
+| CK | key | 128-bit byte 순서 보존 |
+| COUNT-C | count | 32-bit 값 그대로 |
+| BEARER | bearer | 5-bit 값 그대로 |
+| DIRECTION | direction | 1-bit 값 그대로 |
+| LENGTH | Bits.length | 원문 bit 길이 그대로 |
+| IBS / OBS | 입력 / 기대 출력 | MSB 우선 유효 bit만 처리 |
+
+SAGE Document 1 v2.1 §3.4의 K3..K0는 key의 앞쪽 32-bit부터 대응한다.
+SNOW 초기 IV의 IV3=IV1=COUNT이고 IV2=IV0=(BEARER<<27)|(DIRECTION<<26)이다.
+공식 다섯 케이스는 해당 매핑을 거쳐 expected와 비교한다.
+원문의 K0..K3·IV0..IV3 표와 독립 매핑 테스트를 추가해 word 순서도 확인한다.
+
+Cip1-005의 원문 p14에는 plaintext word 19가 `60876A0`로 인쇄돼 있다.
+동일 원문 row 18에서 두 번째 keystream `AE56E26E`와 두 번째 enc/dec `A85E94CE`를 XOR하면 `060876A0`이다.
+32-bit word의 생략된 선행 0을 복구한다. 원문 페이지 이미지도 대조했다.
+이 입력 정규화는 importer와 manifest에 명시했으며 Core의 출력은 사용하지 않았다.
+
+### Null 검증 범위
+
+TS 33.401 v19.2.0 B.0과 TS 33.501 v19.7.0 D.1에서 zero keystream과 32-bit zero MAC 정의를 확인했다.
+고정된 공식 문서들의 알고리즘 test set 목록에는 Null 전용 suite가 없다.
+Null 동작은 정의 기반 자체 테스트로 검증하고 공식 36건과 별도 집계한다.
+이 관찰은 다른 모든 출처에 Null 벡터가 없다는 주장이 아니다.
