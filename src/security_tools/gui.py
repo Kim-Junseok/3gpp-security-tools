@@ -1,40 +1,62 @@
 """Tkinter transmit/receive interface; all calculations go through adapter/Core."""
 
+import sys
 import tkinter as tk
+from tkinter import font
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
-from .adapter import execute
+from .adapter import COUNT_FORMATS, execute, format_data
 from .bits import Bits, from_result
 from .errors import SecurityToolsError
 
 ALGORITHMS = ["0 — Null (보호 없음)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)"]
+SHARED_SETTINGS = ("cipher_enabled", "integrity_enabled", "ciphering", "integrity", "enc_key", "int_key",
+                   "enc_format", "int_format", "count", "count_format", "bearer", "direction")
+
+
+def enable_windows_dpi():
+    """Match Tk 8.6's system-DPI layout before it creates any windows."""
+    if sys.platform != "win32":
+        return
+    import ctypes
+    user32 = ctypes.WinDLL("user32", use_last_error=True)
+    try:
+        set_awareness = user32.SetProcessDpiAwarenessContext
+        set_awareness.argtypes = [ctypes.c_void_p]
+        set_awareness.restype = ctypes.c_bool
+        # A frozen EXE sets this through its manifest; source launches use the API.
+        set_awareness(ctypes.c_void_p(-2))
+    except AttributeError:
+        user32.SetProcessDPIAware()
 
 
 class Panel(ttk.Frame):
-    def __init__(self, parent, receiving=False):
+    def __init__(self, parent, receiving=False, settings=None):
         super().__init__(parent, padding=16)
         self.receiving = receiving
         self.result = None
-        self.variables = {}
+        self.variables = dict(settings or {})
         self.columnconfigure(1, weight=1)
         for name, default in [("cipher_enabled", True), ("integrity_enabled", True)]:
-            self.variables[name] = tk.BooleanVar(value=default)
+            if name not in self.variables:
+                self.variables[name] = tk.BooleanVar(value=default)
         defaults = dict(ciphering=ALGORITHMS[2], integrity=ALGORITHMS[2], enc_key="", int_key="",
-                        enc_format="Hex", int_format="Hex", count="00000000", bearer="0", direction="0 — UL",
+                        enc_format="Hex", int_format="Hex", count="0", count_format="Decimal", bearer="0", direction="0 — UL",
                         data_format="Hex", received_mac="", mac_format="Hex", output_format="Hex")
         for name, default in defaults.items():
-            self.variables[name] = tk.StringVar(value=default)
-        self.cip_check = ttk.Checkbutton(self, text="Ciphering 사용", variable=self.variables["cipher_enabled"], command=self.refresh)
+            if name not in self.variables:
+                self.variables[name] = tk.StringVar(value=default)
+        self.cip_check = ttk.Checkbutton(self, text="Ciphering 사용", variable=self.variables["cipher_enabled"])
         self.cip_check.grid(row=0, column=0, sticky="w", pady=3)
         self.cip_combo = ttk.Combobox(self, textvariable=self.variables["ciphering"], values=ALGORITHMS, state="readonly", width=30)
         self.cip_combo.grid(row=0, column=1, sticky="ew", pady=3)
-        self.itg_check = ttk.Checkbutton(self, text="Integrity 사용", variable=self.variables["integrity_enabled"], command=self.refresh)
+        self.itg_check = ttk.Checkbutton(self, text="Integrity 사용", variable=self.variables["integrity_enabled"])
         self.itg_check.grid(row=1, column=0, sticky="w", pady=3)
         self.itg_combo = ttk.Combobox(self, textvariable=self.variables["integrity"], values=ALGORITHMS, state="readonly", width=30)
         self.itg_combo.grid(row=1, column=1, sticky="ew", pady=3)
         self.enc_entry, self.enc_fmt = self.entry_row(2, "K_enc", "enc_key", "enc_format")
         self.int_entry, self.int_fmt = self.entry_row(3, "K_int", "int_key", "int_format")
-        self.count_entry, _ = self.entry_row(4, "COUNT (Hex, 0–FFFFFFFF)", "count")
+        self.count_entry, self.count_fmt = self.entry_row(4, "COUNT (32-bit unsigned)", "count", "count_format")
         self.bearer_entry, _ = self.entry_row(5, "BEARER (10진수, 0–31)", "bearer")
         ttk.Label(self, text="무선 DIRECTION").grid(row=6, column=0, sticky="w", padx=(0, 12), pady=3)
         self.direction_combo = ttk.Combobox(self, textvariable=self.variables["direction"], values=["0 — UL", "1 — DL"], state="readonly")
@@ -45,7 +67,7 @@ class Panel(ttk.Frame):
         self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
         self.data_combo.pack(side="left", padx=4)
         ttk.Button(formats, text="Hex ↔ Bit 변환", command=self.convert_input).pack(side="left")
-        self.input = ScrolledText(self, height=5, wrap="word", font=("Consolas", 10), undo=True)
+        self.input = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", undo=True)
         self.input.grid(row=8, column=0, columnspan=3, sticky="nsew", pady=4)
         self.rowconfigure(8, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
@@ -64,24 +86,25 @@ class Panel(ttk.Frame):
         self.output_combo.pack(side="left", padx=4)
         self.copy_button = ttk.Button(output_controls, text="결과 복사", command=self.copy_output, state="disabled")
         self.copy_button.pack(side="left")
-        self.output = ScrolledText(self, height=5, wrap="word", font=("Consolas", 10), state="disabled")
+        self.output = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", state="disabled")
         self.output.grid(row=14, column=0, columnspan=3, sticky="nsew")
         self.rowconfigure(14, weight=1)
-        self.details = ScrolledText(self, height=4, wrap="word", font=("Consolas", 9), state="disabled")
+        self.details = ScrolledText(self, height=4, wrap="word", font="TkDefaultFont", state="disabled")
         self.details.grid(row=15, column=0, columnspan=3, sticky="ew", pady=(6, 0))
-        self.cip_combo.bind("<<ComboboxSelected>>", lambda _: self.refresh())
-        self.itg_combo.bind("<<ComboboxSelected>>", lambda _: self.refresh())
+        for name in SHARED_SETTINGS:
+            self.variables[name].trace_add("write", lambda *_: self.refresh())
         self.data_combo.bind("<<ComboboxSelected>>", lambda _: self.update_length())
         self.output_combo.bind("<<ComboboxSelected>>", lambda _: self.render())
         self.refresh()
 
     def entry_row(self, row, label, name, fmt=None):
         ttk.Label(self, text=label).grid(row=row, column=0, sticky="w", padx=(0, 12), pady=3)
-        entry = ttk.Entry(self, textvariable=self.variables[name], font=("Consolas", 10))
+        entry = ttk.Entry(self, textvariable=self.variables[name], font="TkFixedFont")
         entry.grid(row=row, column=1, sticky="ew", pady=3)
         combo = None
         if fmt:
-            combo = ttk.Combobox(self, textvariable=self.variables[fmt], values=["Hex", "Bit"], width=6, state="readonly")
+            values = COUNT_FORMATS if fmt == "count_format" else ("Hex", "Bit")
+            combo = ttk.Combobox(self, textvariable=self.variables[fmt], values=values, width=8, state="readonly")
             combo.grid(row=row, column=2, padx=(6, 0))
         return entry, combo
 
@@ -101,6 +124,7 @@ class Panel(ttk.Frame):
         needs_params = c not in (None, 0) or i not in (None, 0)
         for entry in (self.count_entry, self.bearer_entry):
             entry.configure(state="normal" if needs_params else "disabled")
+        self.count_fmt.configure(state="readonly" if needs_params else "disabled")
         self.direction_combo.configure(state="readonly" if needs_params else "disabled")
         if c is not None and i is not None:
             action = "복호화 → MAC-I 분리 → 검증" if self.receiving else "MAC-I 생성 → 추가 → 암호화"
@@ -120,7 +144,7 @@ class Panel(ttk.Frame):
         elif c == 0:
             self.status.configure(text="Null Ciphering — 암호화 보호 없음.")
         else:
-            self.status.configure(text="송신/수신 탭을 바꿔도 무선 DIRECTION은 반전되지 않습니다.")
+            self.status.configure(text="송신·수신 탭은 키·알고리즘·COUNT·BEARER·DIRECTION 설정을 공유합니다.")
 
     def fields(self):
         result = {name: var.get() for name, var in self.variables.items()}
@@ -147,7 +171,7 @@ class Panel(ttk.Frame):
             current = self.variables["data_format"].get()
             bits = Bits.parse(self.input.get("1.0", "end-1c"), current)
             target = "Bit" if current == "Hex" else "Hex"
-            text = bits.format(target)
+            text = format_data(bits, target)
             self.variables["data_format"].set(target)
             self.input.delete("1.0", "end")
             self.input.insert("1.0", text)
@@ -196,7 +220,7 @@ class Panel(ttk.Frame):
             self.output_combo.configure(values=["Bit"])
         else:
             self.output_combo.configure(values=["Hex", "Bit"])
-        self.set_text(self.output, data.format(self.variables["output_format"].get()))
+        self.set_text(self.output, format_data(data, self.variables["output_format"].get()))
         title = "Plaintext" if self.receiving else "Ciphertext"
         if not self.receiving and r["ciphering"] is None and "mac_i" in r:
             title = "MAC-I"
@@ -208,17 +232,17 @@ class Panel(ttk.Frame):
         details = [f"입력 길이: {r['input_bit_length']} bit / 출력 길이: {data.length} bit"]
         if not self.receiving and r["ciphering"] is None and "mac_i" in r:
             original = from_result(r["data"])
-            details.append(f"원본 데이터 ({original.length} bit): {original.format('Bit' if original.length % 8 else 'Hex')}")
+            details.append(f"원본 데이터 ({original.length} bit): {format_data(original, 'Bit' if original.length % 8 else 'Hex')}")
         if "cipher_bit_length" in r:
             details.append(f"암호화 입력 길이 (MAC-I 포함 시 +32): {r['cipher_bit_length']} bit")
         for key, label in [("mac_i", "생성 MAC-I (검증용 중간 결과)"), ("received_mac", "수신 MAC-I"), ("calculated_mac", "재계산 MAC-I")]:
             if key in r:
-                details.append(f"{label}: {r[key]['hex']} (32 bit)")
+                details.append(f"{label}: {format_data(from_result(r[key]))} (32 bit)")
         self.set_text(self.details, "\n".join(details))
 
     def copy_output(self):
         if self.result is not None:
-            text = self.primary_output().format(self.variables["output_format"].get())
+            text = format_data(self.primary_output(), self.variables["output_format"].get())
             self.clipboard_clear()
             self.clipboard_append(text)
 
@@ -229,17 +253,30 @@ class Panel(ttk.Frame):
 
 class Application(tk.Tk):
     def __init__(self):
+        enable_windows_dpi()
         super().__init__()
         self.title("3GPP Security Tools")
-        self.geometry("940x900")
-        self.minsize(800, 780)
+        families = set(font.families(self))
+        ui_family = next((name for name in ("Malgun Gothic", "맑은 고딕") if name in families),
+                         font.nametofont("TkDefaultFont").actual("family"))
+        for name in ("TkDefaultFont", "TkTextFont", "TkMenuFont", "TkHeadingFont", "TkCaptionFont", "TkTooltipFont"):
+            font.nametofont(name).configure(family=ui_family, size=10)
+        font.nametofont("TkFixedFont").configure(family="Consolas", size=11)
+        scale = float(self.tk.call("tk", "scaling")) / (96 / 72)
+        width = min(round(1000 * scale), self.winfo_screenwidth() - round(40 * scale))
+        height = min(round(940 * scale), self.winfo_screenheight() - round(80 * scale))
+        self.geometry(f"{width}x{height}")
+        self.minsize(min(round(860 * scale), width), min(round(780 * scale), height))
         style = ttk.Style(self)
         if "vista" in style.theme_names():
             style.theme_use("vista")
+        style.configure(".", font="TkDefaultFont")
         ttk.Label(self, text="3GPP Security Tools", font=("Segoe UI", 18, "bold"), padding=(16, 12)).pack(anchor="w")
         notebook = ttk.Notebook(self)
         notebook.pack(fill="both", expand=True, padx=12)
-        self.tx, self.rx = Panel(notebook), Panel(notebook, receiving=True)
+        self.tx = Panel(notebook)
+        settings = {name: self.tx.variables[name] for name in SHARED_SETTINGS}
+        self.rx = Panel(notebook, receiving=True, settings=settings)
         notebook.add(self.tx, text="  송신  ")
         notebook.add(self.rx, text="  수신  ")
         self.notebook = notebook

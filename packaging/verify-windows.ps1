@@ -1,7 +1,8 @@
-param([string]$Name = "3GPP-Security-Tools", [switch]$DeveloperRuntimeAlreadyIsolated)
+param([string]$Name = "3GPP-Security-Tools", [switch]$DeveloperRuntimeAlreadyIsolated,
+      [string]$ReportDirectory = "validation/gui-update/windows")
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path $PSScriptRoot -Parent
-$ReportDir = Join-Path $ProjectRoot "validation/v0.1/windows"
+$ReportDir = Join-Path $ProjectRoot $ReportDirectory
 $TestRoot = Join-Path ([IO.Path]::GetTempPath()) ("3gpp-security-tools-" + [guid]::NewGuid().ToString("N"))
 $LaunchDir = Join-Path $TestRoot "different-working-directory"
 $BundleDir = Join-Path $TestRoot "portable"
@@ -28,7 +29,7 @@ try {
     $Process = Start-Process -FilePath $Exe -ArgumentList @("--gui-smoke-report", ('"' + $GuiReport + '"')) -WorkingDirectory $LaunchDir -Wait -PassThru
     if ($Process.ExitCode -ne 0) { throw "Packaged GUI tests failed with exit $($Process.ExitCode)" }
     $Gui = Get-Content $GuiReport -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($Gui.total -lt 30 -or $Gui.passed -ne $Gui.total) { throw "GUI test report is incomplete or failed." }
+    if ($Gui.total -ne 44 -or $Gui.passed -ne $Gui.total) { throw "Expected all 44 GUI cases." }
     Copy-Item (Join-Path $OfficialDir "*.json") $ReportDir -Force
     Copy-Item $GuiReport (Join-Path $ReportDir "gui-report.json") -Force
     $Evidence = [ordered]@{

@@ -1,8 +1,38 @@
 """GUI-independent input conversion, shared by widget tests."""
 
+import re
+
 from .bits import Bits
 from .core import transmit, receive
 from .errors import SecurityToolsError
+
+
+COUNT_FORMATS = ("Decimal", "Hex", "Bit")
+
+
+def parse_count(text, fmt="Decimal"):
+    """Read an unsigned 32-bit COUNT independently of byte-oriented data input."""
+    patterns = {"Decimal": (r"[0-9]+", 10), "Hex": (r"[0-9a-fA-F]+", 16), "Bit": (r"[01]+", 2)}
+    if fmt not in patterns:
+        raise SecurityToolsError("COUNT format must be Decimal, Hex, or Bit.")
+    value = text.strip() if fmt == "Decimal" else "".join(text.split())
+    pattern, radix = patterns[fmt]
+    if not re.fullmatch(pattern, value):
+        raise SecurityToolsError(f"COUNT must contain valid {fmt} digits.")
+    # Reject overflow without converting an arbitrarily long decimal string.
+    significant = value.lstrip("0") or "0"
+    if len(significant) > {10: 10, 16: 8, 2: 32}[radix]:
+        raise SecurityToolsError("COUNT must be in 0..4294967295 (32-bit unsigned).")
+    count = int(significant, radix)
+    if count > 0xFFFFFFFF:
+        raise SecurityToolsError("COUNT must be in 0..4294967295 (32-bit unsigned).")
+    return count
+
+
+def format_data(data, fmt="Hex"):
+    """Format GUI text while preserving the Core's serialized representation."""
+    value = data.format(fmt)
+    return " ".join(value[n:n + 2] for n in range(0, len(value), 2)).upper() if fmt == "Hex" else value
 
 
 def execute(fields, receiving=False):
@@ -24,7 +54,8 @@ def execute(fields, receiving=False):
     itg = fields["integrity"] if fields["integrity_enabled"] else None
     needs_params = cip not in (None, 0) or itg not in (None, 0)
     args = dict(ciphering=cip, integrity=itg, enc_key=key("enc_key", "enc_format", cip),
-                int_key=key("int_key", "int_format", itg), count=number("count", 16) if needs_params else 0,
+                int_key=key("int_key", "int_format", itg),
+                count=parse_count(fields["count"], fields.get("count_format", "Decimal")) if needs_params else 0,
                 bearer=number("bearer", 10) if needs_params else 0, direction=fields["direction"] if needs_params else 0)
     data = Bits.parse(fields["data"], fields["data_format"])
     if receiving:

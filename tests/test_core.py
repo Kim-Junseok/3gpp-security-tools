@@ -6,7 +6,7 @@ import unittest
 from security_tools.bits import Bits, from_result
 from security_tools.core import cipher, mac, verify, transmit, receive
 from security_tools.errors import SecurityToolsError, UnsupportedAlgorithm, VectorError
-from security_tools.adapter import execute
+from security_tools.adapter import execute, format_data, parse_count
 from security_tools.validation import run
 
 KEY = bytes.fromhex("000102030405060708090a0b0c0d0e0f")
@@ -154,7 +154,7 @@ class AdapterTests(unittest.TestCase):
     def fields(self):
         return dict(cipher_enabled=True, integrity_enabled=True, ciphering=2, integrity=2,
                     enc_key=KEY.hex(), int_key=INT_KEY.hex(), enc_format="Hex", int_format="Hex",
-                    data="00010100101", data_format="Bit", count="12345678", bearer="17", direction=1,
+                    data="00010100101", data_format="Bit", count="12345678", count_format="Hex", bearer="17", direction=1,
                     received_mac="", mac_format="Hex")
 
     def test_same_as_direct_core(self):
@@ -174,6 +174,40 @@ class AdapterTests(unittest.TestCase):
         for patch in [{"count": "xyz"}, {"bearer": "0x11"}, {"enc_key": "00"}]:
             with self.subTest(patch=patch), self.assertRaises(SecurityToolsError):
                 execute(self.fields() | patch)
+
+    def test_count_formats_preserve_parameters(self):
+        reference = execute(self.fields())
+        for fmt, value in [("Decimal", str(PARAMS["count"])), ("Hex", "12 34 56 78"),
+                           ("Hex", "12345678"), ("Bit", "00010010 00110100 01010110 01111000")]:
+            with self.subTest(fmt=fmt, value=value):
+                self.assertEqual(execute(self.fields() | {"count": value, "count_format": fmt}), reference)
+        default = self.fields() | {"count": str(PARAMS["count"])}
+        del default["count_format"]
+        self.assertEqual(execute(default), reference)
+
+    def test_count_boundaries_and_invalid_formats(self):
+        for fmt, maximum in [("Decimal", "4294967295"), ("Hex", "FFFFFFFF"), ("Bit", "1" * 32)]:
+            with self.subTest(fmt=fmt):
+                self.assertEqual(parse_count(maximum, fmt), 2**32 - 1)
+                self.assertEqual(parse_count("0", fmt), 0)
+                self.assertEqual(parse_count("0" * 100 + maximum, fmt), 2**32 - 1)
+        invalid = [("4294967296", "Decimal"), ("100000000", "Hex"), ("1" + "0" * 32, "Bit"),
+                   ("-1", "Decimal"), ("+1", "Decimal"), ("1_000", "Decimal"), ("1 0", "Decimal"),
+                   ("", "Hex"), ("GG", "Hex"), ("102", "Bit"), ("1", "bad"),
+                   ("9" * 5000, "Decimal")]
+        for value, fmt in invalid:
+            with self.subTest(fmt=fmt, value=value[:40]), self.assertRaises(SecurityToolsError):
+                parse_count(value, fmt)
+
+    def test_gui_hex_format_preserves_bytes_and_bits(self):
+        data = Bits.parse("00 01 ab CD")
+        self.assertEqual(format_data(data), "00 01 AB CD")
+        self.assertEqual(Bits.parse(format_data(data)), data)
+        self.assertEqual(format_data(data, "Bit"), "00000000000000011010101111001101")
+        self.assertEqual(data.to_dict()["hex"], "0001abcd")
+        self.assertEqual(format_data(Bits.parse("")), "")
+        with self.assertRaises(SecurityToolsError):
+            format_data(Bits.parse("00101", "Bit"))
 
 
 class InventoryTests(unittest.TestCase):

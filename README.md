@@ -8,7 +8,7 @@ GUI와 공식 테스트 실행기는 동일한 Pure Python 코어를 사용한�
 
 ## 실행
 
-[Windows 배포 후보 다운로드](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc1)에서 ZIP을 받아 압축을 푼다.
+[Windows 배포 후보 다운로드](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc2)에서 ZIP을 받아 압축을 푼다.
 
 
 배포 폴더의 `3GPP-Security-Tools.exe`를 실행한다.
@@ -26,7 +26,7 @@ Windows 10·ARM64와 새로 설치한 Windows VM은 검증 환경에 포함하�
 
 1. 송신 또는 수신 탭을 선택한다. 탭은 무선 UL/DL DIRECTION을 반전하지 않는다.
 2. Ciphering·Integrity를 각각 켜고 알고리즘 번호를 선택한다.
-3. 활성화된 키와 COUNT·BEARER·DIRECTION을 입력한다.
+3. 활성화된 키와 COUNT·BEARER·DIRECTION을 입력한다. COUNT는 Decimal(기본)·Hex·Bit 중 입력 형식을 선택한다.
 4. 데이터 형식을 Hex 또는 Bit로 선택하고 데이터를 입력한다. 길이는 자동 계산한다.
 5. 현재 연산이 표시된 실행 버튼을 누른다. 결과와 bit 길이를 확인하고 복사한다.
 
@@ -51,14 +51,18 @@ Core의 `matches`는 도구의 진단용 값 동등성이고 `authentication`은
 | 2 | 128-EEA2 / 128-NEA2 | 128-EIA2 / 128-NIA2 | AES |
 | 3 | 128-EEA3 / 128-NEA3 | 128-EIA3 / 128-NIA3 | ZUC |
 
-COUNT는 **16진수**, BEARER는 **10진수 0~31**이다.
+COUNT는 **Decimal(기본)·Hex·Bit**를 지원하며 범위는 0~4,294,967,295이다.
+선택한 형식으로 입력값을 해석한다. BEARER는 **10진수 0~31**이다.
 DIRECTION은 0=UL, 1=DL이다.
 비Null 키는 각각 정확히 128-bit여야 한다.
 결합 처리의 K_enc와 K_int는 독립 입력이다.
 두 계산에는 공통 COUNT·BEARER·DIRECTION을 적용한다.
+송신·수신 탭은 기능 사용 여부·알고리즘·키와 키 형식·COUNT와 COUNT 형식·BEARER·DIRECTION 설정을 공유한다.
+데이터와 수신 MAC-I, 결과 표시 형식은 각 탭에서 따로 유지한다.
 
 Hex 입력은 공백·탭·줄바꿈을 제외한 짝수 개 digit를 byte로 해석한다.
 Bit 입력은 공백을 제외한 0·1 개수로 길이를 계산한다.
+GUI의 Hex 출력·복사·Bit→Hex 변환은 `00 01 AB CD`처럼 대문자와 byte 사이 공백을 사용한다.
 Hex→Bit 변환은 각 byte를 8-bit로 표시해 선행 0을 보존한다.
 Bit→Hex는 유효 길이가 8의 배수일 때만 허용한다.
 비정렬 결과는 정확한 Bit 문자열로 표시·복사한다.

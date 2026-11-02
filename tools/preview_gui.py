@@ -10,10 +10,12 @@ from security_tools.gui import Application
 
 app = Application()
 p = app.tx
-p.variables["enc_key"].set("000102030405060708090a0b0c0d0e0f")
-p.variables["int_key"].set("f0e0d0c0b0a090807060504030201000")
-p.variables["data_format"].set("Bit")
-p.input.insert("1.0", "00010100101")
+p.variables["enc_key"].set("D3 C5 D5 92 32 7F B1 1C 40 35 C6 68 0A F8 C6 D1")
+p.variables["int_key"].set("D3C5D592327FB11C4035C6680AF8C6D1")
+p.variables["count"].set("965368244")
+p.variables["bearer"].set("26")
+p.variables["direction"].set("1 — DL")
+p.input.insert("1.0", "48 45 83 D5 AF E0 82 AE")
 p.calculate()
 app.after(20000, app.destroy)
 app.mainloop()

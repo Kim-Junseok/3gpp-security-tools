@@ -11,7 +11,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Install the pinned packaging requirements first." }
     & $Python tools/write_build_info.py
     if ($LASTEXITCODE -ne 0) { throw "Build identity generation failed." }
-    & $Python -m PyInstaller --noconfirm --clean --onefile --windowed --name $Name --paths src --add-data "testdata;testdata" --add-data "build-info.json;." --distpath dist --workpath .build/pyinstaller packaging/launch.py
+    & $Python -m PyInstaller --noconfirm --clean --onefile --windowed --name $Name --manifest packaging/windows.manifest --paths src --add-data "testdata;testdata" --add-data "build-info.json;." --distpath dist --workpath .build/pyinstaller packaging/launch.py
     if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed." }
     Get-FileHash (Join-Path $ProjectRoot "dist/$Name.exe") -Algorithm SHA256 | Format-List
 } finally { Pop-Location }
