@@ -1,10 +1,42 @@
 # 검증 기록
 
-- 문서 profile: TECHNICAL_NOTE
-- 실행일: 2026-11-01 (Asia/Seoul)
-- 상태: 로컬 Windows 배포 후보 검증 완료. 공개 v0.1.0-rc1 게시 완료. 새 Windows VM 검증은 미완료.
+## v0.1.0-rc2 GUI 개선 — 2026-11-02
 
-## 공식 알고리즘 결과
+| 구분 | 결과 | 보고서 |
+|---|---:|---|
+| Linux 공식 테스트 | 36/36 PASS | [공식 보고서](../validation/gui-update/linux/official-report.json) |
+| Windows EXE 공식 테스트 | 36/36 PASS | [공식 보고서](../validation/gui-update/windows/official-report.json) |
+| 자체 통합·경계 테스트 | 24개 PASS | [통합 보고서](../validation/gui-update/integration-report.json) |
+| Windows EXE GUI widget | 44/44 PASS | [GUI 보고서](../validation/gui-update/windows/gui-report.json) |
+
+COUNT의 Decimal·Hex·Bit 입력으로 동일한 공식 Itg2-002 결과를 확인했다.
+COUNT 범위 오류, 대문자·byte 간 공백 Hex 출력·복사·변환, 양방향 탭 설정 공유를 검사했다.
+입력 데이터는 탭마다 별도로 유지한다.
+공식 manifest·입력·expected와 계산 코어는 rc1과 동일하다.
+
+기존 rc1 EXE의 내장 manifest에는 DPI 인식 선언이 없었다.
+rc2는 [Microsoft의 manifest 방식](https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process)을 따라 시스템 DPI 인식을 선언한다.
+[실제 내장 manifest](../validation/gui-update/embedded.manifest)와 실행 중 DPI awareness=1을 확인했다.
+Windows 11 x64의 192 DPI(200%)에서 맑은 고딕 UI와 주요 필드·버튼의 배치를 [창 캡처](../validation/gui-update/gui-preview.png)로 확인했다.
+[캡처 정보](../validation/gui-update/visual-capture.json)는 실제 창 크기와 DPI를 기록한다.
+다른 배율의 모니터 사이 이동에 따른 재배치는 검증하지 않았다.
+
+EXE 한 개를 임시 폴더로 복사하고 다른 작업 폴더에서 실행했다.
+개발용 Python 경로를 격리하고 Python/Tcl/Tk 환경변수를 제거한 상태에서 위 EXE 공식·GUI 검사를 통과했다.
+[배포 보고서](../validation/gui-update/windows/deployment-report.json)에 해시와 격리 조건을 기록했다.
+개발 런타임은 검사 후 복원했다.
+새 Windows PC/VM, Windows 10·ARM64 검증은 여전히 미완료다.
+
+- EXE SHA-256: `423a9b5b7f4c82c58e7e063520b221c326fa785f5e77168ef9bda861ff6f2a56`
+- 빌드 기준 commit: `ed4ad9419f354f2160eee72f224e191a04937507`
+- [빌드 입력 해시](../validation/gui-update/build-info.json): src·testdata·packaging 파일과 대조해 일치를 확인했다. 보고서가 미추적 상태여서 dirty=true다.
+- 재현 명령: [README](../README.md)의 개발·Windows 빌드 항목. 이번 배포 검증 기본 출력 경로는 `validation/gui-update/windows/`다.
+
+## v0.1.0-rc1 기준선 — 2026-11-01
+
+아래는 이전 배포 후보 rc1의 검증 기록이다.
+
+### 공식 알고리즘 결과
 
 원문에서 전사한 expected Set을 읽고 동일 Core의 actual과 비교했다.
 필수 분모는 실행 전에 고정한 36건이다.
@@ -24,7 +56,7 @@
 SNOW/ZUC 내부 상태 자료 전체나 다른 문서의 conformance 자료 전체를 검증했다는 뜻은 아니다.
 Null은 고정 문서의 정의 기반 자체 시험이며 공식 36건에 포함하지 않는다.
 
-## 자체 통합·경계 검증
+### 자체 통합·경계 검증
 
 [통합 보고서](../validation/v0.1/integration-report.json): unittest test method **21개 PASS**, failure/error/skip 0.
 16개 Ciphering/Integrity 조합 × 정렬/비정렬 입력 = 32개 참조 연결·왕복 subcase를 확인했다.
@@ -33,9 +65,9 @@ Null은 고정 문서의 정의 기반 자체 시험이며 공식 36건에 포�
 비Null integrity 12조합 × 2정렬 × 데이터/MAC 변조 = 48개 변조 subcase에서 실패 상태를 확인했다.
 선행 0, key 길이, 숫자 범위, Null/단계 생략 차이, 32-bit 미만 결합 수신 오류, 고정 분모 누락 검출도 확인했다.
 위 subcase는 test method 수와 중복해 합산하지 않는다.
-왕복 시험만으로 알고리즘 정확성을 판정하지 않았다.
+알고리즘 정확성은 계산 결과와 공식 기대값을 비교해 검증했다.
 
-## GUI 검증
+### GUI 검증
 
 [실제 Windows widget 보고서](../validation/v0.1/windows/gui-report.json): **30/30 PASS**.
 송신/수신의 세 보호 조합, 필드 활성화, 두 기능 해제, Hex/Bit 변환·복사, Null, 검증 실패 표시, 짧은 수신과 홀수 Hex 오류를 확인했다.
@@ -45,7 +77,7 @@ Null은 고정 문서의 정의 기반 자체 시험이며 공식 36건에 포�
 캡처는 동일 GUI 소스를 Windows CPython으로 연 창이다.
 배포 EXE의 widget 동작은 별도 smoke 실행으로 검증했다.
 
-## Windows 배포 시험
+### Windows 배포 시험
 
 실제 환경은 Windows 11 Home x64, OS 10.0.26200이다.
 빌드 런타임은 CPython 3.12.10 x64, Tcl/Tk 8.6, PyInstaller 6.22.3이다.
@@ -66,14 +98,14 @@ WSL 공유 경로의 개발 폴더를 Windows에서 복원할 때 파일 이동 
 새로 설치한 Windows VM, WSL·개발 도구가 설치된 적 없는 PC, Windows 10 및 ARM64에서는 시험하지 않았다.
 따라서 해당 환경에 대한 배포 검증 완료를 표시하지 않는다.
 
-## 재현과 provenance
+### 재현과 provenance
 
 배포 EXE SHA-256: `b27b536b216e8f43c6c390d27262ec6f091a4a51b9c5a6340c8148e3802f4522`.
 
 빌드 기준 commit: `a572e34fc68b6717f2baaf1da6bfac81b6a08fb9`.
 빌드 당시 문서 변경과 보고서가 있어 dirty=true로 기록했다.
 EXE에 포함한 src·testdata 각 파일의 SHA-256을 [build-info.json](../validation/v0.1/build-info.json)에 보존했다.
-현재 소스의 해당 계산·GUI·데이터 파일과 모두 일치함을 확인했다.
+rc1 검증 시점의 계산·GUI·데이터 파일과 일치함을 확인했다.
 빌드 후 수정한 Windows 검증 harness의 폴더 관리 코드는 EXE의 계산 코드를 변경하지 않는다.
 
 [Linux 공식 보고서](../validation/v0.1/linux/official-report.json), [Linux Answer Set](../validation/v0.1/linux/answers.json),
@@ -82,7 +114,7 @@ EXE에 포함한 src·testdata 각 파일의 SHA-256을 [build-info.json](../val
 명령은 [README](../README.md)의 개발·Windows 빌드 항목을 따른다.
 원문과 Cip1 정규화 근거는 [SOURCES.md](SOURCES.md)를 따른다.
 
-## 남은 항목
+### 남은 항목
 
 - 새 Windows 환경에서 Python·WSL·개발 도구 없는 상태의 시험.
 - Windows 10·ARM64는 지원 검증 범위 밖이다.

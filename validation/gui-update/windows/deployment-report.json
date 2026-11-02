@@ -1,0 +1,22 @@
+﻿{
+    "category":  "windows_portable_isolation",
+    "os":  {
+               "Caption":  "Microsoft Windows 11 Home",
+               "Version":  "10.0.26200",
+               "OSArchitecture":  "64비트"
+           },
+    "exe_sha256":  "423a9b5b7f4c82c58e7e063520b221c326fa785f5e77168ef9bda861ff6f2a56",
+    "copied_files":  [
+                         "3GPP-Security-Tools.exe"
+                     ],
+    "working_directory":  "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-security-tools-e06c82b848c0471489660eaa973e3493\\different-working-directory",
+    "development_runtime_renamed":  true,
+    "python_environment_cleared":  true,
+    "path":  "C:\\Windows\\System32;C:\\Windows",
+    "official_required":  36,
+    "official_passed":  36,
+    "gui_total":  44,
+    "gui_passed":  44,
+    "scope":  "Existing Windows 11 host with isolated development runtime; not a fresh VM or a Windows 10 test.",
+    "test_directory":  "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-security-tools-e06c82b848c0471489660eaa973e3493"
+}
