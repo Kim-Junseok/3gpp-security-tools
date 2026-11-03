@@ -226,6 +226,86 @@ def run(output):
             panel.input.insert("1.0", "0")
             panel.calculate()
             check("odd-hex-input-error", lambda: equal(panel.result, None))
+
+            # Every new official NEA/NIA case enters through the same widgets as user data.
+            new_inputs = json.loads((dataset / "256/inputs.json").read_text(encoding="utf-8"))
+            new_expected = json.loads((dataset / "256/expected.json").read_text(encoding="utf-8"))
+            for case, inp in new_inputs.items():
+                if not case.startswith(("NEA", "NIA")):
+                    continue
+                enc = case.startswith("NEA")
+                original = Bits(bytes.fromhex(inp["buffer_hex"]), inp["bit_length"])
+                exp = new_expected[case]
+                reference = Bits(bytes.fromhex(exp["buffer_hex"]), exp["bit_length"])
+                for panel in (app.tx, app.rx):
+                    v = panel.variables
+                    v["ciphering"].set(ALGORITHMS[inp["algorithm"]])
+                    v["integrity"].set(ALGORITHMS[inp["algorithm"]])
+                    v["cipher_enabled"].set(enc)
+                    v["integrity_enabled"].set(not enc)
+                    for name in ("enc_key", "int_key"):
+                        v[name].set(inp["key"])
+                    for name in ("enc_format", "int_format", "extra_format", "mac_format"):
+                        v[name].set("Hex")
+                    v["count_format"].set("Decimal")
+                    v["count"].set(str(inp["count"]))
+                    v["bearer"].set(str(inp["bearer"]))
+                    v["direction"].set(f"{inp['direction']} — {'DL' if inp['direction'] else 'UL'}")
+                    v["extra_iv"].set(inp["extra_iv"])
+                    if not enc:
+                        v["mac_bytes"].set(str(inp["mac_bytes"]))
+                    v["data_format"].set("Bit")
+                    v["received_mac"].set(format_data(reference) if not enc else "")
+                    panel.input.delete("1.0", "end")
+                    payload = reference if enc and panel.receiving else original
+                    panel.input.insert("1.0", payload.format("Bit"))
+                    panel.execute_button.invoke()
+
+                    def official_check():
+                        assert panel.result is not None, panel.status.cget("text")
+                        if panel.receiving:
+                            equal(panel.result["data"], original.to_dict())
+                            if not enc:
+                                equal(panel.result["authentication"], "passed")
+                        else:
+                            equal(panel.primary_output(), reference)
+                        equal(str(panel.extra_entry.cget("state")), "normal")
+                        equal(str(panel.mac_bytes_combo.cget("state")), "disabled" if enc else "readonly")
+                    check(f"gui-official-{case}-{'rx' if panel.receiving else 'tx'}", official_check)
+
+            # A 120-bit MAC is appended/split at the exact bit boundary in mixed families.
+            for panel in (app.tx, app.rx):
+                v = panel.variables
+                v["cipher_enabled"].set(True)
+                v["integrity_enabled"].set(True)
+                v["ciphering"].set(ALGORITHMS[4])
+                v["integrity"].set(ALGORITHMS[6])
+                v["mac_bytes"].set("15")
+                panel.input.delete("1.0", "end")
+                panel.input.insert("1.0", "0010101" if not panel.receiving else combined_payload)
+                panel.execute_button.invoke()
+                if not panel.receiving:
+                    combined_payload = panel.result["data"]["bits"]
+                    check("variable-mac-tx-combined", lambda: equal(panel.result["data"]["bit_length"], 127))
+                    check("variable-mac-detail-length", lambda: equal("(120 bit)" in panel.details.get("1.0", "end-1c"), True))
+                else:
+                    check("variable-mac-rx-combined", lambda: equal(panel.result["data"]["bits"], "0010101"))
+                    check("variable-mac-rx-authenticated", lambda: equal(panel.result["authentication"], "passed"))
+                    payload = panel.input.get("1.0", "end-1c")
+                    panel.input.delete("1.0", "end")
+                    panel.input.insert("1.0", ("1" if payload[0] == "0" else "0") + payload[1:])
+                    panel.execute_button.invoke()
+                    check("variable-mac-tamper-fails", lambda: equal(panel.result["authentication"], "failed"))
+                    check("variable-mac-tamper-visible", lambda: equal(panel.output_title.cget("text").startswith("Data failed authentication"), True))
+            # Shared settings changes above invalidate both results; keep the saved payload local.
+            panel = app.tx
+            panel.variables["extra_iv"].set("00")
+            panel.calculate()
+            check("short-extra-iv-input-error", lambda: equal(panel.result, None))
+            panel.variables["extra_iv"].set("00" * 6)
+            panel.variables["enc_key"].set("00" * 16)
+            panel.calculate()
+            check("short-256-key-input-error", lambda: equal(panel.result, None))
         except Exception:
             cases.append({"id": "smoke-driver", "status": "FAIL", "error": traceback.format_exc()})
         finally:

@@ -57,7 +57,7 @@ class CoreTests(unittest.TestCase):
         for key in (b"", bytes(15), bytes(17), "0" * 16):
             with self.subTest(key_length=len(key)), self.assertRaises(SecurityToolsError):
                 mac(2, key, data=Bits.parse("00"), **PARAMS)
-        for number in (4, 5, 6, -1, True):
+        for number in (7, 8, 9, -1, True):
             with self.subTest(number=number), self.assertRaises(UnsupportedAlgorithm):
                 cipher(number, KEY, data=Bits.parse("00"), **PARAMS)
 

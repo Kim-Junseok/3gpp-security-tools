@@ -9,9 +9,11 @@ from .adapter import COUNT_FORMATS, execute, format_data
 from .bits import Bits, from_result
 from .errors import SecurityToolsError
 
-ALGORITHMS = ["0 — Null (no protection)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)"]
+ALGORITHMS = ["0 — Null (no protection)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)",
+              "4 — SNOW 5G (256-bit)", "5 — AES (256-bit)", "6 — ZUC (256-bit)"]
 SHARED_SETTINGS = ("cipher_enabled", "integrity_enabled", "ciphering", "integrity", "enc_key", "int_key",
-                   "enc_format", "int_format", "count", "count_format", "bearer", "direction")
+                   "enc_format", "int_format", "count", "count_format", "bearer", "direction",
+                   "extra_iv", "extra_format", "mac_bytes")
 
 
 def enable_windows_dpi():
@@ -42,6 +44,7 @@ class Panel(ttk.Frame):
                 self.variables[name] = tk.BooleanVar(value=default)
         defaults = dict(ciphering=ALGORITHMS[2], integrity=ALGORITHMS[2], enc_key="", int_key="",
                         enc_format="Hex", int_format="Hex", count="0", count_format="Decimal", bearer="0", direction="0 — UL",
+                        extra_iv="00 00 00 00 00 00", extra_format="Hex", mac_bytes="4",
                         data_format="Hex", received_mac="", mac_format="Hex", output_format="Hex")
         for name, default in defaults.items():
             if name not in self.variables:
@@ -61,36 +64,41 @@ class Panel(ttk.Frame):
         ttk.Label(self, text="Radio DIRECTION").grid(row=6, column=0, sticky="w", padx=(0, 12), pady=3)
         self.direction_combo = ttk.Combobox(self, textvariable=self.variables["direction"], values=["0 — UL", "1 — DL"], state="readonly")
         self.direction_combo.grid(row=6, column=1, sticky="ew", pady=3)
-        ttk.Label(self, text="Input data").grid(row=7, column=0, sticky="w", pady=(10, 3))
+        self.extra_entry, self.extra_fmt = self.entry_row(7, "EXTRA_IV (48-bit)", "extra_iv", "extra_format")
+        ttk.Label(self, text="MAC-I length (bytes)").grid(row=8, column=0, sticky="w", pady=3)
+        self.mac_bytes_combo = ttk.Combobox(self, textvariable=self.variables["mac_bytes"],
+                                           values=[str(n) for n in range(4, 17)], width=8, state="readonly")
+        self.mac_bytes_combo.grid(row=8, column=1, sticky="w", pady=3)
+        ttk.Label(self, text="Input data").grid(row=9, column=0, sticky="w", pady=(10, 3))
         formats = ttk.Frame(self)
-        formats.grid(row=7, column=1, sticky="e")
+        formats.grid(row=9, column=1, sticky="e")
         self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
         self.data_combo.pack(side="left", padx=4)
         ttk.Button(formats, text="Convert Hex ↔ Bit", command=self.convert_input).pack(side="left")
         self.input = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", undo=True)
-        self.input.grid(row=8, column=0, columnspan=3, sticky="nsew", pady=4)
-        self.rowconfigure(8, weight=1)
+        self.input.grid(row=10, column=0, columnspan=3, sticky="nsew", pady=4)
+        self.rowconfigure(10, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
         self.length_label = ttk.Label(self, text="Valid length: 0 bit")
-        self.length_label.grid(row=9, column=0, columnspan=3, sticky="w")
-        self.mac_entry, self.mac_fmt = self.entry_row(10, "Received MAC-I (32-bit)", "received_mac", "mac_format")
+        self.length_label.grid(row=11, column=0, columnspan=3, sticky="w")
+        self.mac_entry, self.mac_fmt = self.entry_row(12, "Received MAC-I", "received_mac", "mac_format")
         self.execute_button = ttk.Button(self, command=self.calculate)
-        self.execute_button.grid(row=11, column=0, columnspan=3, sticky="ew", pady=10)
+        self.execute_button.grid(row=13, column=0, columnspan=3, sticky="ew", pady=10)
         self.status = ttk.Label(self, text="", wraplength=780)
-        self.status.grid(row=12, column=0, columnspan=3, sticky="w")
+        self.status.grid(row=14, column=0, columnspan=3, sticky="w")
         self.output_title = ttk.Label(self, text="Result")
-        self.output_title.grid(row=13, column=0, sticky="w", pady=(8, 4))
+        self.output_title.grid(row=15, column=0, sticky="w", pady=(8, 4))
         output_controls = ttk.Frame(self)
-        output_controls.grid(row=13, column=1, sticky="e")
+        output_controls.grid(row=15, column=1, sticky="e")
         self.output_combo = ttk.Combobox(output_controls, textvariable=self.variables["output_format"], values=["Hex", "Bit"], state="readonly", width=6)
         self.output_combo.pack(side="left", padx=4)
         self.copy_button = ttk.Button(output_controls, text="Copy result", command=self.copy_output, state="disabled")
         self.copy_button.pack(side="left")
         self.output = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", state="disabled")
-        self.output.grid(row=14, column=0, columnspan=3, sticky="nsew")
-        self.rowconfigure(14, weight=1)
+        self.output.grid(row=16, column=0, columnspan=3, sticky="nsew")
+        self.rowconfigure(16, weight=1)
         self.details = ScrolledText(self, height=4, wrap="word", font="TkDefaultFont", state="disabled")
-        self.details.grid(row=15, column=0, columnspan=3, sticky="ew", pady=(6, 0))
+        self.details.grid(row=17, column=0, columnspan=3, sticky="ew", pady=(6, 0))
         for name in SHARED_SETTINGS:
             self.variables[name].trace_add("write", lambda *_: self.refresh())
         self.data_combo.bind("<<ComboboxSelected>>", lambda _: self.update_length())
@@ -126,6 +134,12 @@ class Panel(ttk.Frame):
             entry.configure(state="normal" if needs_params else "disabled")
         self.count_fmt.configure(state="readonly" if needs_params else "disabled")
         self.direction_combo.configure(state="readonly" if needs_params else "disabled")
+        newer = c in (4, 5, 6) or i in (4, 5, 6)
+        self.extra_entry.configure(state="normal" if newer else "disabled")
+        self.extra_fmt.configure(state="readonly" if newer else "disabled")
+        self.mac_bytes_combo.configure(state="readonly" if i in (4, 5, 6) else "disabled")
+        if i not in (4, 5, 6) and self.variables["mac_bytes"].get() != "4":
+            self.variables["mac_bytes"].set("4")
         if c is not None and i is not None:
             action = "Decrypt → Extract MAC-I → Verify" if self.receiving else "Generate MAC-I → Append → Encrypt"
         elif c is not None:
@@ -234,10 +248,10 @@ class Panel(ttk.Frame):
             original = from_result(r["data"])
             details.append(f"Original data ({original.length} bit): {format_data(original, 'Bit' if original.length % 8 else 'Hex')}")
         if "cipher_bit_length" in r:
-            details.append(f"Cipher input length (+32 when MAC-I is appended): {r['cipher_bit_length']} bit")
+            details.append(f"Cipher input length (including appended MAC-I): {r['cipher_bit_length']} bit")
         for key, label in [("mac_i", "Generated MAC-I (intermediate verification value)"), ("received_mac", "Received MAC-I"), ("calculated_mac", "Calculated MAC-I")]:
             if key in r:
-                details.append(f"{label}: {format_data(from_result(r[key]))} (32 bit)")
+                details.append(f"{label}: {format_data(from_result(r[key]))} ({r[key]['bit_length']} bit)")
         self.set_text(self.details, "\n".join(details))
 
     def copy_output(self):
@@ -280,7 +294,7 @@ class Application(tk.Tk):
         notebook.add(self.tx, text="  Transmit  ")
         notebook.add(self.rx, text="  Receive  ")
         self.notebook = notebook
-        ttk.Label(self, text="Legacy 0–3 · 256-bit NEA/NIA support planned · Whole-data calculation (no automatic NAS/PDCP PDU parsing)", padding=(12, 8)).pack(anchor="w")
+        ttk.Label(self, text="Legacy 0–3 / 256-bit NEA/NIA 4–6 · MAC-append/encrypt pipeline · NCA and PDU parsing excluded", padding=(12, 8)).pack(anchor="w")
 
 
 def main():

@@ -1,0 +1,67 @@
+name: Validate security tools
+
+on:
+  push:
+    branches: [dev, feature/256-bit-nea-nia]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Tk and virtual display
+        run: sudo apt-get update && sudo apt-get install -y python3-tk xvfb
+      - name: Official vectors, integration, and GUI
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m security_tools --validate --output validation/256-bit/ci-linux
+          python tools/run_tests.py --output validation/256-bit/ci-linux/integration-report.json
+          xvfb-run -a python -m security_tools --gui-smoke-report validation/256-bit/ci-linux/gui-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-validation
+          path: validation/256-bit/ci-linux
+
+  windows:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+          architecture: x64
+      - name: Source official vectors, integration, and GUI
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m security_tools --validate --output validation/256-bit/windows-source
+          if ($LASTEXITCODE) { throw 'Source official validation failed.' }
+          python tools/run_tests.py --output validation/256-bit/windows-source/integration-report.json
+          if ($LASTEXITCODE) { throw 'Integration validation failed.' }
+          python -m security_tools --gui-smoke-report validation/256-bit/windows-source/gui-report.json
+          if ($LASTEXITCODE) { throw 'Source GUI validation failed.' }
+      - name: Install pinned packager and build EXE
+        run: |
+          python -m pip install -r packaging/requirements-windows.txt
+          if ($LASTEXITCODE) { throw 'Packager installation failed.' }
+          ./packaging/build-windows.ps1 -Python (Get-Command python).Source
+      - name: Validate standalone EXE
+        run: |
+          ./packaging/verify-windows.ps1
+          Copy-Item build-info.json validation/256-bit/windows/build-info.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-validation-and-exe
+          path: |
+            validation/256-bit/windows*
+            dist/3GPP-Security-Tools.exe
