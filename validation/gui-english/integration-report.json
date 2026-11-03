@@ -1,0 +1,1062 @@
+{
+  "category": "integration_and_boundary",
+  "environment": {
+    "version": "0.1.0",
+    "commit": "ce2a9c1445b5cbd886fc1a782ceb3e6ee796ebbb",
+    "dirty": true,
+    "source_sha256": "0de6b587e2b245440629ebc55e5a0d1f1aee79e3d6799869174f569b324f5cf1",
+    "build": null,
+    "frozen": false,
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "bundle_root": null,
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "utc": "2026-11-03T13:33:51.968017+00:00"
+  },
+  "tests": 24,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "records": [
+    {
+      "id": "test_core.AdapterTests.test_bit_key",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='4294967296')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='100000000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit', value='100000000000000000000000000000000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='-1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='+1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='1_000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='1 0')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='GG')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit', value='102')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='bad', value='1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='9999999999999999999999999999999999999999')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Decimal', value='305419896')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Hex', value='12 34 56 78')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Hex', value='12345678')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Bit', value='00010010 00110100 01010110 01111000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_gui_hex_format_preserves_bytes_and_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'count': 'xyz'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'bearer': '0x11'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'enc_key': '00'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_same_as_direct_core",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_leading_zero_whitespace",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_non_aligned_format",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0x00', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='gg', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='1012', fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0_1', fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='00', fmt='bad')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_bad_mac_length",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_disabled_differs_from_null",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=15)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=17)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_null_definition",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=4294967296)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='bearer', value=32)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='direction', value=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=31)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.InventoryTests.test_changed_denominator_rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.InventoryTests.test_missing_case_does_not_pass",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.MappingTests.test_cip1_official_key_iv_mapping",
+      "status": "PASS"
+    }
+  ]
+}
