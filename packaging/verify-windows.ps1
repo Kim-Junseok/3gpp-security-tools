@@ -1,6 +1,6 @@
 param([string]$Name = "3GPP-Security-Tools", [switch]$DeveloperRuntimeAlreadyIsolated,
       [string]$ReportDirectory = "validation/256-bit/windows",
-      [int]$ExpectedOfficial = 135, [int]$ExpectedGui = 196)
+      [int]$ExpectedOfficial = 135, [int]$ExpectedGui = 197)
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path $PSScriptRoot -Parent
 $ReportDir = Join-Path $ProjectRoot $ReportDirectory

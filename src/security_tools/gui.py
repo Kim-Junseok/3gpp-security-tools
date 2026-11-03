@@ -34,7 +34,7 @@ def enable_windows_dpi():
 
 class Panel(ttk.Frame):
     def __init__(self, parent, receiving=False, settings=None):
-        super().__init__(parent, padding=16)
+        super().__init__(parent, padding=12)
         self.receiving = receiving
         self.result = None
         self.variables = dict(settings or {})
@@ -69,13 +69,13 @@ class Panel(ttk.Frame):
         self.mac_bytes_combo = ttk.Combobox(self, textvariable=self.variables["mac_bytes"],
                                            values=[str(n) for n in range(4, 17)], width=8, state="readonly")
         self.mac_bytes_combo.grid(row=8, column=1, sticky="w", pady=3)
-        ttk.Label(self, text="Input data").grid(row=9, column=0, sticky="w", pady=(10, 3))
+        ttk.Label(self, text="Input data").grid(row=9, column=0, sticky="w", pady=(6, 3))
         formats = ttk.Frame(self)
         formats.grid(row=9, column=1, sticky="e")
         self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
         self.data_combo.pack(side="left", padx=4)
         ttk.Button(formats, text="Convert Hex ↔ Bit", command=self.convert_input).pack(side="left")
-        self.input = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", undo=True)
+        self.input = ScrolledText(self, height=4, wrap="word", font="TkFixedFont", undo=True)
         self.input.grid(row=10, column=0, columnspan=3, sticky="nsew", pady=4)
         self.rowconfigure(10, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
@@ -83,7 +83,7 @@ class Panel(ttk.Frame):
         self.length_label.grid(row=11, column=0, columnspan=3, sticky="w")
         self.mac_entry, self.mac_fmt = self.entry_row(12, "Received MAC-I", "received_mac", "mac_format")
         self.execute_button = ttk.Button(self, command=self.calculate)
-        self.execute_button.grid(row=13, column=0, columnspan=3, sticky="ew", pady=10)
+        self.execute_button.grid(row=13, column=0, columnspan=3, sticky="ew", pady=6)
         self.status = ttk.Label(self, text="", wraplength=780)
         self.status.grid(row=14, column=0, columnspan=3, sticky="w")
         self.output_title = ttk.Label(self, text="Result")
@@ -94,10 +94,10 @@ class Panel(ttk.Frame):
         self.output_combo.pack(side="left", padx=4)
         self.copy_button = ttk.Button(output_controls, text="Copy result", command=self.copy_output, state="disabled")
         self.copy_button.pack(side="left")
-        self.output = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", state="disabled")
+        self.output = ScrolledText(self, height=4, wrap="word", font="TkFixedFont", state="disabled")
         self.output.grid(row=16, column=0, columnspan=3, sticky="nsew")
         self.rowconfigure(16, weight=1)
-        self.details = ScrolledText(self, height=4, wrap="word", font="TkDefaultFont", state="disabled")
+        self.details = ScrolledText(self, height=3, wrap="word", font="TkDefaultFont", state="disabled")
         self.details.grid(row=17, column=0, columnspan=3, sticky="ew", pady=(6, 0))
         for name in SHARED_SETTINGS:
             self.variables[name].trace_add("write", lambda *_: self.refresh())
@@ -294,7 +294,8 @@ class Application(tk.Tk):
         notebook.add(self.tx, text="  Transmit  ")
         notebook.add(self.rx, text="  Receive  ")
         self.notebook = notebook
-        ttk.Label(self, text="Legacy 0–3 / 256-bit NEA/NIA 4–6 · MAC-append/encrypt pipeline · NCA and PDU parsing excluded", padding=(12, 8)).pack(anchor="w")
+        self.footer = ttk.Label(self, text="Legacy 0–3 / 256-bit NEA/NIA 4–6 · MAC-append/encrypt pipeline · NCA and PDU parsing excluded", padding=(12, 8))
+        self.footer.pack(anchor="w")
 
 
 def main():

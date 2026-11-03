@@ -40,6 +40,11 @@ def run(output):
     def tests():
         try:
             app.update_idletasks()
+            def layout_check():
+                assert app.footer.winfo_ismapped()
+                assert app.footer.winfo_y() + app.footer.winfo_height() <= app.winfo_height()
+                assert app.tx.details.winfo_rooty() + app.tx.details.winfo_height() <= app.footer.winfo_rooty()
+            check("new-fields-fit-window", layout_check)
             check("count-default-decimal", lambda: equal(app.tx.variables["count_format"].get(), "Decimal"))
             if sys.platform == "win32":
                 check("system-dpi-aware", lambda: equal(environment["dpi_awareness"], 1))
