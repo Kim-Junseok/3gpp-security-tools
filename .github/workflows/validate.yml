@@ -30,6 +30,9 @@ jobs:
         with:
           name: linux-validation
           path: validation/256-bit/ci-linux
+      - name: Record evidence in logs
+        if: always()
+        run: python tools/ci_evidence.py
 
   windows:
     runs-on: windows-2025
@@ -65,3 +68,6 @@ jobs:
           path: |
             validation/256-bit/windows*
             dist/3GPP-Security-Tools.exe
+      - name: Record evidence in logs
+        if: always()
+        run: python tools/ci_evidence.py

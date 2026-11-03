@@ -42,8 +42,12 @@ def run(output):
             app.update_idletasks()
             def layout_check():
                 assert app.footer.winfo_ismapped()
-                assert app.footer.winfo_y() + app.footer.winfo_height() <= app.winfo_height()
-                assert app.tx.details.winfo_rooty() + app.tx.details.winfo_height() <= app.footer.winfo_rooty()
+                assert app.footer.winfo_y() + app.footer.winfo_height() <= app.winfo_height(), app.geometry()
+                app.canvas.yview_moveto(1)
+                app.update_idletasks()
+                bottom = app.tx.details.winfo_rooty() + app.tx.details.winfo_height()
+                assert bottom <= app.footer.winfo_rooty(), (bottom, app.footer.winfo_rooty(), app.geometry())
+                app.canvas.yview_moveto(0)
             check("new-fields-fit-window", layout_check)
             check("count-default-decimal", lambda: equal(app.tx.variables["count_format"].get(), "Decimal"))
             if sys.platform == "win32":
@@ -322,4 +326,7 @@ def run(output):
 
     app.after(400, tests)
     app.mainloop()
+    if sys.stdout:
+        print(json.dumps(dict(category="gui_widgets", passed=sum(c["status"] == "PASS" for c in cases),
+                              total=len(cases), failed=[c for c in cases if c["status"] != "PASS"])))
     return 0 if cases and all(c["status"] == "PASS" for c in cases) else 1

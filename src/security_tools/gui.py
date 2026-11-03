@@ -286,8 +286,24 @@ class Application(tk.Tk):
             style.theme_use("vista")
         style.configure(".", font="TkDefaultFont")
         ttk.Label(self, text="3GPP Security Tools", font=("Segoe UI", 18, "bold"), padding=(16, 12)).pack(anchor="w")
-        notebook = ttk.Notebook(self)
-        notebook.pack(fill="both", expand=True, padx=12)
+        body = ttk.Frame(self)
+        body.pack(fill="both", expand=True, padx=12)
+        self.canvas = tk.Canvas(body, highlightthickness=0)
+        scrollbar = ttk.Scrollbar(body, orient="vertical", command=self.canvas.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+        notebook = ttk.Notebook(self.canvas)
+        window = self.canvas.create_window((0, 0), window=notebook, anchor="nw")
+
+        def fit_body(event=None):
+            # Preserve usable text areas on short screens; the scrollbar reaches
+            # every control when the notebook's requested height cannot fit.
+            self.canvas.itemconfigure(window, width=self.canvas.winfo_width(),
+                                      height=max(self.canvas.winfo_height(), notebook.winfo_reqheight()))
+            self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.canvas.bind("<Configure>", fit_body)
+        notebook.bind("<Configure>", fit_body)
         self.tx = Panel(notebook)
         settings = {name: self.tx.variables[name] for name in SHARED_SETTINGS}
         self.rx = Panel(notebook, receiving=True, settings=settings)
