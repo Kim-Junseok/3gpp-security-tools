@@ -49,6 +49,39 @@ def run(output):
                 assert bottom <= app.footer.winfo_rooty(), (bottom, app.footer.winfo_rooty(), app.geometry())
                 app.canvas.yview_moveto(0)
             check("new-fields-fit-window", layout_check)
+            # Notice text should use the available width, including at high DPI.
+            # A narrow window still needs readable wrapping for full errors.
+            from tkinter import font
+            original_geometry, original_minimum = app.geometry(), app.minsize()
+            def notice_check(panel):
+                app.notebook.select(panel)
+                app.minsize(1, 1)
+                wide = min(1600, app.winfo_screenwidth() - 80)
+                app.geometry(f"{wide}x900")
+                app.update()
+                face = font.nametofont("TkDefaultFont")
+                text = "Input error: " + "Check the key and data format. " * 12
+                available = panel.winfo_width() - 32
+                while face.measure(text) > available:
+                    text = text.rsplit(" ", 1)[0]
+                assert face.measure(text) > 780
+                for label in (panel.status, panel.length_label):
+                    label.configure(text=text)
+                app.update()
+                for label in (panel.status, panel.length_label):
+                    assert label.winfo_height() <= face.metrics("linespace") + 6, label.winfo_height()
+                app.geometry("900x900")
+                app.update()
+                for label in (panel.status, panel.length_label):
+                    assert int(label.cget("wraplength")) == label.winfo_width()
+                    assert label.winfo_height() > face.metrics("linespace") + 6
+                app.geometry(original_geometry)
+                app.minsize(*original_minimum)
+                panel.refresh()
+                panel.update_length()
+                app.update()
+            for panel, prefix in ((app.tx, "tx"), (app.rx, "rx")):
+                check(prefix + "-notice-responsive-wrapping", lambda: notice_check(panel))
             check("count-default-decimal", lambda: equal(app.tx.variables["count_format"].get(), "Decimal"))
             if sys.platform == "win32":
                 check("system-dpi-aware", lambda: equal(environment["dpi_awareness"], 1))

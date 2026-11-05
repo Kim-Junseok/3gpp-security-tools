@@ -79,13 +79,15 @@ class Panel(ttk.Frame):
         self.input.grid(row=10, column=0, columnspan=3, sticky="nsew", pady=4)
         self.rowconfigure(10, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
-        self.length_label = ttk.Label(self, text="Valid length: 0 bit")
-        self.length_label.grid(row=11, column=0, columnspan=3, sticky="w")
+        self.length_label = ttk.Label(self, text="Valid length: 0 bit", wraplength=780, justify="left")
+        self.length_label.grid(row=11, column=0, columnspan=3, sticky="ew")
+        self.length_label.bind("<Configure>", self.fit_notice_width)
         self.mac_entry, self.mac_fmt = self.entry_row(12, "Received MAC-I", "received_mac", "mac_format")
         self.execute_button = ttk.Button(self, command=self.calculate)
         self.execute_button.grid(row=13, column=0, columnspan=3, sticky="ew", pady=6)
-        self.status = ttk.Label(self, text="", wraplength=780)
-        self.status.grid(row=14, column=0, columnspan=3, sticky="w")
+        self.status = ttk.Label(self, text="", wraplength=780, justify="left")
+        self.status.grid(row=14, column=0, columnspan=3, sticky="ew")
+        self.status.bind("<Configure>", self.fit_notice_width)
         self.output_title = ttk.Label(self, text="Result")
         self.output_title.grid(row=15, column=0, sticky="w", pady=(8, 4))
         output_controls = ttk.Frame(self)
@@ -104,6 +106,13 @@ class Panel(ttk.Frame):
         self.data_combo.bind("<<ComboboxSelected>>", lambda _: self.update_length())
         self.output_combo.bind("<<ComboboxSelected>>", lambda _: self.render())
         self.refresh()
+
+    @staticmethod
+    def fit_notice_width(event):
+        # Tk reports physical pixels, matching the DPI-scaled font and layout.
+        width = max(1, event.width)
+        if int(event.widget.cget("wraplength")) != width:
+            event.widget.configure(wraplength=width)
 
     def entry_row(self, row, label, name, fmt=None):
         ttk.Label(self, text=label).grid(row=row, column=0, sticky="w", padx=(0, 12), pady=3)

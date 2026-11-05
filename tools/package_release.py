@@ -11,11 +11,11 @@ import zipfile
 
 root = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--tag', default='v0.1.0-rc3')
-parser.add_argument('--evidence', default='validation/rc3/windows')
+parser.add_argument('--tag', default='v0.1.0-rc4')
+parser.add_argument('--evidence', default='validation/rc4/windows')
 args = parser.parse_args()
 if not re.fullmatch(r'v\d+\.\d+\.\d+(?:-rc\d+)?', args.tag):
-    parser.error('Use a version tag such as v0.1.0-rc3.')
+    parser.error('Use a version tag such as v0.1.0-rc4.')
 for options in (['diff', '--quiet'], ['diff', '--cached', '--quiet']):
     subprocess.run(['git', *options], cwd=root, check=True)
 
@@ -26,9 +26,9 @@ exe = root / 'dist/3GPP-Security-Tools.exe'
 sha256 = hashlib.sha256(exe.read_bytes()).hexdigest()
 official, gui, deployment = [report(name) for name in ('official-report.json', 'gui-report.json', 'deployment-report.json')]
 if not (official['all_passed'] and official['required'] == official['passed'] == 135
-        and gui['total'] == gui['passed'] == 197 and deployment['exe_sha256'] == sha256
+        and gui['total'] == gui['passed'] == 199 and deployment['exe_sha256'] == sha256
         and official['environment']['frozen'] and gui['environment']['frozen']):
-    raise SystemExit('The EXE must match passing 135-case official and 197-case GUI evidence.')
+    raise SystemExit('The EXE must match passing 135-case official and 199-case GUI evidence.')
 tracked = subprocess.check_output(['git', 'ls-files', 'validation'], cwd=root, text=True).splitlines()
 if (Path(args.evidence) / 'official-report.json').as_posix() not in tracked:
     raise SystemExit('Commit the release evidence before packaging the source snapshot.')
@@ -62,7 +62,7 @@ shutil.copytree(root / 'packaging/licenses', stage / 'licenses')
     'Hex output uses uppercase letters and spaces between bytes. Use the right scrollbar on short screens.\n\n'
     f"Verified EXE: {official['passed']}/{official['required']} official vectors and {gui['passed']}/{gui['total']} GUI checks.\n"
     'The 135 vectors comprise 36 legacy, 72 NEA/NIA, and 27 primitive cases.\n'
-    'Tested on Windows Server 2025 x64 CI and Windows 11 x64, including developer-runtime isolation on Windows 11.\n'
+    'This EXE was tested on Windows 11 x64 with the development runtime isolated.\n'
     'Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10, and ARM64 testing remain unverified.\n'
     f'EXE SHA-256: {sha256}\n', encoding='utf-8')
 zip_path = dist / (name + '.zip')
