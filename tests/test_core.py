@@ -170,6 +170,21 @@ class AdapterTests(unittest.TestCase):
         bit_key = fields | {"enc_key": Bits(KEY, 128).format("Bit"), "enc_format": "Bit"}
         self.assertEqual(execute(fields), execute(bit_key))
 
+    def test_integrity_only_single_input_hex_and_bit(self):
+        fields = self.fields() | {"cipher_enabled": False}
+        data = Bits.parse(fields["data"], "Bit")
+        sent = execute(fields)
+        packet = Bits.parse(fields["data"] + sent["mac_i"]["bits"], "Bit")
+        for fmt in ("Bit", "Hex"):
+            if fmt == "Hex":
+                data = Bits.parse("00 01 AB CD")
+                sent = execute(fields | {"data": data.format("Bit")})
+                packet = Bits.parse(data.format("Bit") + sent["mac_i"]["bits"], "Bit")
+            result = execute(fields | {"data": packet.format(fmt), "data_format": fmt}, True)
+            self.assertEqual(result["data"], data.to_dict())
+            self.assertEqual(result["received_mac"], sent["mac_i"])
+            self.assertEqual(result["authentication"], "passed")
+
     def test_invalid_number_and_key(self):
         for patch in [{"count": "xyz"}, {"bearer": "0x11"}, {"enc_key": "00"}]:
             with self.subTest(patch=patch), self.assertRaises(SecurityToolsError):

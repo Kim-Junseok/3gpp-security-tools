@@ -126,13 +126,14 @@ def receive(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", c
     result = {"operation": "receive", "input_bit_length": data.length, "ciphering": ciphering, "integrity": integrity,
               "authentication": "unprotected"}
     payload = data
+    appended_mac = integrity is not None and (ciphering is not None or received_mac is None)
+    if appended_mac and data.length < tag_length:
+        raise SecurityToolsError(f"Receive input requires at least {tag_length} valid bits for the appended MAC-I.")
     if ciphering is not None:
-        if integrity is not None and data.length < tag_length:
-            raise SecurityToolsError(f"Combined receive requires at least {tag_length} valid bits for MAC-I.")
         payload = cipher(ciphering, enc_key, count, bearer, direction, data,
                          extra_iv=_extra_for(ciphering, extra_iv))
     if integrity is not None:
-        if ciphering is not None:
+        if appended_mac:
             payload, received_mac = payload.split(payload.length - tag_length)
         result.update(verify(integrity, int_key, count, bearer, direction, payload, received_mac,
                              extra_iv=_extra_for(integrity, extra_iv), mac_bytes=mac_bytes))

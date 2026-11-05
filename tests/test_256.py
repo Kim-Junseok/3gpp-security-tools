@@ -97,6 +97,41 @@ class NewAlgorithmTests(unittest.TestCase):
         with self.assertRaises(SecurityToolsError):
             mac(2, KEY[:16], data=data, mac_bytes=16, **PARAMS)
 
+    def test_integrity_only_appended_mac_all_lengths(self):
+        for a in range(7):
+            for size in (range(4, 17) if a >= 4 else [4]):
+                for text in ('00010100101', '0000000010100101'):
+                    options = dict(integrity=a, int_key=key(a), mac_bytes=size,
+                                   extra_iv=IV, **PARAMS)
+                    data = Bits.parse(text, 'Bit')
+                    sent = transmit(data, **options)
+                    # Reference framing uses strings rather than production concat/split.
+                    packet = Bits.parse(text + sent['mac_i']['bits'], 'Bit')
+                    with self.subTest(a=a, size=size, length=len(text)):
+                        result = receive(packet, **options)
+                        self.assertEqual(result['data'], data.to_dict())
+                        self.assertEqual(result['input_bit_length'], len(text) + size * 8)
+                        self.assertEqual(result['received_mac'], sent['mac_i'])
+                        self.assertEqual(result['authentication'], 'passed' if a else 'unprotected')
+                        if a:
+                            for position in (0, packet.length - 1):
+                                altered = Bits.from_int(packet.integer ^ (1 << position), packet.length)
+                                self.assertEqual(receive(altered, **options)['authentication'], 'failed')
+
+    def test_integrity_only_short_input_and_mac_only(self):
+        for a in range(7):
+            for size in ([4, 8, 16] if a >= 4 else [4]):
+                options = dict(integrity=a, int_key=key(a), mac_bytes=size, **PARAMS)
+                for length in (0, 1, size * 8 - 1):
+                    with self.subTest(a=a, size=size, length=length), self.assertRaises(SecurityToolsError):
+                        receive(Bits.from_int(0, length), **options)
+                if a in (0, 2, 4, 5, 6):
+                    data = Bits.parse('')
+                    sent = transmit(data, **options)
+                    result = receive(from_result(sent['mac_i']), **options)
+                    self.assertEqual(result['data']['bit_length'], 0)
+                    self.assertEqual(result['authentication'], 'passed' if a else 'unprotected')
+
     def test_adapter_hex_bit_extra_iv_and_variable_mac(self):
         fields = dict(cipher_enabled=True, integrity_enabled=True, ciphering=4, integrity=6,
                       enc_key=KEY.hex(), int_key=KEY.hex(), enc_format='Hex', int_format='Hex',

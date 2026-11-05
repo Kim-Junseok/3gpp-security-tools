@@ -49,6 +49,11 @@ def run(output):
                 assert bottom <= app.footer.winfo_rooty(), (bottom, app.footer.winfo_rooty(), app.geometry())
                 app.canvas.yview_moveto(0)
             check("new-fields-fit-window", layout_check)
+            def single_input_check():
+                for panel in (app.tx, app.rx):
+                    labels = [w.cget("text") for w in panel.winfo_children() if w.winfo_class() == "TLabel"]
+                    assert "Received MAC-I" not in labels
+            check("single-receive-input-no-mac-field", single_input_check)
             # Notice text should use the available width, including at high DPI.
             # A narrow window still needs readable wrapping for full errors.
             from tkinter import font
@@ -100,18 +105,21 @@ def run(output):
                                    enc_key=bytes.fromhex(v["enc_key"].get()), int_key=bytes.fromhex(v["int_key"].get()))
                     tx = transmit(original, **options)
                     payload = from_result(tx["data"]) if receiving else original
+                    if receiving and itg and not cip:
+                        payload = Bits.parse(original.format("Bit") + tx["mac_i"]["bits"], "Bit")
                     panel.input.delete("1.0", "end")
                     panel.input.insert("1.0", payload.format("Hex"))
-                    if receiving and itg and not cip:
-                        v["received_mac"].set(tx["mac_i"]["hex"])
                     panel.execute_button.invoke()
                     def result_check():
                         assert panel.result is not None, panel.status.cget("text")
                         equal(panel.result["data"], original.to_dict() if receiving else tx["data"])
+                        if receiving and itg:
+                            equal(panel.result["authentication"], "passed")
                     check(f"{prefix}-protection-{cip}-{itg}", result_check)
                     if not receiving and itg and not cip:
                         check("independent-mac-primary-output", lambda: equal(panel.primary_output().format("Hex"), tx["mac_i"]["hex"]))
-                    check(f"{prefix}-mac-field-{cip}-{itg}", lambda: equal(str(panel.mac_entry.cget("state")), "normal" if receiving and itg and not cip else "disabled"))
+                    panel.update_length()
+                    check(f"{prefix}-full-input-length-{cip}-{itg}", lambda: equal(panel.length_label.cget("text"), f"Valid length: {payload.length} bit"))
                 v["cipher_enabled"].set(False)
                 v["integrity_enabled"].set(False)
                 panel.refresh()
@@ -224,9 +232,8 @@ def run(output):
                     v["direction"].set("1 — DL")
                     v["data_format"].set("Hex")
                     v["output_format"].set("Hex")
-                    v["received_mac"].set(format_data(ref))
                     panel.input.delete("1.0", "end")
-                    panel.input.insert("1.0", inp["buffer_hex"])
+                    panel.input.insert("1.0", inp["buffer_hex"] + (ref.format("Hex") if panel.receiving else ""))
                     panel.calculate()
                     def count_check():
                         assert panel.result is not None, panel.status.cget("text")
@@ -287,7 +294,7 @@ def run(output):
                     v["integrity_enabled"].set(not enc)
                     for name in ("enc_key", "int_key"):
                         v[name].set(inp["key"])
-                    for name in ("enc_format", "int_format", "extra_format", "mac_format"):
+                    for name in ("enc_format", "int_format", "extra_format"):
                         v[name].set("Hex")
                     v["count_format"].set("Decimal")
                     v["count"].set(str(inp["count"]))
@@ -297,9 +304,10 @@ def run(output):
                     if not enc:
                         v["mac_bytes"].set(str(inp["mac_bytes"]))
                     v["data_format"].set("Bit")
-                    v["received_mac"].set(format_data(reference) if not enc else "")
                     panel.input.delete("1.0", "end")
                     payload = reference if enc and panel.receiving else original
+                    if panel.receiving and not enc:
+                        payload = Bits.parse(original.format("Bit") + reference.format("Bit"), "Bit")
                     panel.input.insert("1.0", payload.format("Bit"))
                     panel.execute_button.invoke()
 
@@ -348,6 +356,17 @@ def run(output):
             panel.variables["enc_key"].set("00" * 16)
             panel.calculate()
             check("short-256-key-input-error", lambda: equal(panel.result, None))
+            panel = app.rx
+            panel.variables["cipher_enabled"].set(False)
+            panel.variables["integrity_enabled"].set(True)
+            panel.variables["integrity"].set(ALGORITHMS[5])
+            panel.variables["int_key"].set("00" * 32)
+            panel.variables["mac_bytes"].set("8")
+            panel.variables["data_format"].set("Bit")
+            panel.input.delete("1.0", "end")
+            panel.input.insert("1.0", "1")
+            panel.execute_button.invoke()
+            check("short-integrity-only-input-error", lambda: equal(panel.result, None))
         except Exception:
             cases.append({"id": "smoke-driver", "status": "FAIL", "error": traceback.format_exc()})
         finally:

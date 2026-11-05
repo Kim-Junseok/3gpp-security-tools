@@ -68,7 +68,5 @@ def execute(fields, receiving=False):
         args["mac_bytes"] = number("mac_bytes", 10) if "mac_bytes" in fields else 4
     data = Bits.parse(fields["data"], fields["data_format"])
     if receiving:
-        if itg is not None and cip is None:
-            args["received_mac"] = Bits.parse(fields["received_mac"], fields["mac_format"])
         return receive(data, **args)
     return transmit(data, **args)

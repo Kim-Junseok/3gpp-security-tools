@@ -45,7 +45,7 @@ class Panel(ttk.Frame):
         defaults = dict(ciphering=ALGORITHMS[2], integrity=ALGORITHMS[2], enc_key="", int_key="",
                         enc_format="Hex", int_format="Hex", count="0", count_format="Decimal", bearer="0", direction="0 — UL",
                         extra_iv="00 00 00 00 00 00", extra_format="Hex", mac_bytes="4",
-                        data_format="Hex", received_mac="", mac_format="Hex", output_format="Hex")
+                        data_format="Hex", output_format="Hex")
         for name, default in defaults.items():
             if name not in self.variables:
                 self.variables[name] = tk.StringVar(value=default)
@@ -82,7 +82,6 @@ class Panel(ttk.Frame):
         self.length_label = ttk.Label(self, text="Valid length: 0 bit", wraplength=780, justify="left")
         self.length_label.grid(row=11, column=0, columnspan=3, sticky="ew")
         self.length_label.bind("<Configure>", self.fit_notice_width)
-        self.mac_entry, self.mac_fmt = self.entry_row(12, "Received MAC-I", "received_mac", "mac_format")
         self.execute_button = ttk.Button(self, command=self.calculate)
         self.execute_button.grid(row=13, column=0, columnspan=3, sticky="ew", pady=6)
         self.status = ttk.Label(self, text="", wraplength=780, justify="left")
@@ -134,8 +133,8 @@ class Panel(ttk.Frame):
         c, i = self.selection()
         for combo, enabled in [(self.cip_combo, c is not None), (self.itg_combo, i is not None)]:
             combo.configure(state="readonly" if enabled else "disabled")
-        for entry, combo, needed in [(self.enc_entry, self.enc_fmt, c not in (None, 0)), (self.int_entry, self.int_fmt, i not in (None, 0)),
-                                     (self.mac_entry, self.mac_fmt, self.receiving and c is None and i is not None)]:
+        for entry, combo, needed in [(self.enc_entry, self.enc_fmt, c not in (None, 0)),
+                                     (self.int_entry, self.int_fmt, i not in (None, 0))]:
             entry.configure(state="normal" if needed else "disabled")
             combo.configure(state="readonly" if needed else "disabled")
         needs_params = c not in (None, 0) or i not in (None, 0)
@@ -154,7 +153,7 @@ class Panel(ttk.Frame):
         elif c is not None:
             action = "Decrypt" if self.receiving else "Encrypt"
         elif i is not None:
-            action = "Verify MAC-I" if self.receiving else "Generate MAC-I"
+            action = "Extract MAC-I → Verify" if self.receiving else "Generate MAC-I"
         else:
             action = "Select Ciphering or Integrity"
         self.execute_button.configure(text=action, state="disabled" if c is None and i is None else "normal")
@@ -167,7 +166,9 @@ class Panel(ttk.Frame):
         elif c == 0:
             self.status.configure(text="Null Ciphering — No encryption protection.")
         else:
-            self.status.configure(text="Transmit and Receive share keys, algorithms, COUNT, BEARER, and DIRECTION.")
+            self.status.configure(text="Input data: ciphertext of Data + MAC-I." if self.receiving and c is not None and i is not None
+                                  else "Input data: Data + MAC-I (MAC-I at the end)." if self.receiving and i is not None
+                                  else "Transmit and Receive share keys, algorithms, COUNT, BEARER, and DIRECTION.")
 
     def fields(self):
         result = {name: var.get() for name, var in self.variables.items()}
@@ -258,7 +259,7 @@ class Panel(ttk.Frame):
             details.append(f"Original data ({original.length} bit): {format_data(original, 'Bit' if original.length % 8 else 'Hex')}")
         if "cipher_bit_length" in r:
             details.append(f"Cipher input length (including appended MAC-I): {r['cipher_bit_length']} bit")
-        for key, label in [("mac_i", "Generated MAC-I (intermediate verification value)"), ("received_mac", "Received MAC-I"), ("calculated_mac", "Calculated MAC-I")]:
+        for key, label in [("mac_i", "Generated MAC-I (intermediate verification value)"), ("received_mac", "Extracted MAC-I"), ("calculated_mac", "Calculated MAC-I")]:
             if key in r:
                 details.append(f"{label}: {format_data(from_result(r[key]))} ({r[key]['bit_length']} bit)")
         self.set_text(self.details, "\n".join(details))
