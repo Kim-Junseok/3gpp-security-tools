@@ -1,0 +1,211 @@
+{
+  "date": "2026-11-03",
+  "timezone": "Asia/Seoul",
+  "base_branch": "dev",
+  "base_commit": "9e3574b6ce57a2ccb6be47811e809eaf1f12aebb",
+  "feature_branch": "feature/256-bit-nea-nia",
+  "merge_status": "Not merged; awaiting user review of dev GUI and 256-bit validation.",
+  "specifications": {
+    "TS 35.240": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.240/35240-k00.zip",
+      "archive_sha256": "da83eb639cfd7622f43a1a33fb3bf0ee8b5a464cb3a91462ae0e292d8ec1c3de",
+      "document_sha256": "b291ef04b8ff49434e407adeeb4dfeb348312f367a101a78e972454dea1db554"
+    },
+    "TS 35.241": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.241/35241-k00.zip",
+      "archive_sha256": "417f56b78de6d0f94fa09da52ffadb57dbf12681a533244747c60b2fc0a830d1",
+      "document_sha256": "c374c669afea98893f8b451371c1913322d55b0ff5840daecc77ffb73b1816ad"
+    },
+    "TS 35.242": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.242/35242-k00.zip",
+      "archive_sha256": "a2d20ff40c136658bffef9fdce64174131dd3aa276410c26bf6f2c2d82afbecd",
+      "document_sha256": "bb1fd93f69df51d9641feedb1f61b901bfdddaa6af0a64db0854e173aaddfada"
+    },
+    "TS 35.243": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.243/35243-k00.zip",
+      "archive_sha256": "b9ba7d6f8109cec5f7a0aa413880713910d5ee17bd23ca087db110b633affa65",
+      "document_sha256": "9b77943ca34a80890d18e54e823de6bc4163587412fe222c013cf1cfb4176109"
+    },
+    "TS 35.244": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.244/35244-k00.zip",
+      "archive_sha256": "59ea493319d80f9e9fff6e49354e042ce76aaf2cc87da580d4d72c9103bd6c2c",
+      "document_sha256": "331465e3014340d5dfd39dede10721c6fc0a32b9be4e48a1bf8169073f3ffb55"
+    },
+    "TS 35.245": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.245/35245-k00.zip",
+      "archive_sha256": "42c65b984c4fac16685757bb0f164c01a5bcb185810730dd9b42aadd8dd68ce1",
+      "document_sha256": "0a734b605afe8d52024516814e9a675056bcbfca82a673caf36a018fa3280ec0"
+    },
+    "TS 35.246": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.246/35246-k00.zip",
+      "archive_sha256": "8c1066f336061889b759798c03e48be0f5af82859cc212584da462649134833e",
+      "document_sha256": "dc07113c14fb7d1b9106e62f2109ae4b172ce0228e6cb6672cb09f93f6e18e14"
+    },
+    "TS 35.247": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.247/35247-k00.zip",
+      "archive_sha256": "f7abd83da86947b53ea6c9b89d3905bce736a47dde268ea79d996cc89772fc17",
+      "document_sha256": "64a3581c344dee90bae4d217f795d0dec1d2390be86358bb44345eddd657e92e"
+    },
+    "TS 35.248": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.248/35248-k00.zip",
+      "archive_sha256": "155e3f67aeec70a2d7de9273628386ef483e681c256a818cd16639e55b0d4dd1",
+      "document_sha256": "485d2c0eba4060dccc46952a3fa9ffdd9826ce8ff255005824b6d900dface2d2"
+    }
+  },
+  "inventory": {
+    "legacy_algorithm_cases": 36,
+    "new_nea_nia_cases": 72,
+    "new_implementation_cases": 27,
+    "total": 135,
+    "internal_state_snapshots": 63
+  },
+  "supported": {
+    "new_key_bits": 256,
+    "extra_iv_bits": 48,
+    "mac_bytes": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "ciphering_algorithms": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "integrity_algorithms": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "exclusions": [
+    "NCA/AEAD functions",
+    "NAS/PDCP PDU parsing",
+    "128-bit keys with the new 256-bit functions"
+  ],
+  "interpretation_notes": [
+    "TS 35.240/243/246 clause 7.2.0 says at least one message bit, but all three official design conformance suites explicitly include empty NIA messages in tests 1, 4 and 5. This implementation accepts zero-length messages to reproduce those official cases.",
+    "The application computes Integrity on plaintext, appends MAC-I, and applies independently selected Ciphering. This application pipeline is not standardized NCA.",
+    "POLYVAL implementation cases are listed separately for each of the three source documents, including repeated vectors. Internal snapshots are subchecks within six primitive cases and are not added to the 135-case total.",
+    "All repository Markdown files intentionally remain unchanged and describe the earlier baseline."
+  ],
+  "commands": {
+    "official": "PYTHONPATH=src python -m security_tools.validation --all --output validation/256-bit/linux",
+    "integration": "PYTHONPATH=src python tools/run_tests.py --output validation/256-bit/linux/integration-report.json",
+    "gui": "PYTHONPATH=src python -m security_tools --gui-smoke-report validation/256-bit/linux/gui-report.json",
+    "import_vectors": "python tools/import_256_vectors.py --specs local-specs"
+  },
+  "deployment_limitations": [
+    "Windows hosted CI uses Windows Server 2025 x64, not the prior Windows 11 desktop.",
+    "The EXE is copied alone and run with PATH and Python/Tcl/Tk environment cleared. Other installed runtimes are not removed.",
+    "Windows 11 visual/DPI testing and Windows 10/ARM64 testing have not been performed for this branch."
+  ],
+  "ci": {
+    "run_id": 41648779553,
+    "url": "https://github.com/Kim-Junseok/3gpp-security-tools/actions/runs/41648779553",
+    "tested_commit": "c7748f27ec7e418403a1cfd09e114ae1370ce482",
+    "result": "PASS",
+    "artifacts": {
+      "windows-validation-and-exe": 13236936180,
+      "linux-validation": 13236241410
+    },
+    "previous_successful_run": 41648263057
+  },
+  "build_input_verification": {
+    "files_checked": 34,
+    "exact_matches": [
+      "packaging/licenses/CPython-LICENSE.txt",
+      "packaging/licenses/Tk-license.terms"
+    ],
+    "windows_crlf_matches": [
+      "src/security_tools/__init__.py",
+      "src/security_tools/__main__.py",
+      "src/security_tools/adapter.py",
+      "src/security_tools/algorithms/__init__.py",
+      "src/security_tools/algorithms/aes.py",
+      "src/security_tools/algorithms/nea_nia.py",
+      "src/security_tools/algorithms/snow.py",
+      "src/security_tools/algorithms/snow5g.py",
+      "src/security_tools/algorithms/snow_tables.py",
+      "src/security_tools/algorithms/zuc.py",
+      "src/security_tools/algorithms/zuc256.py",
+      "src/security_tools/algorithms/zuc_tables.py",
+      "src/security_tools/bits.py",
+      "src/security_tools/core.py",
+      "src/security_tools/errors.py",
+      "src/security_tools/gui.py",
+      "src/security_tools/gui_smoke.py",
+      "src/security_tools/validation.py",
+      "src/security_tools/validation256.py",
+      "testdata/256/expected.json",
+      "testdata/256/inputs.json",
+      "testdata/256/manifest.json",
+      "testdata/expected.json",
+      "testdata/inputs.json",
+      "testdata/manifest.json",
+      "packaging/build-windows.ps1",
+      "packaging/launch.py",
+      "packaging/licenses/PyInstaller-COPYING.txt",
+      "packaging/licenses/PyInstaller-hooks-LICENSE.txt",
+      "packaging/requirements-windows.txt",
+      "packaging/verify-windows.ps1",
+      "packaging/windows.manifest"
+    ],
+    "unexplained_mismatches": [],
+    "note": "Windows Git checkout converts text files to CRLF. Reconstructed CRLF bytes match the recorded build hashes exactly; no content differences were found."
+  },
+  "cross_platform_answers_identical": true,
+  "results": {
+    "linux": {
+      "official_passed": 135,
+      "official_required": 135
+    },
+    "ci-linux": {
+      "official_passed": 135,
+      "official_required": 135
+    },
+    "windows-source": {
+      "official_passed": 135,
+      "official_required": 135
+    },
+    "windows": {
+      "official_passed": 135,
+      "official_required": 135
+    }
+  },
+  "gui_results": {
+    "linux": 195,
+    "ci-linux": 195,
+    "windows-source": 197,
+    "windows-exe": 197
+  },
+  "integration_tests": 31,
+  "windows_exe_sha256": "fc45b468faa1489cabc9fc74768d77e3e8ff64d73bb74b04452314cebd2129e7"
+}

@@ -1,4 +1,4 @@
-"""AES-128, CTR and bit-oriented CMAC (TS 33.401 Annex B)."""
+"""AES-128/256, legacy CTR and bit-oriented CMAC (TS 33.401 Annex B)."""
 
 from functools import lru_cache
 from ..bits import Bits
@@ -29,27 +29,32 @@ SBOX = tuple(_sbox(x) for x in range(256))
 @lru_cache(maxsize=32)
 def _round_keys(key):
     schedule = list(key)
+    size = len(key)
+    expanded = 176 if size == 16 else 240
     rc = 1
-    while len(schedule) < 176:
+    while len(schedule) < expanded:
         word = schedule[-4:]
-        if len(schedule) % 16 == 0:
+        if len(schedule) % size == 0:
             word = [SBOX[x] for x in word[1:] + word[:1]]
             word[0] ^= rc
             rc = _mul(rc, 2)
+        elif size == 32 and len(schedule) % size == 16:
+            word = [SBOX[x] for x in word]
         for x in word:
-            schedule.append(schedule[-16] ^ x)
-    return tuple(tuple(schedule[n:n + 16]) for n in range(0, 176, 16))
+            schedule.append(schedule[-size] ^ x)
+    return tuple(tuple(schedule[n:n + 16]) for n in range(0, expanded, 16))
 
 
 def encrypt_block(key, block):
-    if len(key) != 16 or len(block) != 16:
-        raise ValueError("AES-128 requires a 16-byte key and block.")
+    if len(key) not in (16, 32) or len(block) != 16:
+        raise ValueError("AES requires a 16/32-byte key and a 16-byte block.")
     keys = _round_keys(key)
+    rounds = len(keys) - 1
     s = [a ^ b for a, b in zip(block, keys[0])]
-    for round_number in range(1, 11):
+    for round_number in range(1, rounds + 1):
         s = [SBOX[x] for x in s]
         s = [s[4 * ((c + r) % 4) + r] for c in range(4) for r in range(4)]
-        if round_number < 10:
+        if round_number < rounds:
             for c in range(4):
                 j = 4 * c
                 a, b, d, e = s[j:j + 4]

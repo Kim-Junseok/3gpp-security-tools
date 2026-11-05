@@ -1,5 +1,6 @@
 param([string]$Name = "3GPP-Security-Tools", [switch]$DeveloperRuntimeAlreadyIsolated,
-      [string]$ReportDirectory = "validation/gui-update/windows")
+      [string]$ReportDirectory = "validation/256-bit/windows",
+      [int]$ExpectedOfficial = 135, [int]$ExpectedGui = 197)
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path $PSScriptRoot -Parent
 $ReportDir = Join-Path $ProjectRoot $ReportDirectory
@@ -25,11 +26,11 @@ try {
     $Process = Start-Process -FilePath $Exe -ArgumentList $OfficialArgs -WorkingDirectory $LaunchDir -Wait -PassThru
     if ($Process.ExitCode -ne 0) { throw "Packaged official tests failed with exit $($Process.ExitCode)" }
     $Official = Get-Content (Join-Path $OfficialDir "official-report.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($Official.required -ne 36 -or $Official.passed -ne 36) { throw "Expected all 36 official cases." }
+    if ($Official.required -ne $ExpectedOfficial -or $Official.passed -ne $ExpectedOfficial) { throw "Expected all $ExpectedOfficial official cases." }
     $Process = Start-Process -FilePath $Exe -ArgumentList @("--gui-smoke-report", ('"' + $GuiReport + '"')) -WorkingDirectory $LaunchDir -Wait -PassThru
     if ($Process.ExitCode -ne 0) { throw "Packaged GUI tests failed with exit $($Process.ExitCode)" }
     $Gui = Get-Content $GuiReport -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($Gui.total -ne 44 -or $Gui.passed -ne $Gui.total) { throw "Expected all 44 GUI cases." }
+    if ($Gui.total -ne $ExpectedGui -or $Gui.passed -ne $Gui.total) { throw "Expected all $ExpectedGui GUI cases." }
     Copy-Item (Join-Path $OfficialDir "*.json") $ReportDir -Force
     Copy-Item $GuiReport (Join-Path $ReportDir "gui-report.json") -Force
     $Evidence = [ordered]@{
@@ -45,7 +46,7 @@ try {
         official_passed = $Official.passed
         gui_total = $Gui.total
         gui_passed = $Gui.passed
-        scope = "Existing Windows 11 host with isolated development runtime; not a fresh VM or a Windows 10 test."
+        scope = "Windows x64 host; standalone EXE copied alone and run from a different directory with Python/Tcl/Tk environment and PATH cleared. Other installed runtimes have not necessarily been removed."
         test_directory = $TestRoot
     }
     $Evidence | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $ReportDir "deployment-report.json")

@@ -1,0 +1,866 @@
+{
+  "NEA4-001": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA4-002": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8
+  },
+  "NEA4-003": {
+    "algorithm": 4,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144
+  },
+  "NEA4-004": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA4-005": {
+    "algorithm": 4,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA4-006": {
+    "algorithm": 4,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24
+  },
+  "NEA4-007": {
+    "algorithm": 4,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32
+  },
+  "NEA4-008": {
+    "algorithm": 4,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216
+  },
+  "NEA4-009": {
+    "algorithm": 4,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936
+  },
+  "NEA4-010": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8
+  },
+  "NEA4-011": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7
+  },
+  "NEA4-012": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1
+  },
+  "NIA4-001": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 4
+  },
+  "NIA4-002": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8,
+    "mac_bytes": 5
+  },
+  "NIA4-003": {
+    "algorithm": 4,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144,
+    "mac_bytes": 6
+  },
+  "NIA4-004": {
+    "algorithm": 4,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 7
+  },
+  "NIA4-005": {
+    "algorithm": 4,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 8
+  },
+  "NIA4-006": {
+    "algorithm": 4,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24,
+    "mac_bytes": 9
+  },
+  "NIA4-007": {
+    "algorithm": 4,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32,
+    "mac_bytes": 12
+  },
+  "NIA4-008": {
+    "algorithm": 4,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216,
+    "mac_bytes": 15
+  },
+  "NIA4-009": {
+    "algorithm": 4,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936,
+    "mac_bytes": 16
+  },
+  "NIA4-010": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8,
+    "mac_bytes": 16
+  },
+  "NIA4-011": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7,
+    "mac_bytes": 16
+  },
+  "NIA4-012": {
+    "algorithm": 4,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1,
+    "mac_bytes": 16
+  },
+  "NEA5-001": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA5-002": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8
+  },
+  "NEA5-003": {
+    "algorithm": 5,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144
+  },
+  "NEA5-004": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA5-005": {
+    "algorithm": 5,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA5-006": {
+    "algorithm": 5,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24
+  },
+  "NEA5-007": {
+    "algorithm": 5,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32
+  },
+  "NEA5-008": {
+    "algorithm": 5,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216
+  },
+  "NEA5-009": {
+    "algorithm": 5,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936
+  },
+  "NEA5-010": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8
+  },
+  "NEA5-011": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7
+  },
+  "NEA5-012": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1
+  },
+  "NIA5-001": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 4
+  },
+  "NIA5-002": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8,
+    "mac_bytes": 5
+  },
+  "NIA5-003": {
+    "algorithm": 5,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144,
+    "mac_bytes": 6
+  },
+  "NIA5-004": {
+    "algorithm": 5,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 7
+  },
+  "NIA5-005": {
+    "algorithm": 5,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 8
+  },
+  "NIA5-006": {
+    "algorithm": 5,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24,
+    "mac_bytes": 9
+  },
+  "NIA5-007": {
+    "algorithm": 5,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32,
+    "mac_bytes": 12
+  },
+  "NIA5-008": {
+    "algorithm": 5,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216,
+    "mac_bytes": 15
+  },
+  "NIA5-009": {
+    "algorithm": 5,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936,
+    "mac_bytes": 16
+  },
+  "NIA5-010": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8,
+    "mac_bytes": 16
+  },
+  "NIA5-011": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7,
+    "mac_bytes": 16
+  },
+  "NIA5-012": {
+    "algorithm": 5,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1,
+    "mac_bytes": 16
+  },
+  "NEA6-001": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA6-002": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8
+  },
+  "NEA6-003": {
+    "algorithm": 6,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144
+  },
+  "NEA6-004": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA6-005": {
+    "algorithm": 6,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0
+  },
+  "NEA6-006": {
+    "algorithm": 6,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24
+  },
+  "NEA6-007": {
+    "algorithm": 6,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32
+  },
+  "NEA6-008": {
+    "algorithm": 6,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216
+  },
+  "NEA6-009": {
+    "algorithm": 6,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936
+  },
+  "NEA6-010": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8
+  },
+  "NEA6-011": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7
+  },
+  "NEA6-012": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1
+  },
+  "NIA6-001": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 4
+  },
+  "NIA6-002": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "00",
+    "bit_length": 8,
+    "mac_bytes": 5
+  },
+  "NIA6-003": {
+    "algorithm": 6,
+    "key": "0100000000000000000000000000000000000000000000000000000000000000",
+    "count": 2147483649,
+    "bearer": 14,
+    "direction": 0,
+    "extra_iv": "111213141516",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112",
+    "bit_length": 144,
+    "mac_bytes": 6
+  },
+  "NIA6-004": {
+    "algorithm": 6,
+    "key": "0000000000000000000000000000000000000000000000000000000000000001",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "102030405000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 7
+  },
+  "NIA6-005": {
+    "algorithm": 6,
+    "key": "8000000000000000000000000000010100000000000000000000000000000008",
+    "count": 1,
+    "bearer": 0,
+    "direction": 0,
+    "extra_iv": "000000000000",
+    "buffer_hex": "",
+    "bit_length": 0,
+    "mac_bytes": 8
+  },
+  "NIA6-006": {
+    "algorithm": 6,
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00",
+    "bit_length": 24,
+    "mac_bytes": 9
+  },
+  "NIA6-007": {
+    "algorithm": 6,
+    "key": "5555555555555555555555555555555555555555555555555555555555555555",
+    "count": 2852170240,
+    "bearer": 6,
+    "direction": 1,
+    "extra_iv": "000000000000",
+    "buffer_hex": "ffff00ff",
+    "bit_length": 32,
+    "mac_bytes": 12
+  },
+  "NIA6-008": {
+    "algorithm": 6,
+    "key": "1f2f3f4f5f6f7f8f9fafbfcfdfefff0f1f3f5f7f9f2f4f6f8fafffffffffffff",
+    "count": 4294967295,
+    "bearer": 31,
+    "direction": 1,
+    "extra_iv": "ffffffffffff",
+    "buffer_hex": "0102030405060708090a0b0c0d0e0f101112131415aaabacadaeaf",
+    "bit_length": 216,
+    "mac_bytes": 15
+  },
+  "NIA6-009": {
+    "algorithm": 6,
+    "key": "64e7f9a3ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 933965439,
+    "bearer": 20,
+    "direction": 0,
+    "extra_iv": "2923be84e16c",
+    "buffer_hex": "f69e7d49dcad4f14f2444066d06bc430b7323ba122f622919de18b1fdab0ca9902b9729d492c807ebf3811ac9421580c19e6537fd1cac60bbc9bd49a2c3a6f9fd45813fc227eb424cf50f57cb4129a08df6b4043e6694b4e7bc6214d416a960fde30a6ed52ed6af487af454628425fbdb7f954d2da",
+    "bit_length": 936,
+    "mac_bytes": 16
+  },
+  "NIA6-010": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 8,
+    "mac_bytes": 16
+  },
+  "NIA6-011": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 7,
+    "mac_bytes": 16
+  },
+  "NIA6-012": {
+    "algorithm": 6,
+    "key": "dce001a5ef617d7e6cff9f64191c1fa35c953230a62282999ee6773a7c44b5b4",
+    "count": 19088743,
+    "bearer": 26,
+    "direction": 1,
+    "extra_iv": "0123456789ab",
+    "buffer_hex": "ff",
+    "bit_length": 1,
+    "mac_bytes": 16
+  },
+  "POLYVAL241-001": {
+    "a": "01000000000000000000000000000000",
+    "b": "01000000000000000000000000000000"
+  },
+  "POLYVAL241-002": {
+    "a": "00000000000000000000000000000001",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL241-003": {
+    "a": "80000000000000000000000000000000",
+    "b": "80000000000000000000000000000000"
+  },
+  "POLYVAL241-004": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL241-005": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "0123456789abcdef1032547698badcfe"
+  },
+  "POLYVAL241-006": {
+    "a": "ffffffffffffffffffffffffffffffff",
+    "b": "ffffffffffffffffffffffffffffffff"
+  },
+  "SNOW5G-001": {
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "iv": "00000000000000000000000000000000"
+  },
+  "SNOW5G-002": {
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "iv": "ffffffffffffffffffffffffffffffff"
+  },
+  "SNOW5G-003": {
+    "key": "0102030405060708090a0b0c0d0e0f13121110171615141b1a19181f1e1d1cff",
+    "iv": "0123456789abcdef1032547698badcfe"
+  },
+  "POLYVAL244-001": {
+    "a": "01000000000000000000000000000000",
+    "b": "01000000000000000000000000000000"
+  },
+  "POLYVAL244-002": {
+    "a": "00000000000000000000000000000001",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL244-003": {
+    "a": "80000000000000000000000000000000",
+    "b": "80000000000000000000000000000000"
+  },
+  "POLYVAL244-004": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL244-005": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "0123456789abcdef1032547698badcfe"
+  },
+  "POLYVAL244-006": {
+    "a": "ffffffffffffffffffffffffffffffff",
+    "b": "ffffffffffffffffffffffffffffffff"
+  },
+  "AES256-001": {
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "iv": "000000000000000000000000"
+  },
+  "AES256-002": {
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "iv": "ffffffffffffffffffffffff"
+  },
+  "AES256-003": {
+    "key": "0102030405060708090a0b0c0d0e0f13121110171615141b1a19181f1e1d1cff",
+    "iv": "0123456789abcdef10325476"
+  },
+  "POLYVAL247-001": {
+    "a": "01000000000000000000000000000000",
+    "b": "01000000000000000000000000000000"
+  },
+  "POLYVAL247-002": {
+    "a": "00000000000000000000000000000001",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL247-003": {
+    "a": "80000000000000000000000000000000",
+    "b": "80000000000000000000000000000000"
+  },
+  "POLYVAL247-004": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "00000000000000000000000000000001"
+  },
+  "POLYVAL247-005": {
+    "a": "0102030405060708090a0b0c0d0e0f13",
+    "b": "0123456789abcdef1032547698badcfe"
+  },
+  "POLYVAL247-006": {
+    "a": "ffffffffffffffffffffffffffffffff",
+    "b": "ffffffffffffffffffffffffffffffff"
+  },
+  "ZUC256-001": {
+    "key": "0000000000000000000000000000000000000000000000000000000000000000",
+    "iv": "00000000000000000000000000000000"
+  },
+  "ZUC256-002": {
+    "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "iv": "ffffffffffffffffffffffffffffffff"
+  },
+  "ZUC256-003": {
+    "key": "0102030405060708090a0b0c0d0e0f13121110171615141b1a19181f1e1d1cff",
+    "iv": "0123456789abcdef1032547698badcfe"
+  }
+}

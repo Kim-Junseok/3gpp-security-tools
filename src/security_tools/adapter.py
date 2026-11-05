@@ -3,7 +3,7 @@
 import re
 
 from .bits import Bits
-from .core import transmit, receive
+from .core import transmit, receive, key_bits
 from .errors import SecurityToolsError
 
 
@@ -46,8 +46,9 @@ def execute(fields, receiving=False):
         if algorithm in (None, 0):
             return b""
         value = Bits.parse(fields[name], fields[fmt])
-        if value.length != 128:
-            raise SecurityToolsError("Each non-Null key must contain exactly 128 bits.")
+        required = key_bits(algorithm)
+        if value.length != required:
+            raise SecurityToolsError(f"Algorithm {algorithm} requires an exact {required}-bit key.")
         return value.buffer
 
     cip = fields["ciphering"] if fields["cipher_enabled"] else None
@@ -57,6 +58,14 @@ def execute(fields, receiving=False):
                 int_key=key("int_key", "int_format", itg),
                 count=parse_count(fields["count"], fields.get("count_format", "Decimal")) if needs_params else 0,
                 bearer=number("bearer", 10) if needs_params else 0, direction=fields["direction"] if needs_params else 0)
+    newer = any(a in (4, 5, 6) for a in (cip, itg))
+    if newer:
+        extra_iv = Bits.parse(fields.get("extra_iv", "00" * 6), fields.get("extra_format", "Hex"))
+        if extra_iv.length != 48:
+            raise SecurityToolsError("EXTRA_IV must contain exactly 48 bits.")
+        args["extra_iv"] = extra_iv.buffer
+    if itg in (4, 5, 6):
+        args["mac_bytes"] = number("mac_bytes", 10) if "mac_bytes" in fields else 4
     data = Bits.parse(fields["data"], fields["data_format"])
     if receiving:
         if itg is not None and cip is None:

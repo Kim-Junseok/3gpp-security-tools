@@ -47,7 +47,7 @@ def identity():
             "platform": platform.platform(), "utc": datetime.now(timezone.utc).isoformat()}
 
 
-def run(suites=None, output=None, source=None):
+def _legacy_run(suites=None, output=None, source=None):
     source = Path(source) if source else data_dir()
     try:
         manifest, inputs, expected = [json.loads((source / f"{name}.json").read_text(encoding="utf-8"))
@@ -99,6 +99,35 @@ def run(suites=None, output=None, source=None):
         dest.mkdir(parents=True, exist_ok=True)
         (dest / "answers.json").write_text(json.dumps({"environment": report["environment"], "actual": report["actual"]}, indent=2) + "\n", encoding="utf-8")
         (dest / "official-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def run(suites=None, output=None, source=None):
+    from .validation256 import REQUIRED, run as run256
+    legacy = {"Cip1", "Itg1", "Cip2", "Itg2", "Cip3", "Itg3"}
+    if suites is not None and (not suites or len(set(suites)) != len(suites) or any(s not in legacy | REQUIRED.keys() for s in suites)):
+        raise VectorError("Unknown or duplicate suite selection.")
+    reports = []
+    if suites is None or any(s in legacy for s in suites):
+        reports.append(_legacy_run([s for s in suites if s in legacy] if suites else None, source=source))
+    if suites is None or any(s in REQUIRED for s in suites):
+        reports.append(run256([s for s in suites if s in REQUIRED] if suites else None,
+                              source=Path(source) / '256' if source else None))
+    report = dict(category='official', environment=identity(), suites={}, cases=[], actual={}, dataset_sha256={})
+    for part in reports:
+        report['suites'].update(part['suites'])
+        report['cases'].extend(part['cases'])
+        report['actual'].update(part['actual'])
+        prefix = '256/' if part['category'] == 'official_256' else ''
+        report['dataset_sha256'].update({prefix + k: v for k, v in part['dataset_sha256'].items()})
+    report['required'] = sum(p['required'] for p in reports)
+    report['passed'] = sum(p['passed'] for p in reports)
+    report['all_passed'] = bool(reports) and all(p['all_passed'] for p in reports)
+    if output:
+        dest = Path(output)
+        dest.mkdir(parents=True, exist_ok=True)
+        (dest / 'answers.json').write_text(json.dumps(dict(environment=report['environment'], actual=report['actual']), indent=2) + '\n')
+        (dest / 'official-report.json').write_text(json.dumps(report, indent=2) + '\n')
     return report
 
 
