@@ -1,5 +1,23 @@
 # 릴리스 기록
 
+## v0.1.0-rc3 — 영문 GUI·256-bit NEA/NIA
+
+- GUI 전체를 영어로 전환하고 작은 화면에서 입력·결과를 스크롤할 수 있게 했다.
+- 256-bit NEA4/NIA4·NEA5/NIA5·NEA6/NIA6을 추가했다.
+- 48-bit EXTRA_IV와 NIA4~6의 4~16-byte MAC-I를 지원한다.
+- 기존 legacy 0~3과 Hex/Bit 입력·공통 탭 설정·결합 송신·수신을 유지한다.
+
+공식 벡터는 legacy 36 + 추가 NEA/NIA 72 + primitive 27 = 135건이다.
+이번 Linux와 Windows 11 EXE에서 각각 135/135 PASS, 통합 테스트 31개 PASS, Windows EXE GUI 197/197 PASS를 확인했다.
+Windows CI에서 검증한 EXE를 그대로 사용하고 로컬에서 개발 런타임을 격리해 다시 실행했다.
+EXE SHA-256: `fc45b468faa1489cabc9fc74768d77e3e8ff64d73bb74b04452314cebd2129e7`.
+
+Windows ZIP을 풀고 EXE를 실행한다. Python이나 별도 라이브러리를 설치할 필요가 없다.
+GitHub 릴리스 제목·본문과 `RUNNING.txt`는 영어, 저장소와 배포물의 `.md` 문서는 한글로 제공한다.
+rc1·rc2의 태그·첨부 파일은 보존하고 GitHub 제목·본문만 영어로 바꾼다.
+새 Windows PC/VM, 서로 다른 DPI 모니터 이동, Windows 10·ARM64는 검증하지 않았다.
+상세 결과는 [VALIDATION.md](VALIDATION.md)를 따른다.
+
 ## v0.1.0-rc2 — GUI 표시·입력 개선
 
 - Windows 시스템 DPI 인식을 선언하고 한글 UI에 맑은 고딕을 적용했다. 200% 배율에서 실제 창을 확인했다.

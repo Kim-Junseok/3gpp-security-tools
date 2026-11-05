@@ -1,0 +1,2118 @@
+{
+  "category": "integration_and_boundary",
+  "environment": {
+    "version": "0.1.0",
+    "commit": "c4171276c5081e4dcd1b457ca17eb5b7d21e90d9",
+    "dirty": true,
+    "source_sha256": "c9f96e26c2f1ead4d9936cea7fa9480302fc98ea7dbd247d250ab353ba606716",
+    "build": {
+      "commit": "c7748f27ec7e418403a1cfd09e114ae1370ce482",
+      "dirty": true,
+      "files": {
+        "src/security_tools/__init__.py": "350650909902ade637c05dc68fc8279bb1c3b3b493c102f3d39563252974127f",
+        "src/security_tools/__main__.py": "8498792abfb15edd96990ec52142e5d3b997911e381d6ba8c3703b4c402ff069",
+        "src/security_tools/adapter.py": "03d9a508d458ad785f54a2ef02d401acabfc688668fd4873eeebb6d52628dc2e",
+        "src/security_tools/algorithms/__init__.py": "f5189f3351022253fd511219af8fa54b09b215aa330bf34c5406743946b287f5",
+        "src/security_tools/algorithms/aes.py": "63bb1b947b89b0ebec23b96f425a98cea0d3ccdd2dcc6ec1cb03bdc08def74f5",
+        "src/security_tools/algorithms/nea_nia.py": "537d85e7738a2559e01d087d5b6921af45720438ad9d9b40abd42ced53a4fe98",
+        "src/security_tools/algorithms/snow.py": "ec54f5b698cf682e3df9db7c73184ee82781c87a4dfc49b2ff17265ea8791f72",
+        "src/security_tools/algorithms/snow5g.py": "e4ff78fd91717177f14639ec80c2efe5b63c95559263e9a99038b8f91733d84e",
+        "src/security_tools/algorithms/snow_tables.py": "010aa0527a4a021b29133e680b768054d43864eb8629c9018817da5b8d97b7a4",
+        "src/security_tools/algorithms/zuc.py": "34f18c49a8866c2a22ff7b71fa87dc8f4ea627e0c60eb37df3d5fb6306711d0b",
+        "src/security_tools/algorithms/zuc256.py": "7b9beff00f06d20e76a4b716265efeb523b065b603791f173b488bcd40265717",
+        "src/security_tools/algorithms/zuc_tables.py": "fa91b87f3a1b138661ce7691dbc6c16673d82544ebf2a4e5f18bf2127e651ea1",
+        "src/security_tools/bits.py": "0b6033a9bc819f6fcc7aaca1106ac7cc54046c1845decbe5228864fc3a2a7ce3",
+        "src/security_tools/core.py": "568b44ffa87217a1019f3cda74963a96f1bba52c8c59d20268b827eafb48b521",
+        "src/security_tools/errors.py": "37de18d7875e9b53b52582376463c134770a31fb5f445dc326409627846737ca",
+        "src/security_tools/gui.py": "5c48aaa66abf735ab58835cbbad1291eab47b7924d821a80509f9d2b82f92513",
+        "src/security_tools/gui_smoke.py": "7b40c7dbb7dc7d74880ba4765ba4f1255257d349b6f0ec57e0a4d56239427e7d",
+        "src/security_tools/validation.py": "ba176a6322f79b196b734d138d8b830abf7c28fd0511e2c198fd52cf44459279",
+        "src/security_tools/validation256.py": "259a261c687382e26d61333f9237c8322b81b2a566020cbde5a7cf2ced2703aa",
+        "testdata/256/expected.json": "756c8724e696b98d319bf62477a26c416f734d62065701ff8600902455f3b55a",
+        "testdata/256/inputs.json": "a470c646e7dae7fd952a44e2daf2d0cd138809734f89337492ec0c7318a2db8e",
+        "testdata/256/manifest.json": "474f804a3a6f2751fc9b9b442477037b5f4dedd44120f8cc9e76b49c688350d4",
+        "testdata/expected.json": "38725eb52d1f328cac416896ec9074d4e37725e43f25f91dfb89eb50668e71bc",
+        "testdata/inputs.json": "8ebc0261c390e90141b16b231414e2e858b912a6b9571b64d5ffa39e1316cf13",
+        "testdata/manifest.json": "af43a394cd2c0d1d91d5a6e226b07b3b1cd6ddbac5149ccf431fac66afa4509a",
+        "packaging/build-windows.ps1": "fb9fe338e1d6a3b80ade60ac618fa1e6b294c3f8939c19c7e2f72a43398b0030",
+        "packaging/launch.py": "e7c90c3891eebe398fc8b4c468ce02091501923b6d46f27e4df8119ce3b76e35",
+        "packaging/licenses/CPython-LICENSE.txt": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",
+        "packaging/licenses/PyInstaller-COPYING.txt": "2f71515511f67e3102ae9ba0d3ec0d3a513295262dec1fa0ab0bb2e23e9f2a77",
+        "packaging/licenses/PyInstaller-hooks-LICENSE.txt": "f7f282da3989d0b3423bca8d90f38e83c91c273d4896a72b01f7a89b2f1ce08d",
+        "packaging/licenses/Tk-license.terms": "0d1e4405f6273f091732764ed89b57066be63ce64869be6c71ea337dc4f2f9b5",
+        "packaging/requirements-windows.txt": "5da1948087068e8efef436487666891ce377ae2fdf7dc1f05e73c8cadf6cfb3b",
+        "packaging/verify-windows.ps1": "0d51fe557f238beba7a7895cce2be4d0f39c1d794e6bd1a3a984e00846d5d960",
+        "packaging/windows.manifest": "82264801f3f3e4f327830e132a9de856585255e98c3fe98fd4389d198b136283"
+      },
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    },
+    "frozen": false,
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/usr/bin/python3",
+    "bundle_root": null,
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "utc": "2026-11-05T13:38:19.318882+00:00"
+  },
+  "tests": 31,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "records": [
+    {
+      "id": "test_256.NewAlgorithmTests.test_adapter_hex_bit_extra_iv_and_variable_mac (change={'enc_key': '00'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_adapter_hex_bit_extra_iv_and_variable_mac (change={'extra_iv': '00'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_adapter_hex_bit_extra_iv_and_variable_mac (change={'mac_bytes': '17'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_adapter_hex_bit_extra_iv_and_variable_mac (change={'mac_bytes': 'bad'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_adapter_hex_bit_extra_iv_and_variable_mac",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=10)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=12)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=13)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=14)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=15)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=4, size=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=10)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=12)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=13)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=14)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=15)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=5, size=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=10)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=12)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=13)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=14)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=15)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation (a=6, size=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_all_mac_lengths_independent_verify_and_domain_separation",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=127)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=128)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=4, length=129)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=127)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=128)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=5, length=129)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=127)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=128)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits (a=6, length=129)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_empty_input_and_masked_tail_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_fixed_official_inventory_and_internal_states",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, key_length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, key_length=31)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, key_length=33)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, key_length=32)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, iv_length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, iv_length=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, iv_length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, iv_length=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, size=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, size=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, size=17)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, size=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=4, size=4.0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, key_length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, key_length=31)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, key_length=33)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, key_length=32)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, iv_length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, iv_length=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, iv_length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, iv_length=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, size=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, size=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, size=17)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, size=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=5, size=4.0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, key_length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, key_length=31)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, key_length=33)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, key_length=32)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, iv_length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, iv_length=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, iv_length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, iv_length=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, size=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, size=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, size=17)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, size=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive (a=6, size=4.0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_invalid_key_extra_iv_mac_size_and_short_receive",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_missing_vectors_and_changed_denominator_cannot_pass (kind='missing_case')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_missing_vectors_and_changed_denominator_cannot_pass (kind='missing_suite')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_missing_vectors_and_changed_denominator_cannot_pass (kind='duplicate_case')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_missing_vectors_and_changed_denominator_cannot_pass (kind='missing_file')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_missing_vectors_and_changed_denominator_cannot_pass",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=0, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=1, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=2, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=3, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=4, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=5, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=0, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=0, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=1, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=1, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=2, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=2, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=3, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=3, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=4, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=4, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=4, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=4, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=5, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=5, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=5, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=5, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=6, length=16, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=6, length=16, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=6, length=11, mac_bytes=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering (c=6, i=6, length=11, mac_bytes=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_256.NewAlgorithmTests.test_mixed_families_reference_roundtrip_and_tampering",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_bit_key",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='4294967296')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='100000000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit', value='100000000000000000000000000000000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='-1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='+1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='1_000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='1 0')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Hex', value='GG')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Bit', value='102')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='bad', value='1')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats (fmt='Decimal', value='9999999999999999999999999999999999999999')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_boundaries_and_invalid_formats",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Decimal', value='305419896')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Hex', value='12 34 56 78')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Hex', value='12345678')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters (fmt='Bit', value='00010010 00110100 01010110 01111000')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_count_formats_preserve_parameters",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_gui_hex_format_preserves_bytes_and_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'count': 'xyz'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'bearer': '0x11'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key (patch={'enc_key': '00'})",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_invalid_number_and_key",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.AdapterTests.test_same_as_direct_core",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=0, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=1, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=2, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=3, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=4, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=5, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=6, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=7, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=8, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=4)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=5)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=6)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits (a=9, b=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_all_short_concatenations_and_splits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits (n=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_buffer_length_and_unused_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_leading_zero_whitespace",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_non_aligned_format",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0x00', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='gg', fmt='Hex')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='1012', fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='0_1', fmt='Bit')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text (text='00', fmt='bad')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.BitTests.test_reject_invalid_text",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=0, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=1, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=2, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=0, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=0, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=1, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=1, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=2, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=2, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=3, length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip (ciphering=3, integrity=3, length=11)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_all_combined_reference_and_roundtrip",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_bad_mac_length",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=0, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=1, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=2, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=1, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=2, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=16, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=16, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=11, area='data')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering (ciphering=3, integrity=3, length=11, area='mac')",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_data_and_mac_tampering",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_disabled_differs_from_null",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity (algorithm=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_independent_cipher_and_integrity",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=15)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=17)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (key_length=16)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=8)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=9)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported (number=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_key_checks_and_unsupported",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_null_definition",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits (algorithm=3)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_official_tail_bits_are_not_message_bits",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=-1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=4294967296)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='count', value=True)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='bearer', value=32)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks (name='direction', value=2)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_range_checks",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=0)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=1)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=7)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive (length=31)",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.CoreTests.test_short_combined_receive",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.InventoryTests.test_changed_denominator_rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.InventoryTests.test_missing_case_does_not_pass",
+      "status": "PASS"
+    },
+    {
+      "id": "test_core.MappingTests.test_cip1_official_key_iv_mapping",
+      "status": "PASS"
+    }
+  ]
+}

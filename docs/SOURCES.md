@@ -1,90 +1,52 @@
-# 표준·공식 테스트 원문 조사
+# 표준·공식 테스트 출처
 
-- 조사일: 2026-11-01 (Asia/Seoul)
-- 문서 profile: TECHNICAL_NOTE
-- 현재 상태: 원문 확보·공식 벡터 전사 완료. legacy 공식 36건 개발 실행 PASS. 상세 결과는 VALIDATION.md 참조.
+## 256-bit NEA/NIA — Release 20
 
-## 버전 탐색
+TS 35.240~35.248 v20.0.0을 고정 기준으로 사용한다.
+클라우드에서 확보한 원문 기록을 바탕으로 2026-11-05에 공식 ZIP과 DOCX 9개를 로컬에 다시 내려받았다.
+추적 중인 manifest의 ZIP·DOCX SHA-256과 실제 문서의 `V20.0.0` 문구를 대조했다.
+최종 URL·로컬 경로·두 파일 해시는 [확보 기록](../validation/rc3/source-acquisition.json)에 보존한다.
 
-ETSI 공개 디렉터리에서 확인한 가장 높은 버전은 다음과 같다.
-이를 이번 구현의 고정 기준으로 제안한다.
-3GPP 포털 전체의 최신성 검증과 동일한 의미는 아니다.
+| 문서 | 실제 버전 | 최종 URL | 로컬 DOCX | DOCX SHA-256 |
+|---|---|---|---|---|
+| TS 35.240 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.240/35240-k00.zip) | `local-specs/35240-k00.docx` | `b291ef04b8ff49434e407adeeb4dfeb348312f367a101a78e972454dea1db554` |
+| TS 35.241 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.241/35241-k00.zip) | `local-specs/35241-k00.docx` | `c374c669afea98893f8b451371c1913322d55b0ff5840daecc77ffb73b1816ad` |
+| TS 35.242 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.242/35242-k00.zip) | `local-specs/35242-k00.docx` | `bb1fd93f69df51d9641feedb1f61b901bfdddaa6af0a64db0854e173aaddfada` |
+| TS 35.243 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.243/35243-k00.zip) | `local-specs/35243-k00.docx` | `9b77943ca34a80890d18e54e823de6bc4163587412fe222c013cf1cfb4176109` |
+| TS 35.244 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.244/35244-k00.zip) | `local-specs/35244-k00.docx` | `331465e3014340d5dfd39dede10721c6fc0a32b9be4e48a1bf8169073f3ffb55` |
+| TS 35.245 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.245/35245-k00.zip) | `local-specs/35245-k00.docx` | `0a734b605afe8d52024516814e9a675056bcbfca82a673caf36a018fa3280ec0` |
+| TS 35.246 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.246/35246-k00.zip) | `local-specs/35246-k00.docx` | `dc07113c14fb7d1b9106e62f2109ae4b172ce0228e6cb6672cb09f93f6e18e14` |
+| TS 35.247 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.247/35247-k00.zip) | `local-specs/35247-k00.docx` | `64a3581c344dee90bae4d217f795d0dec1d2390be86358bb44345eddd657e92e` |
+| TS 35.248 | 20.0.0 | [ZIP](https://www.3gpp.org/ftp/Specs/archive/35_series/35.248/35248-k00.zip) | `local-specs/35248-k00.docx` | `485d2c0eba4060dccc46952a3fa9ffdd9826ce8ff255005824b6d900dface2d2` |
 
-| 문서 | 버전 | 원문 |
-|---|---|---|
-| TS 33.401 | 19.2.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/133400_133499/133401/19.02.00_60/ts_133401v190200p.pdf) |
-| TS 33.501 | 19.7.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/133500_133599/133501/19.07.00_60/ts_133501v190700p.pdf) |
-| TS 35.215 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135215/19.00.00_60/ts_135215v190000p.pdf) |
-| TS 35.216 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135216/19.00.00_60/ts_135216v190000p.pdf) |
-| TS 35.217 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135217/19.00.00_60/ts_135217v190000p.pdf) |
-| TS 35.221 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135221/19.00.00_60/ts_135221v190000p.pdf) |
-| TS 35.222 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135222/19.00.00_60/ts_135222v190000p.pdf) |
-| TS 35.223 | 19.0.0 | [PDF](https://www.etsi.org/deliver/etsi_ts/135200_135299/135223/19.00.00_60/ts_135223v190000p.pdf) |
+- TS 35.240·35.243·35.246: 알고리즘 명세.
+- TS 35.241·35.244·35.247: primitive 구현 검증 데이터.
+- TS 35.242·35.245·35.248: NEA/NIA 설계 검증 데이터. 각 문서에서 NEA 12건·NIA 12건을 사용한다.
 
-위 PDF는 온라인 열람으로 버전을 확인했다.
-TS 33.401·33.501과 상세 SAGE 명세·테스트 원문을 로컬에 저장했다.
-TS 35.xxx PDF들은 §2의 SAGE 문서를 참조하며 §4가 그 문서에 기술 내용을 위임한다.
-wrapper PDF 확보와 상세 알고리즘·벡터 확보를 구분한다.
+[manifest](https://github.com/Kim-Junseok/3gpp-security-tools/blob/main/testdata/256/manifest.json)에 문서·절·test set과 필수 99건을 고정했다.
+NEA/NIA 72건과 primitive 27건을 구분한다.
+SNOW 5G·ZUC 내부 상태 snapshot 63건은 6개 primitive 케이스 내부의 하위 검사다.
+세 문서에 반복된 POLYVAL 벡터는 출처별로 보존하며 새로운 독립 벡터로 해석하지 않는다.
+NCA test set은 가져오지 않는다.
 
-| TS wrapper | 참조 SAGE 문서 버전 | 상세 원문 확보 상태 |
-|---|---|---|
-| 35.215 | UEA2/UIA2 Document 1 v2.1 | 로컬 확보, 표지 v2.1 확인 |
-| 35.216 | SNOW 3G Document 2 v1.1 (2006-09-06) | 로컬 확보, 표지 v1.1 확인 |
-| 35.217 | UEA2/UIA2 Document 3 v1.1 (2012-10-25) | 로컬 확보; §4 UEA2 5개 목록 대조 |
-| 35.221 | EEA3/EIA3 Document 1 v1.7 | 공식 GSMA 원문은 표지 v1.8; CONTRACT CHANGE 기록 후 사용 |
-| 35.222 | ZUC Document 2 v1.6 | 로컬 확보, 표지 v1.6 확인 |
-| 35.223 | EEA3/EIA3 Document 3 v1.1 (2011-01-04) | 로컬 확보; §4/§5 각 5개 목록 대조 |
+[전사 도구](https://github.com/Kim-Junseok/3gpp-security-tools/blob/main/tools/import_256_vectors.py)는 공식 DOCX XML의 문서 텍스트를 읽는다.
+계산 코어를 호출하거나 구현 출력으로 기대값을 만들지 않는다.
+입력과 기대값은 [inputs.json](https://github.com/Kim-Junseok/3gpp-security-tools/blob/main/testdata/256/inputs.json)·[expected.json](https://github.com/Kim-Junseok/3gpp-security-tools/blob/main/testdata/256/expected.json)으로 분리해 Git으로 추적한다.
 
-SNOW 3G 상세 명세의 발견 링크: [GSMA PDF](https://www.gsma.com/security/wp-content/uploads/2019/05/snow3gspec.pdf).
-자료 목록 페이지는 일부 요청에서 HTTP 403을 반환했다.
-아래 테스트 PDF 직접 다운로드는 성공했다.
+```bash
+python3 tools/import_256_vectors.py --specs local-specs --output /tmp/3gpp-256-transcription
+```
 
-## 로컬 캐시와 무결성
+위 명령의 출력 경로는 원문 재전사 대조용이다. 기존 expected를 덮어쓰지 않고 추적 파일과 비교한다.
+TS 35.240·35.243·35.246 §7.2.0의 최소 1-bit 설명과 달리 공식 NIA test 1·4·5에는 빈 메시지가 포함돼 있다.
+현재 구현은 이 공식 케이스를 재현하도록 0-bit NIA 입력을 허용한다.
+이 해석은 [구현 범위 기록](../validation/256-bit/scope.json)에 남겨져 있다.
 
-아래 PDF와 `pdftotext -layout` 결과는 `/tmp/3gpp-security-preflight/`에 있다.
-이 임시 경로는 영구 보관 위치가 아니다.
-승인 후 `local-specs/`로 옮기고 Git 추적에서 제외한다.
+## Legacy 0~3
 
-| 로컬 파일 | byte 수 | SHA-256 |
-|---|---:|---|
-| `ts_133401v190200p.pdf` | 1359397 | `39f5979a20979c00d6041a27100d1f598c60081d346d0771e0e3db50d5c66006` |
-| `uea2-uia2-test-v11.pdf` | 335256 | `fdf3281aacb8098f7cee4461851910aeff84f8c6cbdaadca95ee9a5d63d1c677` |
-| `eea3-eia3-test-v11.pdf` | 227188 | `65b461c84daac4f9c7e831b739ca33792e25fdcbcf67e2e6befa60e4a58eea82` |
-
-UEA2/UIA2 Document 3 source:
-[GSMA PDF v1.1](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/Doc3-UEA2-UIA2-Spec-Implementors-Test-Data.pdf).
-
-EEA3/EIA3 Document 3 source:
-[GSMA PDF v1.1](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/eea3eia3testdatav11.pdf).
-검색에서 발견한 `/aboutus/wp-content/uploads/2014/12/eea3eia3testdatav11.pdf` 주소는 이 URL로 redirect한다.
-
-## 테스트 집계 범위
-
-TS 33.401 C.1 6개, C.2 8개, C.4 7개의 본문 test set 표제를 확인했다.
-SAGE UEA2/UIA2 Document 3 §4 5개와 EEA3/EIA3 Document 3 §4·§5 각 5개의 본문 표제를 확인했다.
-합계 36개는 요구사항 문서가 지정한 알고리즘 입출력 suite의 필수 수이다.
-SNOW 3G/ZUC primitive 내부 상태 자료는 이 수에 포함하지 않는다.
-UEA2의 EEA1 입력 매핑은 TS 33.401 C.3의 설명에 근거한다.
-매개변수 매핑을 문서화했고 전사한 다섯 벡터가 공식 출력과 일치했다.
-
-고정 원문의 목록에서 Null 전용 공식 suite는 발견하지 못했고, 정의 기반 자체 테스트를 실행했다.
-256-bit TS 35.240~35.248의 버전·명세·NEA/NIA 목록 확보는 후속 작업으로 남긴다.
-AEAD/NCA는 제외한다.
-
-## 원문 이용 안내와 패키징 참고
-
-원문의 이용 조건 안내는 [ETSI](https://www.etsi.org/expertise/algorithms-codes/)와
-[GSMA](https://www.gsma.com/solutions-and-impact/technologies/security/security-algorithms/)에서 확인할 수 있다.
-이 저장소에는 원문 PDF와 참조 C 코드 전체를 포함하지 않는다.
-
-패키징 방식은 [PyInstaller 공식 설명](https://www.pyinstaller.org/en/stable/operating-mode.html)을 확인했다.
-조회된 문서 버전은 6.22.3이다.
-빌드 성공과 깨끗한 Windows 환경에서의 실제 실행은 별도로 검증한다.
-
-## 승인 후 원문 확보 기록
-
-PDF 표지를 직접 읽어 실제 버전을 확인했다. 표지 버전·최종 URL·로컬 경로·SHA-256은 아래 표에 기록했다.
-로컬 경로는 프로젝트 루트 기준이며 원문은 Git에서 제외한다.
+TS 33.401 v19.2.0과 TS 33.501 v19.7.0을 기준으로 삼는다.
+TS 35.215·35.216·35.217 및 TS 35.221·35.222·35.223의 wrapper 버전은 v19.0.0이다.
+상세 SAGE 원문의 실제 표지 버전과 최종 출처는 다음과 같다.
 
 | 표지 버전 | 최종 URL | 로컬 경로 | SHA-256 |
 |---|---|---|---|
@@ -97,11 +59,23 @@ PDF 표지를 직접 읽어 실제 버전을 확인했다. 표지 버전·최종
 | 1.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/Doc3-UEA2-UIA2-Spec-Implementors-Test-Data.pdf) | `local-specs/uea2-uia2-test-v11.pdf` | `fdf3281aacb8098f7cee4461851910aeff84f8c6cbdaadca95ee9a5d63d1c677` |
 | 1.1 | [PDF](https://www.gsma.com/solutions-and-impact/technologies/security/wp-content/uploads/2019/05/eea3eia3testdatav11.pdf) | `local-specs/eea3-eia3-test-v11.pdf` | `65b461c84daac4f9c7e831b739ca33792e25fdcbcf67e2e6befa60e4a58eea82` |
 
-이 표가 앞선 사전 조사 시점의 미확보 상태를 갱신한다.
-EEA3/EIA3 Document 1은 TS wrapper 참조 v1.7과 달리 실제 확보 표지가 v1.8이다.
-변경 이력은 integrity 최대 데이터 길이 증가를 명시한다. 구현 명세는 확보한 v1.8을 사용하고, 공식 테스트 기준은 Document 3 v1.1을 유지했다.
+TS 35.221 wrapper의 참조는 SAGE Document 1 v1.7이지만 실제 확보한 공식 PDF 표지는 v1.8이다.
+변경 이력은 integrity 최대 데이터 길이 증가를 명시한다.
+구현 명세는 확보한 v1.8, 공식 EEA3/EIA3 테스트 기준은 Document 3 v1.1을 사용했다.
 
-### Cip1 입력 매핑과 원문 정규화
+| Suite | 원문 | 필수 수 |
+|---|---|---:|
+| Cip1 | TS 35.217 → SAGE Document 3 v1.1 §4; TS 33.401 C.3 매핑 | 5 |
+| Itg1 | TS 33.401 C.4 | 7 |
+| Cip2 | TS 33.401 C.1 | 6 |
+| Itg2 | TS 33.401 C.2 | 8 |
+| Cip3 | TS 35.223 → SAGE Document 3 v1.1 §4 | 5 |
+| Itg3 | 같은 SAGE 문서 §5 | 5 |
+| 합계 | legacy 알고리즘 입출력 | **36** |
+
+Legacy 목록은 [manifest](https://github.com/Kim-Junseok/3gpp-security-tools/blob/main/testdata/manifest.json), 입력·기대값은 별도 JSON으로 추적한다.
+
+## Cip1 입력 매핑과 원문 정규화
 
 TS 33.401 C.3은 UEA2 테스트를 EEA1에 일대일로 대응시킨다.
 
@@ -124,9 +98,9 @@ Cip1-005의 원문 p14에는 plaintext word 19가 `60876A0`로 인쇄돼 있다.
 32-bit word의 생략된 선행 0을 복구한다. 원문 페이지 이미지도 대조했다.
 이 입력 정규화는 importer와 manifest에 명시했으며 Core의 출력은 사용하지 않았다.
 
-### Null 검증 범위
+## Null과 집계 범위
 
-TS 33.401 v19.2.0 B.0과 TS 33.501 v19.7.0 D.1에서 zero keystream과 32-bit zero MAC 정의를 확인했다.
-고정된 공식 문서들의 알고리즘 test set 목록에는 Null 전용 suite가 없다.
-Null 동작은 정의 기반 자체 테스트로 검증하고 공식 36건과 별도 집계한다.
-이 관찰은 다른 모든 출처에 Null 벡터가 없다는 주장이 아니다.
+TS 33.401 B.0과 TS 33.501 D.1에서 Null의 zero keystream·32-bit zero MAC 정의를 확인했다.
+Null은 정의 기반 자체 테스트로 검사하며 공식 벡터 135건에 더하지 않는다.
+공식 벡터 합계는 legacy 36 + NEA/NIA 72 + primitive 27이다.
+입력 PDU의 보호 영역 구성이나 표준 NCA 기능의 검증으로 확대해 해석하지 않는다.

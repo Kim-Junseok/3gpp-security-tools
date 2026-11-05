@@ -1,0 +1,870 @@
+{
+  "category": "gui_widgets",
+  "environment": {
+    "version": "0.1.0",
+    "commit": "c7748f27ec7e418403a1cfd09e114ae1370ce482",
+    "dirty": true,
+    "source_sha256": "ca018eb7827e5a27348c3382644caa3ce29f3e89ee70a5f70140e058862f9c3a",
+    "build": {
+      "commit": "c7748f27ec7e418403a1cfd09e114ae1370ce482",
+      "dirty": true,
+      "files": {
+        "src/security_tools/__init__.py": "350650909902ade637c05dc68fc8279bb1c3b3b493c102f3d39563252974127f",
+        "src/security_tools/__main__.py": "8498792abfb15edd96990ec52142e5d3b997911e381d6ba8c3703b4c402ff069",
+        "src/security_tools/adapter.py": "03d9a508d458ad785f54a2ef02d401acabfc688668fd4873eeebb6d52628dc2e",
+        "src/security_tools/algorithms/__init__.py": "f5189f3351022253fd511219af8fa54b09b215aa330bf34c5406743946b287f5",
+        "src/security_tools/algorithms/aes.py": "63bb1b947b89b0ebec23b96f425a98cea0d3ccdd2dcc6ec1cb03bdc08def74f5",
+        "src/security_tools/algorithms/nea_nia.py": "537d85e7738a2559e01d087d5b6921af45720438ad9d9b40abd42ced53a4fe98",
+        "src/security_tools/algorithms/snow.py": "ec54f5b698cf682e3df9db7c73184ee82781c87a4dfc49b2ff17265ea8791f72",
+        "src/security_tools/algorithms/snow5g.py": "e4ff78fd91717177f14639ec80c2efe5b63c95559263e9a99038b8f91733d84e",
+        "src/security_tools/algorithms/snow_tables.py": "010aa0527a4a021b29133e680b768054d43864eb8629c9018817da5b8d97b7a4",
+        "src/security_tools/algorithms/zuc.py": "34f18c49a8866c2a22ff7b71fa87dc8f4ea627e0c60eb37df3d5fb6306711d0b",
+        "src/security_tools/algorithms/zuc256.py": "7b9beff00f06d20e76a4b716265efeb523b065b603791f173b488bcd40265717",
+        "src/security_tools/algorithms/zuc_tables.py": "fa91b87f3a1b138661ce7691dbc6c16673d82544ebf2a4e5f18bf2127e651ea1",
+        "src/security_tools/bits.py": "0b6033a9bc819f6fcc7aaca1106ac7cc54046c1845decbe5228864fc3a2a7ce3",
+        "src/security_tools/core.py": "568b44ffa87217a1019f3cda74963a96f1bba52c8c59d20268b827eafb48b521",
+        "src/security_tools/errors.py": "37de18d7875e9b53b52582376463c134770a31fb5f445dc326409627846737ca",
+        "src/security_tools/gui.py": "5c48aaa66abf735ab58835cbbad1291eab47b7924d821a80509f9d2b82f92513",
+        "src/security_tools/gui_smoke.py": "7b40c7dbb7dc7d74880ba4765ba4f1255257d349b6f0ec57e0a4d56239427e7d",
+        "src/security_tools/validation.py": "ba176a6322f79b196b734d138d8b830abf7c28fd0511e2c198fd52cf44459279",
+        "src/security_tools/validation256.py": "259a261c687382e26d61333f9237c8322b81b2a566020cbde5a7cf2ced2703aa",
+        "testdata/256/expected.json": "756c8724e696b98d319bf62477a26c416f734d62065701ff8600902455f3b55a",
+        "testdata/256/inputs.json": "a470c646e7dae7fd952a44e2daf2d0cd138809734f89337492ec0c7318a2db8e",
+        "testdata/256/manifest.json": "474f804a3a6f2751fc9b9b442477037b5f4dedd44120f8cc9e76b49c688350d4",
+        "testdata/expected.json": "38725eb52d1f328cac416896ec9074d4e37725e43f25f91dfb89eb50668e71bc",
+        "testdata/inputs.json": "8ebc0261c390e90141b16b231414e2e858b912a6b9571b64d5ffa39e1316cf13",
+        "testdata/manifest.json": "af43a394cd2c0d1d91d5a6e226b07b3b1cd6ddbac5149ccf431fac66afa4509a",
+        "packaging/build-windows.ps1": "fb9fe338e1d6a3b80ade60ac618fa1e6b294c3f8939c19c7e2f72a43398b0030",
+        "packaging/launch.py": "e7c90c3891eebe398fc8b4c468ce02091501923b6d46f27e4df8119ce3b76e35",
+        "packaging/licenses/CPython-LICENSE.txt": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",
+        "packaging/licenses/PyInstaller-COPYING.txt": "2f71515511f67e3102ae9ba0d3ec0d3a513295262dec1fa0ab0bb2e23e9f2a77",
+        "packaging/licenses/PyInstaller-hooks-LICENSE.txt": "f7f282da3989d0b3423bca8d90f38e83c91c273d4896a72b01f7a89b2f1ce08d",
+        "packaging/licenses/Tk-license.terms": "0d1e4405f6273f091732764ed89b57066be63ce64869be6c71ea337dc4f2f9b5",
+        "packaging/requirements-windows.txt": "5da1948087068e8efef436487666891ce377ae2fdf7dc1f05e73c8cadf6cfb3b",
+        "packaging/verify-windows.ps1": "0d51fe557f238beba7a7895cce2be4d0f39c1d794e6bd1a3a984e00846d5d960",
+        "packaging/windows.manifest": "82264801f3f3e4f327830e132a9de856585255e98c3fe98fd4389d198b136283"
+      },
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    },
+    "frozen": true,
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "executable": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-security-tools-6ff440a19aef42d2b9d2562e2015297b\\portable\\3GPP-Security-Tools.exe",
+    "bundle_root": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\_MEI0000fe402",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "utc": "2026-11-05T13:31:25.681087+00:00",
+    "tcl_library": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\_MEI0000fe402\\_tcl_data",
+    "tk_library": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\_MEI0000fe402\\_tk_data",
+    "tk_scaling": 2.6666666666666665,
+    "screen_size": [
+      2880,
+      1800
+    ],
+    "ui_font": [
+      "-family",
+      "Segoe UI",
+      "-size",
+      10,
+      "-weight",
+      "normal",
+      "-slant",
+      "roman",
+      "-underline",
+      0,
+      "-overstrike",
+      0
+    ],
+    "dpi_awareness": 1
+  },
+  "cases": [
+    {
+      "id": "new-fields-fit-window",
+      "status": "PASS"
+    },
+    {
+      "id": "count-default-decimal",
+      "status": "PASS"
+    },
+    {
+      "id": "system-dpi-aware",
+      "status": "PASS"
+    },
+    {
+      "id": "english-ui-font",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "independent-mac-primary-output",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "hex-to-bit-leading-zero",
+      "status": "PASS"
+    },
+    {
+      "id": "bit-to-hex-uppercase-spaces",
+      "status": "PASS"
+    },
+    {
+      "id": "hex-output-uppercase-spaces",
+      "status": "PASS"
+    },
+    {
+      "id": "clipboard-formatted-hex",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-conversion-rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-output",
+      "status": "PASS"
+    },
+    {
+      "id": "clipboard-exact-bits",
+      "status": "PASS"
+    },
+    {
+      "id": "null-keys-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "null-not-authenticated",
+      "status": "PASS"
+    },
+    {
+      "id": "failed-verification-visible",
+      "status": "PASS"
+    },
+    {
+      "id": "failed-not-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "short-receive-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "short-receive-clears-output",
+      "status": "PASS"
+    },
+    {
+      "id": "tabs-do-not-invert-direction",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-to-rx-shared-settings-local-data",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-to-tx-shared-settings-local-data",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Decimal-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Decimal-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Hex-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Hex-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Bit-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Bit-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-overflow-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-Cip2-001",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-Itg2-001",
+      "status": "PASS"
+    },
+    {
+      "id": "odd-hex-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA4-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA4-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA5-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA5-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NEA6-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-001-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-001-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-002-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-002-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-003-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-003-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-004-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-004-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-005-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-005-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-006-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-006-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-007-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-007-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-008-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-008-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-009-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-009-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-010-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-010-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-011-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-011-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-012-tx",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-NIA6-012-rx",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-tx-combined",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-detail-length",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-rx-combined",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-rx-authenticated",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-tamper-fails",
+      "status": "PASS"
+    },
+    {
+      "id": "variable-mac-tamper-visible",
+      "status": "PASS"
+    },
+    {
+      "id": "short-extra-iv-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "short-256-key-input-error",
+      "status": "PASS"
+    }
+  ],
+  "passed": 197,
+  "total": 197
+}

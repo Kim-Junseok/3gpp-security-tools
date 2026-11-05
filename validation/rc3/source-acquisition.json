@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-05",
+  "documents": {
+    "TS 35.240": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.240/35240-k00.zip",
+      "archive_sha256": "da83eb639cfd7622f43a1a33fb3bf0ee8b5a464cb3a91462ae0e292d8ec1c3de",
+      "document_sha256": "b291ef04b8ff49434e407adeeb4dfeb348312f367a101a78e972454dea1db554",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.240/35240-k00.zip",
+      "archive_path": "local-specs/35240-k00.zip",
+      "document_path": "local-specs/35240-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.241": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.241/35241-k00.zip",
+      "archive_sha256": "417f56b78de6d0f94fa09da52ffadb57dbf12681a533244747c60b2fc0a830d1",
+      "document_sha256": "c374c669afea98893f8b451371c1913322d55b0ff5840daecc77ffb73b1816ad",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.241/35241-k00.zip",
+      "archive_path": "local-specs/35241-k00.zip",
+      "document_path": "local-specs/35241-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.242": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.242/35242-k00.zip",
+      "archive_sha256": "a2d20ff40c136658bffef9fdce64174131dd3aa276410c26bf6f2c2d82afbecd",
+      "document_sha256": "bb1fd93f69df51d9641feedb1f61b901bfdddaa6af0a64db0854e173aaddfada",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.242/35242-k00.zip",
+      "archive_path": "local-specs/35242-k00.zip",
+      "document_path": "local-specs/35242-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.243": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.243/35243-k00.zip",
+      "archive_sha256": "b9ba7d6f8109cec5f7a0aa413880713910d5ee17bd23ca087db110b633affa65",
+      "document_sha256": "9b77943ca34a80890d18e54e823de6bc4163587412fe222c013cf1cfb4176109",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.243/35243-k00.zip",
+      "archive_path": "local-specs/35243-k00.zip",
+      "document_path": "local-specs/35243-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.244": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.244/35244-k00.zip",
+      "archive_sha256": "59ea493319d80f9e9fff6e49354e042ce76aaf2cc87da580d4d72c9103bd6c2c",
+      "document_sha256": "331465e3014340d5dfd39dede10721c6fc0a32b9be4e48a1bf8169073f3ffb55",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.244/35244-k00.zip",
+      "archive_path": "local-specs/35244-k00.zip",
+      "document_path": "local-specs/35244-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.245": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.245/35245-k00.zip",
+      "archive_sha256": "42c65b984c4fac16685757bb0f164c01a5bcb185810730dd9b42aadd8dd68ce1",
+      "document_sha256": "0a734b605afe8d52024516814e9a675056bcbfca82a673caf36a018fa3280ec0",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.245/35245-k00.zip",
+      "archive_path": "local-specs/35245-k00.zip",
+      "document_path": "local-specs/35245-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.246": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.246/35246-k00.zip",
+      "archive_sha256": "8c1066f336061889b759798c03e48be0f5af82859cc212584da462649134833e",
+      "document_sha256": "dc07113c14fb7d1b9106e62f2109ae4b172ce0228e6cb6672cb09f93f6e18e14",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.246/35246-k00.zip",
+      "archive_path": "local-specs/35246-k00.zip",
+      "document_path": "local-specs/35246-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.247": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.247/35247-k00.zip",
+      "archive_sha256": "f7abd83da86947b53ea6c9b89d3905bce736a47dde268ea79d996cc89772fc17",
+      "document_sha256": "64a3581c344dee90bae4d217f795d0dec1d2390be86358bb44345eddd657e92e",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.247/35247-k00.zip",
+      "archive_path": "local-specs/35247-k00.zip",
+      "document_path": "local-specs/35247-k00.docx",
+      "version_text_verified": "V20.0.0"
+    },
+    "TS 35.248": {
+      "version": "20.0.0",
+      "url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.248/35248-k00.zip",
+      "archive_sha256": "155e3f67aeec70a2d7de9273628386ef483e681c256a818cd16639e55b0d4dd1",
+      "document_sha256": "485d2c0eba4060dccc46952a3fa9ffdd9826ce8ff255005824b6d900dface2d2",
+      "final_url": "https://www.3gpp.org/ftp/Specs/archive/35_series/35.248/35248-k00.zip",
+      "archive_path": "local-specs/35248-k00.zip",
+      "document_path": "local-specs/35248-k00.docx",
+      "version_text_verified": "V20.0.0"
+    }
+  },
+  "transcription_comparison": {
+    "manifest": "MATCH",
+    "inputs": "MATCH",
+    "expected": "MATCH",
+    "method": "Re-read official DOCX XML with tools/import_256_vectors.py into a separate output directory; compare JSON values without invoking the calculation core."
+  }
+}

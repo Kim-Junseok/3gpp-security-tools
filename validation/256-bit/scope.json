@@ -4,7 +4,7 @@
   "base_branch": "dev",
   "base_commit": "9e3574b6ce57a2ccb6be47811e809eaf1f12aebb",
   "feature_branch": "feature/256-bit-nea-nia",
-  "merge_status": "Not merged; awaiting user review of dev GUI and 256-bit validation.",
+  "merge_status": "Merged into main by PR #2 (c417127).",
   "specifications": {
     "TS 35.240": {
       "version": "20.0.0",
@@ -114,7 +114,7 @@
     "TS 35.240/243/246 clause 7.2.0 says at least one message bit, but all three official design conformance suites explicitly include empty NIA messages in tests 1, 4 and 5. This implementation accepts zero-length messages to reproduce those official cases.",
     "The application computes Integrity on plaintext, appends MAC-I, and applies independently selected Ciphering. This application pipeline is not standardized NCA.",
     "POLYVAL implementation cases are listed separately for each of the three source documents, including repeated vectors. Internal snapshots are subchecks within six primitive cases and are not added to the 135-case total.",
-    "All repository Markdown files intentionally remain unchanged and describe the earlier baseline."
+    "Repository Markdown described the earlier baseline when this cloud evidence was recorded; the Korean documentation was updated for rc3."
   ],
   "commands": {
     "official": "PYTHONPATH=src python -m security_tools.validation --all --output validation/256-bit/linux",
@@ -125,7 +125,7 @@
   "deployment_limitations": [
     "Windows hosted CI uses Windows Server 2025 x64, not the prior Windows 11 desktop.",
     "The EXE is copied alone and run with PATH and Python/Tcl/Tk environment cleared. Other installed runtimes are not removed.",
-    "Windows 11 visual/DPI testing and Windows 10/ARM64 testing have not been performed for this branch."
+    "Windows 11 visual/DPI testing was not part of this initial cloud run. Later Windows 11 EXE and visual checks are recorded in validation/rc3; Windows 10/ARM64 remain unverified."
   ],
   "ci": {
     "run_id": 41648779553,
