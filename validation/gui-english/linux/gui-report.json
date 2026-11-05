@@ -1,0 +1,209 @@
+{
+  "category": "gui_widgets",
+  "environment": {
+    "version": "0.1.0",
+    "commit": "ce2a9c1445b5cbd886fc1a782ceb3e6ee796ebbb",
+    "dirty": true,
+    "source_sha256": "0de6b587e2b245440629ebc55e5a0d1f1aee79e3d6799869174f569b324f5cf1",
+    "build": null,
+    "frozen": false,
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "bundle_root": null,
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "utc": "2026-11-03T13:34:55.814128+00:00",
+    "tcl_library": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/tcl9.0",
+    "tk_library": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/tk9.0",
+    "tk_scaling": 1.3359631821170281,
+    "screen_size": [
+      1280,
+      800
+    ],
+    "ui_font": [
+      "-family",
+      "nimbus sans l",
+      "-size",
+      10,
+      "-weight",
+      "normal",
+      "-slant",
+      "roman",
+      "-underline",
+      0,
+      "-overstrike",
+      0
+    ]
+  },
+  "cases": [
+    {
+      "id": "count-default-decimal",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "independent-mac-primary-output",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-mac-field-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-True-False",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-False-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-protection-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-mac-field-True-True",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-both-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "hex-to-bit-leading-zero",
+      "status": "PASS"
+    },
+    {
+      "id": "bit-to-hex-uppercase-spaces",
+      "status": "PASS"
+    },
+    {
+      "id": "hex-output-uppercase-spaces",
+      "status": "PASS"
+    },
+    {
+      "id": "clipboard-formatted-hex",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-conversion-rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "unaligned-output",
+      "status": "PASS"
+    },
+    {
+      "id": "clipboard-exact-bits",
+      "status": "PASS"
+    },
+    {
+      "id": "null-keys-disabled",
+      "status": "PASS"
+    },
+    {
+      "id": "null-not-authenticated",
+      "status": "PASS"
+    },
+    {
+      "id": "failed-verification-visible",
+      "status": "PASS"
+    },
+    {
+      "id": "failed-not-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "short-receive-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "short-receive-clears-output",
+      "status": "PASS"
+    },
+    {
+      "id": "tabs-do-not-invert-direction",
+      "status": "PASS"
+    },
+    {
+      "id": "tx-to-rx-shared-settings-local-data",
+      "status": "PASS"
+    },
+    {
+      "id": "rx-to-tx-shared-settings-local-data",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Decimal-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Decimal-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Hex-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Hex-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Bit-tx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-Bit-rx-official",
+      "status": "PASS"
+    },
+    {
+      "id": "count-overflow-input-error",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-Cip2-001",
+      "status": "PASS"
+    },
+    {
+      "id": "gui-official-Itg2-001",
+      "status": "PASS"
+    },
+    {
+      "id": "odd-hex-input-error",
+      "status": "PASS"
+    }
+  ],
+  "passed": 42,
+  "total": 42
+}

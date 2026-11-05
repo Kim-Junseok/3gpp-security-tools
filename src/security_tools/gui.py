@@ -9,7 +9,7 @@ from .adapter import COUNT_FORMATS, execute, format_data
 from .bits import Bits, from_result
 from .errors import SecurityToolsError
 
-ALGORITHMS = ["0 — Null (보호 없음)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)"]
+ALGORITHMS = ["0 — Null (no protection)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)"]
 SHARED_SETTINGS = ("cipher_enabled", "integrity_enabled", "ciphering", "integrity", "enc_key", "int_key",
                    "enc_format", "int_format", "count", "count_format", "bearer", "direction")
 
@@ -46,45 +46,45 @@ class Panel(ttk.Frame):
         for name, default in defaults.items():
             if name not in self.variables:
                 self.variables[name] = tk.StringVar(value=default)
-        self.cip_check = ttk.Checkbutton(self, text="Ciphering 사용", variable=self.variables["cipher_enabled"])
+        self.cip_check = ttk.Checkbutton(self, text="Enable Ciphering", variable=self.variables["cipher_enabled"])
         self.cip_check.grid(row=0, column=0, sticky="w", pady=3)
         self.cip_combo = ttk.Combobox(self, textvariable=self.variables["ciphering"], values=ALGORITHMS, state="readonly", width=30)
         self.cip_combo.grid(row=0, column=1, sticky="ew", pady=3)
-        self.itg_check = ttk.Checkbutton(self, text="Integrity 사용", variable=self.variables["integrity_enabled"])
+        self.itg_check = ttk.Checkbutton(self, text="Enable Integrity", variable=self.variables["integrity_enabled"])
         self.itg_check.grid(row=1, column=0, sticky="w", pady=3)
         self.itg_combo = ttk.Combobox(self, textvariable=self.variables["integrity"], values=ALGORITHMS, state="readonly", width=30)
         self.itg_combo.grid(row=1, column=1, sticky="ew", pady=3)
         self.enc_entry, self.enc_fmt = self.entry_row(2, "K_enc", "enc_key", "enc_format")
         self.int_entry, self.int_fmt = self.entry_row(3, "K_int", "int_key", "int_format")
         self.count_entry, self.count_fmt = self.entry_row(4, "COUNT (32-bit unsigned)", "count", "count_format")
-        self.bearer_entry, _ = self.entry_row(5, "BEARER (10진수, 0–31)", "bearer")
-        ttk.Label(self, text="무선 DIRECTION").grid(row=6, column=0, sticky="w", padx=(0, 12), pady=3)
+        self.bearer_entry, _ = self.entry_row(5, "BEARER (decimal, 0–31)", "bearer")
+        ttk.Label(self, text="Radio DIRECTION").grid(row=6, column=0, sticky="w", padx=(0, 12), pady=3)
         self.direction_combo = ttk.Combobox(self, textvariable=self.variables["direction"], values=["0 — UL", "1 — DL"], state="readonly")
         self.direction_combo.grid(row=6, column=1, sticky="ew", pady=3)
-        ttk.Label(self, text="입력 데이터").grid(row=7, column=0, sticky="w", pady=(10, 3))
+        ttk.Label(self, text="Input data").grid(row=7, column=0, sticky="w", pady=(10, 3))
         formats = ttk.Frame(self)
         formats.grid(row=7, column=1, sticky="e")
         self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
         self.data_combo.pack(side="left", padx=4)
-        ttk.Button(formats, text="Hex ↔ Bit 변환", command=self.convert_input).pack(side="left")
+        ttk.Button(formats, text="Convert Hex ↔ Bit", command=self.convert_input).pack(side="left")
         self.input = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", undo=True)
         self.input.grid(row=8, column=0, columnspan=3, sticky="nsew", pady=4)
         self.rowconfigure(8, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
-        self.length_label = ttk.Label(self, text="유효 길이: 0 bit")
+        self.length_label = ttk.Label(self, text="Valid length: 0 bit")
         self.length_label.grid(row=9, column=0, columnspan=3, sticky="w")
-        self.mac_entry, self.mac_fmt = self.entry_row(10, "수신 MAC-I (32-bit)", "received_mac", "mac_format")
+        self.mac_entry, self.mac_fmt = self.entry_row(10, "Received MAC-I (32-bit)", "received_mac", "mac_format")
         self.execute_button = ttk.Button(self, command=self.calculate)
         self.execute_button.grid(row=11, column=0, columnspan=3, sticky="ew", pady=10)
         self.status = ttk.Label(self, text="", wraplength=780)
         self.status.grid(row=12, column=0, columnspan=3, sticky="w")
-        self.output_title = ttk.Label(self, text="최종 결과")
+        self.output_title = ttk.Label(self, text="Result")
         self.output_title.grid(row=13, column=0, sticky="w", pady=(8, 4))
         output_controls = ttk.Frame(self)
         output_controls.grid(row=13, column=1, sticky="e")
         self.output_combo = ttk.Combobox(output_controls, textvariable=self.variables["output_format"], values=["Hex", "Bit"], state="readonly", width=6)
         self.output_combo.pack(side="left", padx=4)
-        self.copy_button = ttk.Button(output_controls, text="결과 복사", command=self.copy_output, state="disabled")
+        self.copy_button = ttk.Button(output_controls, text="Copy result", command=self.copy_output, state="disabled")
         self.copy_button.pack(side="left")
         self.output = ScrolledText(self, height=5, wrap="word", font="TkFixedFont", state="disabled")
         self.output.grid(row=14, column=0, columnspan=3, sticky="nsew")
@@ -127,24 +127,24 @@ class Panel(ttk.Frame):
         self.count_fmt.configure(state="readonly" if needs_params else "disabled")
         self.direction_combo.configure(state="readonly" if needs_params else "disabled")
         if c is not None and i is not None:
-            action = "복호화 → MAC-I 분리 → 검증" if self.receiving else "MAC-I 생성 → 추가 → 암호화"
+            action = "Decrypt → Extract MAC-I → Verify" if self.receiving else "Generate MAC-I → Append → Encrypt"
         elif c is not None:
-            action = "복호화" if self.receiving else "암호화"
+            action = "Decrypt" if self.receiving else "Encrypt"
         elif i is not None:
-            action = "MAC-I 검증" if self.receiving else "MAC-I 생성"
+            action = "Verify MAC-I" if self.receiving else "Generate MAC-I"
         else:
-            action = "Ciphering 또는 Integrity를 선택하세요"
+            action = "Select Ciphering or Integrity"
         self.execute_button.configure(text=action, state="disabled" if c is None and i is None else "normal")
         self.result = None
         self.copy_button.configure(state="disabled")
         self.set_text(self.output, "")
         self.set_text(self.details, "")
         if i == 0:
-            self.status.configure(text="Null Integrity — 인증 보호 없음. MAC 비교는 인증 성공을 뜻하지 않습니다.")
+            self.status.configure(text="Null Integrity — No authentication protection. A matching MAC does not authenticate the data.")
         elif c == 0:
-            self.status.configure(text="Null Ciphering — 암호화 보호 없음.")
+            self.status.configure(text="Null Ciphering — No encryption protection.")
         else:
-            self.status.configure(text="송신·수신 탭은 키·알고리즘·COUNT·BEARER·DIRECTION 설정을 공유합니다.")
+            self.status.configure(text="Transmit and Receive share keys, algorithms, COUNT, BEARER, and DIRECTION.")
 
     def fields(self):
         result = {name: var.get() for name, var in self.variables.items()}
@@ -162,9 +162,9 @@ class Panel(ttk.Frame):
     def update_length(self):
         try:
             bits = Bits.parse(self.input.get("1.0", "end-1c"), self.variables["data_format"].get())
-            self.length_label.configure(text=f"유효 길이: {bits.length} bit")
+            self.length_label.configure(text=f"Valid length: {bits.length} bit")
         except SecurityToolsError as e:
-            self.length_label.configure(text=f"입력 오류: {e}")
+            self.length_label.configure(text=f"Input error: {e}")
 
     def convert_input(self):
         try:
@@ -177,7 +177,7 @@ class Panel(ttk.Frame):
             self.input.insert("1.0", text)
             self.update_length()
         except SecurityToolsError as e:
-            self.status.configure(text=f"입력 오류: {e}")
+            self.status.configure(text=f"Input error: {e}")
 
     def calculate(self):
         try:
@@ -186,22 +186,22 @@ class Panel(ttk.Frame):
                 self.variables["output_format"].set("Bit")
             self.render()
             state = self.result["authentication"]
-            messages = {"passed": "MAC-I 검증 성공", "failed": "MAC-I 검증 실패 — 아래 결과는 검증 실패 데이터입니다.",
-                        "unprotected": "인증 보호 없음", "generated": "MAC-I 생성 완료"}
-            self.status.configure(text=messages[state] + (" / 암호화 보호 없음" if self.result["ciphering"] == 0 else ""))
+            messages = {"passed": "MAC-I verification passed", "failed": "MAC-I verification failed — The data below failed authentication.",
+                        "unprotected": "No authentication protection", "generated": "MAC-I generated"}
+            self.status.configure(text=messages[state] + (" / No encryption protection" if self.result["ciphering"] == 0 else ""))
             self.copy_button.configure(state="normal")
         except SecurityToolsError as e:
             self.result = None
             self.set_text(self.output, "")
             self.set_text(self.details, "")
             self.copy_button.configure(state="disabled")
-            self.status.configure(text=f"입력 오류 ({e.code}): {e}")
+            self.status.configure(text=f"Input error ({e.code}): {e}")
         except Exception:
             self.result = None
             self.set_text(self.output, "")
             self.set_text(self.details, "")
             self.copy_button.configure(state="disabled")
-            self.status.configure(text="실행 오류: 계산을 완료하지 못했습니다.")
+            self.status.configure(text="Execution error: Could not complete the calculation.")
 
     @staticmethod
     def set_text(widget, text):
@@ -225,17 +225,17 @@ class Panel(ttk.Frame):
         if not self.receiving and r["ciphering"] is None and "mac_i" in r:
             title = "MAC-I"
         elif r["ciphering"] is None:
-            title = "원본 데이터"
+            title = "Original data"
         if r["authentication"] == "failed":
-            title = "검증 실패 데이터"
+            title = "Data failed authentication"
         self.output_title.configure(text=f"{title} — {data.length} bit")
-        details = [f"입력 길이: {r['input_bit_length']} bit / 출력 길이: {data.length} bit"]
+        details = [f"Input length: {r['input_bit_length']} bit / Output length: {data.length} bit"]
         if not self.receiving and r["ciphering"] is None and "mac_i" in r:
             original = from_result(r["data"])
-            details.append(f"원본 데이터 ({original.length} bit): {format_data(original, 'Bit' if original.length % 8 else 'Hex')}")
+            details.append(f"Original data ({original.length} bit): {format_data(original, 'Bit' if original.length % 8 else 'Hex')}")
         if "cipher_bit_length" in r:
-            details.append(f"암호화 입력 길이 (MAC-I 포함 시 +32): {r['cipher_bit_length']} bit")
-        for key, label in [("mac_i", "생성 MAC-I (검증용 중간 결과)"), ("received_mac", "수신 MAC-I"), ("calculated_mac", "재계산 MAC-I")]:
+            details.append(f"Cipher input length (+32 when MAC-I is appended): {r['cipher_bit_length']} bit")
+        for key, label in [("mac_i", "Generated MAC-I (intermediate verification value)"), ("received_mac", "Received MAC-I"), ("calculated_mac", "Calculated MAC-I")]:
             if key in r:
                 details.append(f"{label}: {format_data(from_result(r[key]))} (32 bit)")
         self.set_text(self.details, "\n".join(details))
@@ -257,7 +257,7 @@ class Application(tk.Tk):
         super().__init__()
         self.title("3GPP Security Tools")
         families = set(font.families(self))
-        ui_family = next((name for name in ("Malgun Gothic", "맑은 고딕") if name in families),
+        ui_family = next((name for name in ("Segoe UI", "Arial") if name in families),
                          font.nametofont("TkDefaultFont").actual("family"))
         for name in ("TkDefaultFont", "TkTextFont", "TkMenuFont", "TkHeadingFont", "TkCaptionFont", "TkTooltipFont"):
             font.nametofont(name).configure(family=ui_family, size=10)
@@ -277,10 +277,10 @@ class Application(tk.Tk):
         self.tx = Panel(notebook)
         settings = {name: self.tx.variables[name] for name in SHARED_SETTINGS}
         self.rx = Panel(notebook, receiving=True, settings=settings)
-        notebook.add(self.tx, text="  송신  ")
-        notebook.add(self.rx, text="  수신  ")
+        notebook.add(self.tx, text="  Transmit  ")
+        notebook.add(self.rx, text="  Receive  ")
         self.notebook = notebook
-        ttk.Label(self, text="Legacy 0–3 · 256-bit NEA/NIA는 후속 지원 · 데이터 전체 계산 도구 (NAS/PDCP PDU 자동 해석 없음)", padding=(12, 8)).pack(anchor="w")
+        ttk.Label(self, text="Legacy 0–3 · 256-bit NEA/NIA support planned · Whole-data calculation (no automatic NAS/PDCP PDU parsing)", padding=(12, 8)).pack(anchor="w")
 
 
 def main():

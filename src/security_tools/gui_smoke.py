@@ -43,7 +43,7 @@ def run(output):
             check("count-default-decimal", lambda: equal(app.tx.variables["count_format"].get(), "Decimal"))
             if sys.platform == "win32":
                 check("system-dpi-aware", lambda: equal(environment["dpi_awareness"], 1))
-                check("korean-ui-font", lambda: equal(app.tk.call("font", "actual", "TkDefaultFont", "-family") in ("Malgun Gothic", "맑은 고딕"), True))
+                check("english-ui-font", lambda: equal(app.tk.call("font", "actual", "TkDefaultFont", "-family") in ("Segoe UI", "Arial"), True))
             for receiving, panel in [(False, app.tx), (True, app.rx)]:
                 prefix = "rx" if receiving else "tx"
                 v = panel.variables
@@ -120,7 +120,7 @@ def run(output):
             panel.input.delete("1.0", "end")
             panel.input.insert("1.0", bad)
             panel.calculate()
-            check("failed-verification-visible", lambda: equal(panel.output_title.cget("text").split(" — ")[0], "검증 실패 데이터"))
+            check("failed-verification-visible", lambda: equal(panel.output_title.cget("text").split(" — ")[0], "Data failed authentication"))
             check("failed-not-input-error", lambda: equal(panel.result["authentication"], "failed"))
             panel.input.delete("1.0", "end")
             panel.input.insert("1.0", "101")
