@@ -1,5 +1,39 @@
 # 검증 기록
 
+## v0.1.0-rc5 — 2026-11-06
+
+수신 입력을 한 칸으로 통일하고 `Received MAC-I` 입력 칸을 제거했다.
+Integrity만 사용하는 수신은 `Data || MAC-I`를 받는다.
+Ciphering도 사용하면 먼저 복호화하고, 선택한 길이만큼 끝부분을 MAC-I로 분리해 검증한다.
+분리한 값과 재계산한 값은 결과의 `Extracted MAC-I`·`Calculated MAC-I`에 표시한다.
+기존 Python API의 별도 `received_mac=` 인자를 사용하는 독립 검증도 유지한다.
+
+| 구분 | 결과 | 기록 |
+|---|---:|---|
+| Linux CI 공식 벡터 | 135/135 PASS | [보고서](../validation/rc5/linux/official-report.json) |
+| Linux CI 통합·경계 테스트 | 34개 PASS | [보고서](../validation/rc5/linux/integration-report.json) |
+| Linux CI GUI | 199/199 PASS | [보고서](../validation/rc5/linux/gui-report.json) |
+| Windows CI EXE 공식 벡터 | 135/135 PASS | [보고서](../validation/rc5/windows-ci/official-report.json) |
+| Windows CI EXE GUI | 201/201 PASS | [보고서](../validation/rc5/windows-ci/gui-report.json) |
+| Windows 11 EXE 공식 벡터 | 135/135 PASS | [보고서](../validation/rc5/windows/official-report.json) |
+| Windows 11 EXE GUI | 201/201 PASS | [보고서](../validation/rc5/windows/gui-report.json) |
+
+0~6 Integrity의 MAC 분리, 신규 계열의 4~16-byte MAC, byte 정렬·비정렬 데이터, 데이터/MAC 변조, 짧은 입력, 빈 메시지를 허용하는 알고리즘의 MAC만 있는 입력과 기존 API 호환성을 검사했다.
+GUI에서는 제거된 입력 칸과 전체 수신 길이를 확인하고 공식 NIA 수신 케이스를 `Data || MAC-I`로 실행했다.
+공식 벡터·기대값·primitive 구현은 rc4와 동일하다. 신규 수신 형식 검사는 자체 통합·GUI 결과로 구분한다.
+
+배포 EXE는 [성공한 CI 실행](https://github.com/Kim-Junseok/3gpp-security-tools/actions/runs/42051781955)에서 받았다.
+아티팩트 ZIP·EXE 해시와 [빌드 입력](../validation/rc5/build-info.json) 34개 파일을 현재 소스와 대조했다. [대조 기록](../validation/rc5/source-match.json)
+로컬 Windows 11에서 EXE 한 개를 다른 폴더에 복사하고 개발 Python 경로·환경변수를 격리해 다시 검사했다.
+개발 런타임은 복원했다. [배포 기록](../validation/rc5/windows/deployment-report.json)
+
+[실제 Windows 창](../validation/rc5/gui-preview.png)에서는 5번 Integrity 수신의 단일 입력 192 bit에서 원본 128 bit와 MAC 64 bit를 분리해 검증에 성공했다.
+캡처는 동일 소스의 Windows GUI이며, 배포 EXE widget 검사는 별도다. [캡처 기록](../validation/rc5/visual-capture.json)
+
+- EXE SHA-256: `a8c03d25acc53885e8f77c7f6b320e65fb7b9d62173ae2804da55a44c1cc54ff`
+- 빌드 기준 commit: `bea83a0230570833087c7f0e95d17adbe252d58f`
+- 새 Windows PC/VM, 서로 다른 DPI 모니터 이동, Windows 10·ARM64는 검증하지 않았다.
+
 ## v0.1.0-rc4 — 2026-11-05
 
 변환 안내와 오류 문구의 줄바꿈 폭을 고정 780픽셀에서 실제 표시 영역의 가로 폭으로 바꿨다.

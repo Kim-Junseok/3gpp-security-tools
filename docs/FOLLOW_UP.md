@@ -8,6 +8,7 @@
 
 ## 반영 완료
 
+- 수신 입력을 Data + MAC-I 한 칸으로 통일하고 별도 MAC 입력 칸 제거.
 - GUI 영문 전환과 작은 화면용 스크롤.
 - 256-bit NEA4/NIA4·NEA5/NIA5·NEA6/NIA6.
 - 48-bit EXTRA_IV와 4~16-byte MAC-I 선택.

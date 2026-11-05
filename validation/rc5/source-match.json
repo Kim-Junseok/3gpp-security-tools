@@ -1,0 +1,146 @@
+{
+  "ci_run": 42051781955,
+  "ci_commit": "bea83a0230570833087c7f0e95d17adbe252d58f",
+  "windows_artifact_id": 13426732615,
+  "windows_artifact_sha256": "1eb876ddd37dd3be68d0e745b1656d269c1a031ac119b140ff6a16e2e3ced012",
+  "exe_sha256": "a8c03d25acc53885e8f77c7f6b320e65fb7b9d62173ae2804da55a44c1cc54ff",
+  "files": [
+    {
+      "path": "src/security_tools/__init__.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/__main__.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/adapter.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/__init__.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/aes.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/nea_nia.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/snow.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/snow5g.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/snow_tables.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/zuc.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/zuc256.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/algorithms/zuc_tables.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/bits.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/core.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/errors.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/gui.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/gui_smoke.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/validation.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "src/security_tools/validation256.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/256/expected.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/256/inputs.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/256/manifest.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/expected.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/inputs.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "testdata/manifest.json",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/build-windows.ps1",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/launch.py",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/licenses/CPython-LICENSE.txt",
+      "match": "exact"
+    },
+    {
+      "path": "packaging/licenses/PyInstaller-COPYING.txt",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/licenses/PyInstaller-hooks-LICENSE.txt",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/licenses/Tk-license.terms",
+      "match": "exact"
+    },
+    {
+      "path": "packaging/requirements-windows.txt",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/verify-windows.ps1",
+      "match": "CRLF"
+    },
+    {
+      "path": "packaging/windows.manifest",
+      "match": "CRLF"
+    }
+  ],
+  "content_matches": true
+}

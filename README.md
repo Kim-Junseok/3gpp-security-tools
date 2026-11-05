@@ -6,7 +6,7 @@ GUI와 공식 테스트 실행기는 동일한 Python 계산 코어를 사용한
 
 ## 실행
 
-[최신 배포 후보 v0.1.0-rc4](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc4)에서 Windows ZIP을 받아 압축을 푼다.
+[최신 배포 후보 v0.1.0-rc5](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc5)에서 Windows ZIP을 받아 압축을 푼다.
 `3GPP-Security-Tools.exe`를 실행한다. Python이나 별도 라이브러리를 설치할 필요가 없다.
 단일 EXE에 CPython·Tcl/Tk·계산 코어·공식 검증 데이터를 포함한다.
 배포 ZIP의 `RUNNING.txt`는 영문 실행 안내이며, `README.md`와 `docs/`는 한글 문서다.
@@ -24,7 +24,7 @@ GUI와 공식 테스트 실행기는 동일한 Python 계산 코어를 사용한
 | 기능 선택 | 송신 | 수신 |
 |---|---|---|
 | Ciphering만 | 암호화 | 복호화 |
-| Integrity만 | MAC-I 생성 | 원본 데이터와 별도 수신 MAC-I 검증 |
+| Integrity만 | MAC-I 생성 | Data + MAC-I 입력 → 끝부분 분리 → 검증 |
 | 두 기능 모두 | MAC-I 생성 → 데이터 뒤에 추가 → 전체 암호화 | 전체 복호화 → MAC-I 분리 → 검증 |
 | 두 기능 해제 | 실행 비활성화 | 실행 비활성화 |
 
@@ -46,8 +46,22 @@ GUI와 공식 테스트 실행기는 동일한 Python 계산 코어를 사용한
 - **MAC-I 길이:** Integrity 0~3은 4 byte로 고정한다. Integrity 4~6은 4~16 byte를 선택한다.
 
 송신·수신 탭은 기능 사용 여부·알고리즘·키와 형식·COUNT와 형식·BEARER·DIRECTION·EXTRA_IV·MAC 길이를 공유한다.
-입력 데이터·수신 MAC-I·결과 표시 형식은 탭마다 따로 유지한다.
+입력 데이터와 결과 표시 형식은 탭마다 따로 유지한다.
 작은 창에서는 오른쪽 스크롤바로 나머지 입력과 결과를 확인한다.
+
+수신 입력은 `Input data` 한 칸으로 통일한다. 별도의 `Received MAC-I` 입력 칸은 없다.
+
+| 수신 설정 | 입력 데이터 |
+|---|---|
+| Ciphering만 | 암호문 |
+| Integrity만 | Data + MAC-I |
+| Ciphering + Integrity | Data + MAC-I 전체의 암호문 |
+
+Integrity를 켠 수신에서는 송신과 같은 MAC 길이를 선택한다.
+필요하면 먼저 복호화한 뒤 끝에서 해당 길이만큼 MAC-I를 분리한다.
+`Valid length`는 MAC-I를 포함한 전체 입력 길이이고, 최종 결과는 MAC-I를 제외한 데이터다.
+결과 상세에는 `Extracted MAC-I`와 `Calculated MAC-I`를 표시한다.
+송신의 Integrity만 사용한 주출력은 MAC-I다. 이를 수신에서 검사하려면 원본 데이터 뒤에 붙여 입력한다.
 
 ## 입력·결과 형식
 
@@ -103,7 +117,7 @@ powershell -NoProfile -File packaging/build-windows.ps1 -Python C:\Python312\pyt
 powershell -NoProfile -File packaging/verify-windows.ps1 -ReportDirectory validation/local/windows
 ```
 
-공식 테스트는 135건, Windows GUI 검사는 199건을 기준으로 확인한다.
+공식 테스트는 135건, Windows GUI 검사는 201건을 기준으로 확인한다.
 프로젝트의 개발용 `.build/windows-python/python.exe`가 있으면 `-Python`을 생략할 수 있다.
 Windows Git이 없으면 빌드 전에 WSL에서 `python3 tools/stamp_source.py`를 실행한다.
 EXE에는 빌드 입력 commit과 파일 해시를 포함한다.
@@ -121,7 +135,7 @@ $p.ExitCode
 검증 보고서의 EXE 해시가 실제 파일과 일치해야 하며 문서·검증 기록을 먼저 커밋한다.
 
 ```bash
-python3 tools/package_release.py --tag v0.1.0-rc4 --evidence validation/rc4/windows
+python3 tools/package_release.py --tag v0.1.0-rc5 --evidence validation/rc5/windows
 ```
 
 ## Python API
@@ -140,6 +154,7 @@ assert received["data"]["hex"] == "0001abcd"
 assert received["authentication"] == "passed"
 ```
 
+`receive`는 Integrity를 사용하는 경우, 별도 MAC 인자가 없으면 입력 끝에서 MAC-I를 분리한다. 기존 `received_mac=` 인자를 사용하는 독립 검증 API도 유지한다.
 `transmit`·`receive`·`verify`는 dictionary, `cipher`·`mac`은 `Bits`를 반환한다.
 `Bits.to_dict()`로 직렬화할 수 있다. Core JSON의 Hex는 공백 없는 소문자이며 GUI 표시와 구분한다.
 비정렬 결과의 `hex`는 `null`이고 `bits`와 `bit_length`를 사용한다.
