@@ -1,0 +1,13 @@
+{
+  "category": "windows_launch_environment",
+  "exe_sha256": "36e8eef7b97624c5f0b2f6c92f663fb88b1d50d132445ca24e23254e4e3e536d",
+  "official_and_gui_execution": "NOT RUN: application-control policy blocked launch before execution",
+  "windows_code_integrity_event_ids": [
+    3033,
+    3077
+  ],
+  "reason": "The local build did not meet the signing level required by the active Windows Code Integrity policy.",
+  "development_runtime_restored": true,
+  "source_gui_passed": 199,
+  "source_gui_total": 199
+}

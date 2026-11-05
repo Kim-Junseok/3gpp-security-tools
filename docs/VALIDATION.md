@@ -1,5 +1,36 @@
 # 검증 기록
 
+## v0.1.0-rc4 — 2026-11-05
+
+변환 안내와 오류 문구의 줄바꿈 폭을 고정 780픽셀에서 실제 표시 영역의 가로 폭으로 바꿨다.
+넓은 창은 남은 공간을 사용하고 좁은 창에서는 문구가 필요한 만큼 줄바꿈된다.
+계산 코어와 공식 입력·기대값은 rc3과 동일하다.
+
+| 구분 | 결과 | 기록 |
+|---|---:|---|
+| Linux 공식 벡터 | 135/135 PASS | [보고서](../validation/rc4/linux/official-report.json) |
+| Linux 통합·경계 테스트 | 31개 PASS | [보고서](../validation/rc4/integration-report.json) |
+| Windows CI EXE 공식 벡터 | 135/135 PASS | [보고서](../validation/rc4/windows-ci/official-report.json) |
+| Windows CI EXE GUI | 199/199 PASS | [보고서](../validation/rc4/windows-ci/gui-report.json) |
+| Windows 11 EXE 공식 벡터 | 135/135 PASS | [보고서](../validation/rc4/windows/official-report.json) |
+| Windows 11 EXE GUI | 199/199 PASS | [보고서](../validation/rc4/windows/gui-report.json) |
+
+송신·수신 각각에서 넓은 창의 한 줄 표시와 좁은 창의 줄바꿈을 검사하는 2건을 추가했다.
+200% 배율에서 1,914픽셀의 안내 영역을 사용하고 변환 오류가 한 줄로 표시되는 것을 [창 캡처](../validation/rc4/gui-preview.png)와 [크기 기록](../validation/rc4/visual-capture.json)으로 확인했다.
+캡처는 동일 소스의 Windows GUI이며 배포 EXE widget 검사는 별도로 수행했다.
+
+처음 로컬 빌드한 EXE는 Windows Code Integrity 서명 정책에 의해 실행 전에 차단됐다.
+[차단 기록](../validation/rc4/local-build-blocked.json)과 해당 [빌드 입력](../validation/rc4/local-build-info.json)을 보존했다.
+최종 배포에는 [성공한 Windows CI 실행](https://github.com/Kim-Junseok/3gpp-security-tools/actions/runs/42040363349)의 EXE를 사용한다.
+이 EXE는 로컬 Windows 11에서 개발 Python 경로를 격리하고 PATH·Python/Tcl/Tk 환경변수를 제거한 상태로 다시 통과했다.
+개발 런타임은 검사 후 복원했다. [배포 기록](../validation/rc4/windows/deployment-report.json)
+
+- EXE SHA-256: `e16b10737433c94b289270de3eb0749e54a1532fd515e0491d105ed938ae1035`
+- 빌드 기준 commit: `353f1961afb84a91e11d95a8b1cf6144886d28d7`
+- [빌드 입력](../validation/rc4/build-info.json) 34개 파일을 현재 소스와 대조했다. Windows CRLF를 고려하면 내용이 모두 일치한다. [대조 기록](../validation/rc4/source-match.json)
+
+새 Windows PC/VM, 서로 다른 DPI 모니터 이동, Windows 10·ARM64는 검증하지 않았다.
+
 ## v0.1.0-rc3 — 2026-11-05
 
 기준 소스는 `c417127`이며, 클라우드 작업의 영문 GUI와 256-bit NEA/NIA 구현을 포함한다.

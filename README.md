@@ -6,7 +6,7 @@ GUI와 공식 테스트 실행기는 동일한 Python 계산 코어를 사용한
 
 ## 실행
 
-[최신 배포 후보 v0.1.0-rc3](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc3)에서 Windows ZIP을 받아 압축을 푼다.
+[최신 배포 후보 v0.1.0-rc4](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc4)에서 Windows ZIP을 받아 압축을 푼다.
 `3GPP-Security-Tools.exe`를 실행한다. Python이나 별도 라이브러리를 설치할 필요가 없다.
 단일 EXE에 CPython·Tcl/Tk·계산 코어·공식 검증 데이터를 포함한다.
 배포 ZIP의 `RUNNING.txt`는 영문 실행 안내이며, `README.md`와 `docs/`는 한글 문서다.
@@ -103,7 +103,7 @@ powershell -NoProfile -File packaging/build-windows.ps1 -Python C:\Python312\pyt
 powershell -NoProfile -File packaging/verify-windows.ps1 -ReportDirectory validation/local/windows
 ```
 
-공식 테스트는 135건, Windows GUI 검사는 197건을 기준으로 확인한다.
+공식 테스트는 135건, Windows GUI 검사는 199건을 기준으로 확인한다.
 프로젝트의 개발용 `.build/windows-python/python.exe`가 있으면 `-Python`을 생략할 수 있다.
 Windows Git이 없으면 빌드 전에 WSL에서 `python3 tools/stamp_source.py`를 실행한다.
 EXE에는 빌드 입력 commit과 파일 해시를 포함한다.
@@ -121,7 +121,7 @@ $p.ExitCode
 검증 보고서의 EXE 해시가 실제 파일과 일치해야 하며 문서·검증 기록을 먼저 커밋한다.
 
 ```bash
-python3 tools/package_release.py --tag v0.1.0-rc3 --evidence validation/rc3/windows
+python3 tools/package_release.py --tag v0.1.0-rc4 --evidence validation/rc4/windows
 ```
 
 ## Python API
