@@ -2,7 +2,7 @@ name: Validate security tools
 
 on:
   push:
-    branches: [dev, feature/256-bit-nea-nia, fix/pdcp-integrity-headers]
+    branches: [dev, feature/256-bit-nea-nia, fix/pdcp-integrity-headers, fix/shared-pdcp-header-generation]
   workflow_dispatch:
 
 permissions:
@@ -22,17 +22,17 @@ jobs:
         env:
           PYTHONPATH: src
         run: |
-          python -m security_tools --validate --output validation/pdcp-headers/ci-linux
-          python tools/run_tests.py --output validation/pdcp-headers/ci-linux/integration-report.json
-          xvfb-run -a python -m security_tools --gui-smoke-report validation/pdcp-headers/ci-linux/gui-report.json
+          python -m security_tools --validate --output validation/shared-pdcp/ci-linux
+          python tools/run_tests.py --output validation/shared-pdcp/ci-linux/integration-report.json
+          xvfb-run -a python -m security_tools --gui-smoke-report validation/shared-pdcp/ci-linux/gui-report.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: linux-validation
-          path: validation/pdcp-headers/ci-linux
+          path: validation/shared-pdcp/ci-linux
       - name: Record evidence in logs
         if: always()
-        run: python tools/ci_evidence.py --root validation/pdcp-headers
+        run: python tools/ci_evidence.py --root validation/shared-pdcp
 
   windows:
     runs-on: windows-2025
@@ -46,11 +46,11 @@ jobs:
         env:
           PYTHONPATH: src
         run: |
-          python -m security_tools --validate --output validation/pdcp-headers/windows-source
+          python -m security_tools --validate --output validation/shared-pdcp/windows-source
           if ($LASTEXITCODE) { throw 'Source official validation failed.' }
-          python tools/run_tests.py --output validation/pdcp-headers/windows-source/integration-report.json
+          python tools/run_tests.py --output validation/shared-pdcp/windows-source/integration-report.json
           if ($LASTEXITCODE) { throw 'Integration validation failed.' }
-          python -m security_tools --gui-smoke-report validation/pdcp-headers/windows-source/gui-report.json
+          python -m security_tools --gui-smoke-report validation/shared-pdcp/windows-source/gui-report.json
           if ($LASTEXITCODE) { throw 'Source GUI validation failed.' }
       - name: Install pinned packager and build EXE
         run: |
@@ -60,14 +60,14 @@ jobs:
       - name: Validate standalone EXE
         run: |
           ./packaging/verify-windows.ps1
-          Copy-Item build-info.json validation/pdcp-headers/windows/build-info.json
+          Copy-Item build-info.json validation/shared-pdcp/windows/build-info.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: windows-validation-and-exe
           path: |
-            validation/pdcp-headers/windows*
+            validation/shared-pdcp/windows*
             dist/3GPP-Security-Tools.exe
       - name: Record evidence in logs
         if: always()
-        run: python tools/ci_evidence.py --root validation/pdcp-headers
+        run: python tools/ci_evidence.py --root validation/shared-pdcp

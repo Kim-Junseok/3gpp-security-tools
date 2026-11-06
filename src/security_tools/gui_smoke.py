@@ -373,6 +373,7 @@ def run(output):
             # PDCP protection boundaries are explicit application tests. Their
             # primitive references are covered separately by official vectors.
             from .core import cipher, mac
+            app.tx.variables["pdcp_source"].set("Manual Hex")
             payload = Bits.parse("0001020304050607")
             header = Bits.parse("8123")
             for algorithm in range(1, 7):
@@ -446,9 +447,114 @@ def run(output):
             panel.calculate()
             check("unaligned-input-byte-display", lambda: equal(panel.length_label.cget("text"), "Valid length: 9 bit (1 byte + 1 bit)"))
             check("unaligned-output-byte-display", lambda: equal(panel.output_title.cget("text").endswith("9 bit (1 byte + 1 bit)"), True))
-            # Headers are packet input; changing one tab must not overwrite the other.
             panel.variables["pdcp_header"].set("01 23")
-            check("headers-remain-tab-local", lambda: equal(app.rx.variables["pdcp_header"].get(), "81 23"))
+            check("manual-headers-shared-between-tabs", lambda: equal(app.rx.variables["pdcp_header"].get(), "01 23"))
+
+            # All header settings share the same Tk variables, in both directions.
+            # Fixed expected bytes come from the 36.323/38.323 header diagrams.
+            header_cases = [
+                ("LTE SRB", "5", "05"), ("LTE DRB", "7", "C5"),
+                ("LTE DRB", "12", "83 45"), ("LTE DRB", "15", "A3 45"),
+                ("LTE DRB", "18", "81 23 45"), ("LTE SLRB", "16", "40 12 34 23 45"),
+                ("NR SRB", "12", "03 45"), ("NR DRB", "12", "83 45"),
+                ("NR DRB", "18", "81 23 45")]
+            for origin, target, prefix in ((app.tx, app.rx, "tx-to-rx"), (app.rx, app.tx, "rx-to-tx")):
+                for kind, sn_bits, expected_hex in header_cases:
+                    v = origin.variables
+                    app.notebook.select(origin)
+                    for name, value in (("mode", "PDCP"), ("integrity_enabled", True), ("cipher_enabled", True),
+                                        ("integrity", ALGORITHMS[2]), ("ciphering", ALGORITHMS[2]),
+                                        ("pdcp_source", "Automatic"), ("pdcp_pdu_type", kind),
+                                        ("pdcp_sn_bits", sn_bits), ("pdcp_dc", "1"), ("pdcp_poll", False), ("pdcp_ailc", False),
+                                        ("pdcp_slrb_prefix", "40 12 34"), ("count_format", "Decimal"), ("count", "74565"),
+                                        ("direction", "0 — UL"), ("sdap_present", True), ("sdap_header", "09")):
+                        v[name].set(value)
+                    origin.input.delete("1.0", "end")
+                    origin.input.insert("1.0", "origin-payload")
+                    target.input.delete("1.0", "end")
+                    target.input.insert("1.0", "target-payload")
+                    app.notebook.select(target)
+                    app.update()
+                    def settings_check():
+                        for name in SHARED_SETTINGS:
+                            equal(origin.variables[name].get(), target.variables[name].get())
+                        equal(origin.pdcp_entry.get(), expected_hex)
+                        equal(target.pdcp_entry.get(), expected_hex)
+                        equal(str(target.pdcp_entry.cget("state")), "readonly")
+                        equal(target.input.get("1.0", "end-1c"), "target-payload")
+                        equal(origin.input.get("1.0", "end-1c"), "origin-payload")
+                        equal(target.variables["sdap_header"].get(), "09")
+                    check(f"{prefix}-auto-header-{kind}-{sn_bits}", settings_check)
+
+            # Both input directions must use the same COUNT-derived header for MAC.
+            payload = Bits.parse("000102")
+            key = bytes(range(16))
+            for panel in (app.tx, app.rx):
+                v = panel.variables
+                for name, value in (("pdcp_pdu_type", "LTE DRB"), ("pdcp_sn_bits", "15"),
+                                    ("enc_key", key.hex()), ("int_key", key.hex()), ("enc_format", "Hex"),
+                                    ("int_format", "Hex"), ("bearer", "1"), ("extra_format", "Hex"),
+                                    ("extra_iv", "00" * 6), ("mac_bytes", "4"), ("data_format", "Hex")):
+                    v[name].set(value)
+                expected_tag = mac(2, key, 0x12345, 1, 0, Bits.parse("A34509").concat(payload))
+                encoded = cipher(2, key, 0x12345, 1, 0, payload.concat(expected_tag))
+                panel.input.delete("1.0", "end")
+                panel.input.insert("1.0", (encoded if panel.receiving else payload).format("Hex"))
+                panel.calculate()
+                def auto_pipeline_check():
+                    assert panel.result is not None, panel.status.cget("text")
+                    equal(panel.primary_output(), payload if panel.receiving else encoded)
+                    if panel.receiving:
+                        equal(panel.result["authentication"], "passed")
+                    else:
+                        equal(panel.result["mac_i"], expected_tag.to_dict())
+                check("auto-header-" + ("rx" if panel.receiving else "tx") + "-pipeline", auto_pipeline_check)
+            for fmt, value in (("Decimal", "74565"), ("Hex", "00 01 23 45"), ("Bit", "00000000000000010010001101000101")):
+                app.tx.variables["count_format"].set(fmt)
+                app.tx.variables["count"].set(value)
+                check("shared-auto-count-" + fmt, lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("A3 45", "A3 45")))
+            v = app.rx.variables
+            v["count_format"].set("Decimal")
+            v["count"].set("")
+            check("invalid-count-clears-both-auto-previews", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("", "")))
+            app.rx.calculate()
+            check("invalid-auto-count-cannot-calculate", lambda: equal(app.rx.result, None))
+            v["count"].set("74566")
+            check("count-change-updates-both-headers", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("A3 46", "A3 46")))
+            v["pdcp_source"].set("Manual Hex")
+            v["pdcp_header"].set("12 34")
+            v["pdcp_source"].set("Automatic")
+            v["pdcp_source"].set("Manual Hex")
+            check("manual-value-retained-across-auto", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("12 34", "12 34")))
+            v["sdap_header"].set("AB")
+            v["direction"].set("1 — DL")
+            check("sdap-is-manual-and-shared-across-direction", lambda: equal(app.tx.variables["sdap_header"].get(), "AB"))
+            v["sdap_present"].set(False)
+            v["sdap_present"].set(True)
+            check("sdap-presence-and-value-retained", lambda: equal((app.tx.variables["sdap_present"].get(), app.tx.variables["sdap_header"].get()), (True, "AB")))
+            v["pdcp_source"].set("Automatic")
+            v["pdcp_pdu_type"].set("LTE DRB")
+            v["pdcp_sn_bits"].set("18")
+            v["pdcp_poll"].set(True)
+            check("lte-dl-p-shared-header", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("C1 23 46", "C1 23 46")))
+            v["direction"].set("0 — UL")
+            check("lte-p-not-applied-in-ul", lambda: equal(app.tx.pdcp_entry.get(), "81 23 46"))
+            v["pdcp_sn_bits"].set("12")
+            v["pdcp_ailc"].set(True)
+            check("lte-ul-ailc-shared-header", lambda: equal(app.rx.pdcp_entry.get(), "C3 46"))
+            v["pdcp_dc"].set("0")
+            check("control-pdu-clears-auto-header", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("", "")))
+            app.rx.calculate()
+            check("control-pdu-blocked", lambda: equal(app.rx.result, None))
+            v["pdcp_pdu_type"].set("LTE SRB")
+            check("lte-srb-forces-5-bit-sn", lambda: equal(v["pdcp_sn_bits"].get(), "5"))
+            check("srb-has-no-dc-field", lambda: equal(str(app.rx.pdcp_dc_combo.cget("state")), "disabled"))
+            check("lte-srb-ignores-dc", lambda: equal(app.rx.pdcp_entry.get(), "06"))
+            v["pdcp_pdu_type"].set("LTE SLRB")
+            v["pdcp_slrb_prefix"].set("")
+            check("slrb-prefix-required", lambda: equal(app.tx.pdcp_entry.get(), ""))
+            v["pdcp_slrb_prefix"].set("40 12 34")
+            check("slrb-prefix-and-sn-shared", lambda: equal((app.tx.pdcp_entry.get(), app.rx.pdcp_entry.get()), ("40 12 34 23 46", "40 12 34 23 46")))
         except Exception:
             cases.append({"id": "smoke-driver", "status": "FAIL", "error": traceback.format_exc()})
         finally:

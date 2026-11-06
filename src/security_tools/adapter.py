@@ -5,6 +5,7 @@ import re
 from .bits import Bits
 from .core import transmit, receive, key_bits
 from .errors import SecurityToolsError
+from .pdcp import generate_header
 
 
 COUNT_FORMATS = ("Decimal", "Hex", "Bit")
@@ -45,6 +46,32 @@ def format_data(data, fmt="Hex"):
     return " ".join(value[n:n + 2] for n in range(0, len(value), 2)).upper() if fmt == "Hex" else value
 
 
+def pdcp_header_from_fields(fields):
+    # Existing callers with only a pdcp_header field retain manual behavior.
+    source = fields.get("pdcp_source", "Manual Hex")
+    if source == "Manual Hex":
+        return Bits.parse(fields.get("pdcp_header", ""), "Hex").buffer
+    if source != "Automatic":
+        raise SecurityToolsError("PDCP header source must be Automatic or Manual Hex.")
+    pdu_type = fields.get("pdcp_pdu_type", "NR DRB")
+    try:
+        sn_bits = int(fields.get("pdcp_sn_bits", "12"))
+        dc = int(fields.get("pdcp_dc", "1")) if pdu_type.endswith("DRB") else 1
+    except (ValueError, TypeError) as e:
+        raise SecurityToolsError("PDCP SN length and D/C must be valid integers.") from e
+    count = parse_count(fields["count"], fields.get("count_format", "Decimal"))
+    direction = fields.get("direction", 0)
+    if isinstance(direction, str):
+        try:
+            direction = int(direction.split()[0])
+        except (ValueError, IndexError) as e:
+            raise SecurityToolsError("DIRECTION must be 0 or 1.") from e
+    poll = int(bool(fields.get("pdcp_poll", False))) if pdu_type == "LTE DRB" and sn_bits == 18 and direction == 1 else 0
+    ailc = int(bool(fields.get("pdcp_ailc", False))) if pdu_type == "LTE DRB" and sn_bits == 12 and direction == 0 else 0
+    prefix = Bits.parse(fields.get("pdcp_slrb_prefix", ""), "Hex").buffer if pdu_type == "LTE SLRB" else b""
+    return generate_header(count, sn_bits, pdu_type, dc, direction=direction, poll=poll, ailc=ailc, slrb_prefix=prefix)
+
+
 def execute(fields, receiving=False):
     def number(name, radix):
         try:
@@ -79,7 +106,8 @@ def execute(fields, receiving=False):
     # Older API clients without mode retain Raw behavior; the GUI defaults to PDCP.
     args["mode"] = fields.get("mode", "Raw")
     if args["mode"] == "PDCP" and itg is not None:
-        args["pdcp_header"] = Bits.parse(fields.get("pdcp_header", ""), "Hex").buffer
+        # Recompute from the actual COUNT/settings, never trust a stale GUI preview.
+        args["pdcp_header"] = pdcp_header_from_fields(fields)
         if fields.get("sdap_present", False):
             sdap = Bits.parse(fields.get("sdap_header", ""), "Hex")
             if sdap.length != 8:

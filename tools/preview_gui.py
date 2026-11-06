@@ -16,7 +16,7 @@ p.variables["count"].set("965368244")
 p.variables["bearer"].set("26")
 p.variables["direction"].set("1 — DL")
 # NR SRB's 12-bit SN is the low 12 bits of the manually supplied COUNT.
-p.variables["pdcp_header"].set("09 B4")
+p.variables["pdcp_pdu_type"].set("NR SRB")
 p.input.insert("1.0", "48 45 83 D5 AF E0 82 AE")
 p.calculate()
 app.after(20000, app.destroy)
