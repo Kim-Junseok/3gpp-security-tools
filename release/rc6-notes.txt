@@ -1,0 +1,19 @@
+Add explicit PDCP integrity headers and exact bit/byte length displays.
+
+- PDCP is now the default GUI mode. With Integrity enabled, the actual PDCP header is required in a separate Hex field.
+- Select SDAP header present only when applicable; a selected SDAP header requires exactly one byte.
+- Payload input/output excludes both headers. Integrity authenticates PDCP header + optional SDAP header + plaintext payload. Ciphering processes Payload + MAC-I only.
+- Raw mode preserves direct algorithm-input calculations.
+- Header values and payloads stay separate for each tab; mode, radio settings and keys remain shared.
+- Lengths now show bits and bytes together, including exact remainders: 128 bit (16 bytes), 43 bit (5 bytes + 3 bits). No padding is added.
+
+Download the Windows x64 ZIP, extract it, and run 3GPP-Security-Tools.exe. No Python or additional library installation is required.
+Read RUNNING.txt for the rc6 input rules. Existing Korean Markdown documentation is preserved from rc5.
+
+Validation: official vectors 135/135 PASS, integration/boundary tests 40 PASS, Linux GUI 236/236 PASS, and Windows source/EXE GUI 238/238 PASS.
+The EXE is reused unchanged from successful validation run 42176299197. The release packager checks its SHA-256, committed evidence and all 34 recorded build inputs against this source snapshot.
+Windows verification used Windows Server 2025 x64 hosted CI, with the EXE copied alone to another directory and PATH/Python/Tcl/Tk environment variables cleared. Other installed runtimes were not removed. Windows 11 visual/DPI tests were not repeated for rc6.
+
+COUNT remains manual; header format semantics and SN/HFN consistency are not automatically checked. This release does not implement automatic PDU parsing or NCA. Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10 and ARM64 testing remain unverified.
+
+EXE SHA-256: 62813c8e64b250374ac34edc147b999c79b99bdf5fa593bfc3d61120e091a021

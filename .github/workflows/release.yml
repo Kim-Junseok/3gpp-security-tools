@@ -1,0 +1,60 @@
+name: Package verified release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release candidate tag
+        required: true
+        default: v0.1.0-rc6
+      validation_run_id:
+        description: Successful validation run containing the verified Windows EXE
+        required: true
+        default: '42176299197'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  package:
+    runs-on: windows-2025
+    env:
+      RELEASE_TAG: ${{ inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+          architecture: x64
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-validation-and-exe
+          run-id: ${{ inputs.validation_run_id }}
+          github-token: ${{ github.token }}
+          path: .build/release-input
+      - name: Verify and package the tested EXE
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item .build/release-input/dist/3GPP-Security-Tools.exe dist/3GPP-Security-Tools.exe
+          python tools/package_release.py --tag "$env:RELEASE_TAG" --evidence validation/pdcp-headers/windows
+          if ($LASTEXITCODE) { throw 'Release packaging verification failed.' }
+      - name: Create draft prerelease with verified assets
+        run: |
+          $Assets = @(Get-ChildItem dist -File | ForEach-Object { $_.FullName })
+          if ($Assets.Count -ne 5) { throw 'Expected exactly five release assets.' }
+          gh release create "$env:RELEASE_TAG" @Assets --draft --prerelease --target "$env:GITHUB_SHA" --title "$env:RELEASE_TAG - PDCP Integrity Headers and Byte Lengths" --notes-file release/rc6-notes.txt
+          if ($LASTEXITCODE) { throw 'Draft release creation failed.' }
+          gh release view "$env:RELEASE_TAG" --json tagName,isDraft,isPrerelease,assets,url
+      - name: Record packaging verification
+        run: |
+          Get-Content dist/release-manifest.json
+          Get-Content dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-packages
+          path: dist
