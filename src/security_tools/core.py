@@ -97,15 +97,43 @@ def _extra_option(extra_iv):
         raise SecurityToolsError("EXTRA_IV must contain exactly 6 bytes (48 bits).")
 
 
+def _integrity_prefix(mode, integrity, pdcp_header, sdap_header):
+    if mode not in ("Raw", "PDCP"):
+        raise SecurityToolsError("Input mode must be Raw or PDCP.")
+    if not isinstance(pdcp_header, bytes) or not isinstance(sdap_header, bytes):
+        raise SecurityToolsError("PDCP and SDAP headers must be bytes.")
+    if mode == "Raw" or integrity is None:
+        if pdcp_header or sdap_header:
+            raise SecurityToolsError("Header inputs require PDCP mode with Integrity enabled.")
+        return Bits(b"", 0)
+    if not pdcp_header:
+        raise SecurityToolsError("PDCP header is required in PDCP mode with Integrity enabled.")
+    if len(sdap_header) not in (0, 1):
+        raise SecurityToolsError("SDAP header must contain exactly one byte, or be absent.")
+    header = pdcp_header + sdap_header
+    return Bits(header, len(header) * 8)
+
+
+def _integrity_input(prefix, data, result):
+    if not prefix.length:
+        return data
+    message = prefix.concat(data)
+    result["integrity_header_bit_length"] = prefix.length
+    result["integrity_input_bit_length"] = message.length
+    return message
+
+
 def transmit(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", count=0, bearer=0, direction=0,
-             extra_iv=bytes(6), mac_bytes=4):
+             extra_iv=bytes(6), mac_bytes=4, mode="Raw", pdcp_header=b"", sdap_header=b""):
     _options(ciphering, integrity, data)
     _extra_option(extra_iv)
+    prefix = _integrity_prefix(mode, integrity, pdcp_header, sdap_header)
     result = {"operation": "transmit", "input_bit_length": data.length, "ciphering": ciphering, "integrity": integrity,
               "authentication": "unprotected" if integrity in (None, 0) else "generated"}
     payload = data
     if integrity is not None:
-        tag = mac(integrity, int_key, count, bearer, direction, data,
+        message = _integrity_input(prefix, data, result)
+        tag = mac(integrity, int_key, count, bearer, direction, message,
                   extra_iv=_extra_for(integrity, extra_iv), mac_bytes=mac_bytes)
         result["mac_i"] = tag.to_dict()
         if ciphering is not None:
@@ -119,9 +147,10 @@ def transmit(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", 
 
 
 def receive(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", count=0, bearer=0, direction=0,
-            received_mac=None, extra_iv=bytes(6), mac_bytes=4):
+            received_mac=None, extra_iv=bytes(6), mac_bytes=4, mode="Raw", pdcp_header=b"", sdap_header=b""):
     _options(ciphering, integrity, data)
     _extra_option(extra_iv)
+    prefix = _integrity_prefix(mode, integrity, pdcp_header, sdap_header)
     tag_length = mac_bits(integrity, mac_bytes) if integrity is not None else 0
     result = {"operation": "receive", "input_bit_length": data.length, "ciphering": ciphering, "integrity": integrity,
               "authentication": "unprotected"}
@@ -135,7 +164,8 @@ def receive(data, *, ciphering=None, integrity=None, enc_key=b"", int_key=b"", c
     if integrity is not None:
         if appended_mac:
             payload, received_mac = payload.split(payload.length - tag_length)
-        result.update(verify(integrity, int_key, count, bearer, direction, payload, received_mac,
+        message = _integrity_input(prefix, payload, result)
+        result.update(verify(integrity, int_key, count, bearer, direction, message, received_mac,
                              extra_iv=_extra_for(integrity, extra_iv), mac_bytes=mac_bytes))
     result["data"] = payload.to_dict()
     return result
