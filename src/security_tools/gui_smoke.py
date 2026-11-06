@@ -7,7 +7,7 @@ import sys
 from .bits import Bits, from_result
 from .core import transmit
 from .gui import Application, ALGORITHMS
-from .adapter import format_data
+from .adapter import format_data, format_length
 from .validation import data_dir, identity
 
 
@@ -40,6 +40,8 @@ def run(output):
     def tests():
         try:
             app.update_idletasks()
+            check("default-pdcp-mode", lambda: equal(app.tx.variables["mode"].get(), "PDCP"))
+            app.tx.variables["mode"].set("Raw")
             def layout_check():
                 assert app.footer.winfo_ismapped()
                 assert app.footer.winfo_y() + app.footer.winfo_height() <= app.winfo_height(), app.geometry()
@@ -119,7 +121,7 @@ def run(output):
                     if not receiving and itg and not cip:
                         check("independent-mac-primary-output", lambda: equal(panel.primary_output().format("Hex"), tx["mac_i"]["hex"]))
                     panel.update_length()
-                    check(f"{prefix}-full-input-length-{cip}-{itg}", lambda: equal(panel.length_label.cget("text"), f"Valid length: {payload.length} bit"))
+                    check(f"{prefix}-full-input-length-{cip}-{itg}", lambda: equal(panel.length_label.cget("text"), f"Valid length: {format_length(payload.length)}"))
                 v["cipher_enabled"].set(False)
                 v["integrity_enabled"].set(False)
                 panel.refresh()
@@ -337,7 +339,7 @@ def run(output):
                 if not panel.receiving:
                     combined_payload = panel.result["data"]["bits"]
                     check("variable-mac-tx-combined", lambda: equal(panel.result["data"]["bit_length"], 127))
-                    check("variable-mac-detail-length", lambda: equal("(120 bit)" in panel.details.get("1.0", "end-1c"), True))
+                    check("variable-mac-detail-length", lambda: equal(format_length(120) in panel.details.get("1.0", "end-1c"), True))
                 else:
                     check("variable-mac-rx-combined", lambda: equal(panel.result["data"]["bits"], "0010101"))
                     check("variable-mac-rx-authenticated", lambda: equal(panel.result["authentication"], "passed"))
@@ -367,6 +369,86 @@ def run(output):
             panel.input.insert("1.0", "1")
             panel.execute_button.invoke()
             check("short-integrity-only-input-error", lambda: equal(panel.result, None))
+
+            # PDCP protection boundaries are explicit application tests. Their
+            # primitive references are covered separately by official vectors.
+            from .core import cipher, mac
+            payload = Bits.parse("0001020304050607")
+            header = Bits.parse("8123")
+            for algorithm in range(1, 7):
+                key = bytes(range(16 if algorithm < 4 else 32))
+                for sdap in (b"", b"\x09"):
+                    prefix_bits = header.format("Bit") + Bits(sdap, len(sdap) * 8).format("Bit")
+                    message = Bits.parse(prefix_bits + payload.format("Bit"), "Bit")
+                    size = 4 if algorithm < 4 else 16
+                    tag = mac(algorithm, key, 0x123, 1, 0, message, mac_bytes=size)
+                    encoded = cipher(algorithm, key, 0x123, 1, 0,
+                                     Bits.parse(payload.format("Bit") + tag.format("Bit"), "Bit"))
+                    for panel in (app.tx, app.rx):
+                        v = panel.variables
+                        for name, value in (("mode", "PDCP"), ("cipher_enabled", True), ("integrity_enabled", True),
+                                            ("ciphering", ALGORITHMS[algorithm]), ("integrity", ALGORITHMS[algorithm]),
+                                            ("enc_key", key.hex()), ("int_key", key.hex()), ("enc_format", "Hex"),
+                                            ("int_format", "Hex"), ("count_format", "Decimal"), ("count", "291"),
+                                            ("bearer", "1"), ("direction", "0 — UL"), ("extra_format", "Hex"),
+                                            ("extra_iv", "00" * 6), ("mac_bytes", str(size)), ("pdcp_header", "81 23"),
+                                            ("sdap_present", bool(sdap)), ("sdap_header", sdap.hex()), ("data_format", "Hex")):
+                            v[name].set(value)
+                        panel.input.delete("1.0", "end")
+                        panel.input.insert("1.0", (encoded if panel.receiving else payload).format("Hex"))
+                        panel.execute_button.invoke()
+
+                        def header_result_check():
+                            assert panel.result is not None, panel.status.cget("text")
+                            equal(panel.primary_output(), payload if panel.receiving else encoded)
+                            equal(panel.result["integrity_input_bit_length"], message.length)
+                            if panel.receiving:
+                                equal(panel.result["authentication"], "passed")
+                            else:
+                                equal(panel.result["mac_i"], tag.to_dict())
+                            equal(panel.pdcp_length.cget("text"), "16 bit (2 bytes)")
+                            equal(str(panel.sdap_entry.cget("state")), "normal" if sdap else "disabled")
+                        check(f"pdcp-{algorithm}-sdap-{bool(sdap)}-{'rx' if panel.receiving else 'tx'}", header_result_check)
+            panel = app.rx
+            v = panel.variables
+            v["pdcp_header"].set("81 24")
+            panel.calculate()
+            check("pdcp-header-tamper-fails", lambda: equal(panel.result["authentication"], "failed"))
+            v["pdcp_header"].set("81 23")
+            v["sdap_header"].set("0A")
+            panel.calculate()
+            check("sdap-header-tamper-fails", lambda: equal(panel.result["authentication"], "failed"))
+            v["pdcp_header"].set("")
+            panel.calculate()
+            check("pdcp-header-required", lambda: equal(panel.result, None))
+            v["pdcp_header"].set("81 23")
+            v["sdap_header"].set("")
+            panel.calculate()
+            check("sdap-present-requires-value", lambda: equal(panel.result, None))
+            v["sdap_present"].set(False)
+            panel.calculate()
+            check("sdap-absent-allows-empty", lambda: equal(panel.result is not None, True))
+            check("pdcp-length-display", lambda: equal(panel.pdcp_length.cget("text"), "16 bit (2 bytes)"))
+            v["integrity_enabled"].set(False)
+            check("cipher-only-disables-pdcp", lambda: equal(str(panel.pdcp_entry.cget("state")), "disabled"))
+            check("cipher-only-disables-sdap", lambda: equal(str(panel.sdap_check.cget("state")), "disabled"))
+            v["integrity_enabled"].set(True)
+            v["mode"].set("Raw")
+            check("raw-disables-headers", lambda: equal(str(panel.pdcp_entry.cget("state")), "disabled"))
+            panel = app.tx
+            v = panel.variables
+            v["cipher_enabled"].set(True)
+            v["integrity_enabled"].set(False)
+            v["data_format"].set("Bit")
+            panel.input.delete("1.0", "end")
+            panel.input.insert("1.0", "001010101")
+            panel.update_length()
+            panel.calculate()
+            check("unaligned-input-byte-display", lambda: equal(panel.length_label.cget("text"), "Valid length: 9 bit (1 byte + 1 bit)"))
+            check("unaligned-output-byte-display", lambda: equal(panel.output_title.cget("text").endswith("9 bit (1 byte + 1 bit)"), True))
+            # Headers are packet input; changing one tab must not overwrite the other.
+            panel.variables["pdcp_header"].set("01 23")
+            check("headers-remain-tab-local", lambda: equal(app.rx.variables["pdcp_header"].get(), "81 23"))
         except Exception:
             cases.append({"id": "smoke-driver", "status": "FAIL", "error": traceback.format_exc()})
         finally:

@@ -8,6 +8,16 @@ from .errors import SecurityToolsError
 
 
 COUNT_FORMATS = ("Decimal", "Hex", "Bit")
+INPUT_MODES = ("PDCP", "Raw")
+
+
+def format_length(bits):
+    """Report exact message length without counting storage padding as data."""
+    whole, remaining = divmod(bits, 8)
+    units = f"{whole} byte" + ("" if whole == 1 else "s")
+    if remaining:
+        units += f" + {remaining} bit" + ("" if remaining == 1 else "s")
+    return f"{bits} bit ({units})"
 
 
 def parse_count(text, fmt="Decimal"):
@@ -66,6 +76,15 @@ def execute(fields, receiving=False):
         args["extra_iv"] = extra_iv.buffer
     if itg in (4, 5, 6):
         args["mac_bytes"] = number("mac_bytes", 10) if "mac_bytes" in fields else 4
+    # Older API clients without mode retain Raw behavior; the GUI defaults to PDCP.
+    args["mode"] = fields.get("mode", "Raw")
+    if args["mode"] == "PDCP" and itg is not None:
+        args["pdcp_header"] = Bits.parse(fields.get("pdcp_header", ""), "Hex").buffer
+        if fields.get("sdap_present", False):
+            sdap = Bits.parse(fields.get("sdap_header", ""), "Hex")
+            if sdap.length != 8:
+                raise SecurityToolsError("SDAP header is marked present: enter exactly one byte in Hex.")
+            args["sdap_header"] = sdap.buffer
     data = Bits.parse(fields["data"], fields["data_format"])
     if receiving:
         return receive(data, **args)

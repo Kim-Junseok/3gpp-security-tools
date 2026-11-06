@@ -1,0 +1,103 @@
+{
+  "category": "pdcp_header_boundaries_and_length_display",
+  "base_commit": "b4504283eae2fbaee9ef15be23ee5f8759329754",
+  "branch": "fix/pdcp-integrity-headers",
+  "tested_commit": "8671de94c9887de679d8cf7d0d0953730e72e260",
+  "defaults": {
+    "gui_mode": "PDCP",
+    "python_api_mode": "Raw",
+    "pdcp_header_required": "PDCP mode with Integrity enabled, including Null",
+    "sdap_header": "optional; if selected, exactly one byte of Hex is required"
+  },
+  "protection": {
+    "integrity": "PDCP header || optional SDAP header || plaintext payload",
+    "ciphering": "Payload || MAC-I; both headers are excluded",
+    "input_output": "Headers are supplied separately and never included in the payload input/output",
+    "receive": "When Integrity is enabled, the payload input includes the appended MAC-I, encrypted together with the payload if Ciphering is enabled"
+  },
+  "display_examples": [
+    "128 bit (16 bytes)",
+    "43 bit (5 bytes + 3 bits)"
+  ],
+  "verification": {
+    "official_cases": 135,
+    "integration_tests": 40,
+    "linux_gui_cases": 236,
+    "windows_gui_cases": 238,
+    "cross_platform_official_answers_identical": true
+  },
+  "ci": {
+    "id": 42176299197,
+    "url": "https://github.com/Kim-Junseok/3gpp-security-tools/actions/runs/42176299197",
+    "result": "PASS",
+    "windows_artifact_id": 13482853101,
+    "linux_artifact_id": 13482703327
+  },
+  "build_inputs": {
+    "files_checked": 34,
+    "exact_matches": [
+      "packaging/licenses/CPython-LICENSE.txt",
+      "packaging/licenses/Tk-license.terms"
+    ],
+    "windows_crlf_matches": [
+      "src/security_tools/__init__.py",
+      "src/security_tools/__main__.py",
+      "src/security_tools/adapter.py",
+      "src/security_tools/algorithms/__init__.py",
+      "src/security_tools/algorithms/aes.py",
+      "src/security_tools/algorithms/nea_nia.py",
+      "src/security_tools/algorithms/snow.py",
+      "src/security_tools/algorithms/snow5g.py",
+      "src/security_tools/algorithms/snow_tables.py",
+      "src/security_tools/algorithms/zuc.py",
+      "src/security_tools/algorithms/zuc256.py",
+      "src/security_tools/algorithms/zuc_tables.py",
+      "src/security_tools/bits.py",
+      "src/security_tools/core.py",
+      "src/security_tools/errors.py",
+      "src/security_tools/gui.py",
+      "src/security_tools/gui_smoke.py",
+      "src/security_tools/validation.py",
+      "src/security_tools/validation256.py",
+      "testdata/256/expected.json",
+      "testdata/256/inputs.json",
+      "testdata/256/manifest.json",
+      "testdata/expected.json",
+      "testdata/inputs.json",
+      "testdata/manifest.json",
+      "packaging/build-windows.ps1",
+      "packaging/launch.py",
+      "packaging/licenses/PyInstaller-COPYING.txt",
+      "packaging/licenses/PyInstaller-hooks-LICENSE.txt",
+      "packaging/requirements-windows.txt",
+      "packaging/verify-windows.ps1",
+      "packaging/windows.manifest"
+    ],
+    "unexplained_mismatches": []
+  },
+  "exe_sha256": "62813c8e64b250374ac34edc147b999c79b99bdf5fa593bfc3d61120e091a021",
+  "reference": {
+    "document": "TS 38.323",
+    "version": "19.1.0",
+    "sections": [
+      "5.8",
+      "5.9",
+      "6.2.2",
+      "6.3.5"
+    ],
+    "url": "https://www.etsi.org/deliver/etsi_ts/138300_138399/138323/19.01.00_60/ts_138323v190100p.pdf"
+  },
+  "coverage": [
+    "Independent bit-string framing references across algorithms 0-6, SDAP absent/present, aligned/unaligned/empty payloads, legacy and variable MAC lengths.",
+    "Changes to actual PDCP/SDAP header values, payload and MAC are detected for non-Null Integrity.",
+    "Segments taken from official algorithm messages are reassembled and checked against their fixed official MACs. Such artificial segmentation is not an official PDCP packet vector.",
+    "GUI checks cover required headers, SDAP presence, inactive fields, per-tab headers, Raw compatibility, and exact byte/remainder display."
+  ],
+  "limitations": [
+    "COUNT remains a manual input; SN/HFN is not inferred or checked against the header.",
+    "PDCP header bytes are provided manually; only presence/byte encoding is checked, not bearer format, reserved bits, SN length, or header semantic correctness.",
+    "This is an explicit header/payload boundary calculator, not automatic PDU parsing or a complete PDCP/SDAP protocol implementation. NCA remains excluded.",
+    "Windows source and EXE were tested on Windows Server 2025 hosted CI. Windows 11 visual/DPI checks were not repeated for this change.",
+    "No release tag was published and no merge into main/dev was performed. Existing Markdown documents were left unchanged."
+  ]
+}
