@@ -11,11 +11,11 @@ import zipfile
 
 root = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--tag', default='v0.1.0-rc6')
-parser.add_argument('--evidence', default='validation/pdcp-headers/windows')
+parser.add_argument('--tag', default='v0.1.0-rc7')
+parser.add_argument('--evidence', default='validation/shared-pdcp/windows')
 args = parser.parse_args()
 if not re.fullmatch(r'v\d+\.\d+\.\d+(?:-rc\d+)?', args.tag):
-    parser.error('Use a version tag such as v0.1.0-rc6.')
+    parser.error('Use a version tag such as v0.1.0-rc7.')
 for options in (['diff', '--quiet'], ['diff', '--cached', '--quiet']):
     subprocess.run(['git', *options], cwd=root, check=True)
 
@@ -27,12 +27,12 @@ sha256 = hashlib.sha256(exe.read_bytes()).hexdigest()
 official, gui, deployment = [report(name) for name in ('official-report.json', 'gui-report.json', 'deployment-report.json')]
 if not (official['all_passed'] and official['required'] == official['passed'] == 135
         and len(official['cases']) == 135 and all(c['status'] == 'PASS' for c in official['cases'])
-        and gui['total'] == gui['passed'] == len(gui['cases']) == 238
+        and gui['total'] == gui['passed'] == len(gui['cases']) == 277
         and all(c['status'] == 'PASS' for c in gui['cases']) and deployment['exe_sha256'] == sha256
         and deployment['official_required'] == deployment['official_passed'] == 135
-        and deployment['gui_total'] == deployment['gui_passed'] == 238
+        and deployment['gui_total'] == deployment['gui_passed'] == 277
         and official['environment']['frozen'] and gui['environment']['frozen']):
-    raise SystemExit('The EXE must match passing 135-case official and 238-case GUI evidence.')
+    raise SystemExit('The EXE must match passing 135-case official and 277-case GUI evidence.')
 build = report('build-info.json')
 if any(r['environment']['commit'] != build['commit'] for r in (official, gui)):
     raise SystemExit('Official and GUI evidence must identify the same verified build.')
@@ -73,11 +73,11 @@ for relative in tracked:
 shutil.copytree(root / 'packaging/licenses', stage / 'licenses')
 commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
 manifest = dict(tag=args.tag, release_commit=commit, verified_build_commit=build['commit'],
-                exe_sha256=sha256, official_passed=135, windows_gui_passed=238,
+                exe_sha256=sha256, official_passed=135, windows_gui_passed=277,
                 evidence=args.evidence, windows_environment=deployment['os'],
                 build_input_verification=verified_files,
-                limitations=['Windows 11 visual/DPI testing was not repeated for rc6.',
-                             'COUNT is manual; header semantics and SN/HFN consistency are not checked.',
+                limitations=['Windows 11 visual/DPI testing was not repeated for rc7.',
+                             'COUNT is entered manually; RRC configuration and Manual Hex/SLRB prefix semantics are supplied by the user.',
                              'Fresh-PC/VM, mixed-DPI, Windows 10 and ARM64 testing remain unverified.'])
 (dist / 'release-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 shutil.copy2(dist / 'release-manifest.json', stage / 'release-manifest.json')
@@ -86,26 +86,32 @@ shutil.copy2(dist / 'release-manifest.json', stage / 'release-manifest.json')
     'Run 3GPP-Security-Tools.exe. No Python or additional library installation is required.\n'
     'The GUI is in English. README.md and docs/ are written in Korean.\n'
     'Choose Transmit or Receive, enable Ciphering and/or Integrity, and select algorithms independently.\n'
-    'PDCP is the default mode. With Integrity enabled, the actual PDCP header is required in its separate Hex field.\n'
-    'If SDAP header present is selected, enter exactly one byte in its separate Hex field.\n'
+    'PDCP is the default mode. Its header source defaults to Automatic; the generated Hex is read-only.\n'
+    'Choose the actual LTE/NR format, SN length and D/C when applicable. The low SN bits of COUNT form the header; HFN remains outside it.\n'
+    'LTE SRB: 5-bit SN; LTE DRB: 7/12/15/18-bit SN; LTE SLRB: 16-bit SN and an actual 3-byte identity/type prefix.\n'
+    'NR SRB: 12-bit SN; NR DRB: 12/18-bit SN. SRB and SLRB have no D/C field.\n'
+    'D/C=0 is a Control PDU and cannot use this automatic Data PDU protection pipeline.\n'
+    'LTE DRB supports P for DL/18-bit SN and AILC for UL/12-bit SN. Inactive flags are retained but not applied.\n'
+    'Manual Hex remains available for captured/other headers and retains its own value when switching to and from Automatic.\n'
+    'If SDAP header present is selected, enter exactly one byte in its separate Hex field. SDAP is never regenerated when UL/DL changes.\n'
     'Payload input/output excludes both headers. Integrity covers PDCP header + optional SDAP header + plaintext payload.\n'
     'Ciphering covers Payload + MAC-I only; both headers remain outside Ciphering.\n'
     'Raw mode preserves direct algorithm-input calculations without separate headers.\n'
-    'COUNT is entered manually. Header semantic validity and SN/HFN consistency are not automatically checked.\n'
+    'COUNT is entered manually and used in full by the security primitives. RRC bearer configuration and manual header/prefix semantics are not decoded.\n'
     'Algorithms 1-3 require 128-bit keys; algorithms 4-6 require 256-bit keys. Algorithm 0 is Null.\n'
     'COUNT accepts Decimal (default), Hex, or Bit. BEARER is decimal; DIRECTION is 0=UL or 1=DL.\n'
     'Algorithms 4-6 use a 48-bit EXTRA_IV; Integrity 4-6 accepts a 4-16-byte MAC-I.\n'
-    'Both tabs share the mode, radio settings and keys. Payloads and header values stay separate for each tab.\n'
+    'Both tabs share mode, radio settings, keys, all PDCP header values/generation settings, and SDAP presence/Hex. Only payload text stays separate.\n'
     'For receive with Integrity enabled, Input data includes the trailing MAC-I. There is no separate MAC field.\n'
     'With Ciphering enabled too, enter the ciphertext of Data + MAC-I. Use the same MAC length as the sender.\n'
     'Lengths show exact bits and bytes, e.g. 128 bit (16 bytes) or 43 bit (5 bytes + 3 bits); no padding is added.\n'
     'Hex output uses uppercase letters and spaces between bytes. Use the right scrollbar on short screens.\n'
-    'Existing Markdown documentation is preserved from rc5; use this file and release-manifest.json for rc6 changes and scope.\n\n'
+    'Existing Markdown documentation is preserved from rc5; use this file and release-manifest.json for rc7 changes and scope.\n\n'
     f"Verified EXE: {official['passed']}/{official['required']} official vectors and {gui['passed']}/{gui['total']} GUI checks.\n"
     'The 135 vectors comprise 36 legacy, 72 NEA/NIA, and 27 primitive cases.\n'
     f"Verified Windows environment: {deployment['os']['Caption']} ({deployment['os']['Version']}, {deployment['os']['OSArchitecture']}).\n"
     f"Deployment test scope: {deployment['scope']}\n"
-    'Windows 11 visual/DPI testing was not repeated for rc6.\n'
+    'Windows 11 visual/DPI testing was not repeated for rc7.\n'
     'Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10, and ARM64 testing remain unverified.\n'
     f'EXE SHA-256: {sha256}\n', encoding='utf-8')
 zip_path = dist / (name + '.zip')
