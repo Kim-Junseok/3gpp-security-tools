@@ -5,15 +5,18 @@ import tkinter as tk
 from tkinter import font
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
-from .adapter import COUNT_FORMATS, INPUT_MODES, execute, format_data, format_length
+from .adapter import COUNT_FORMATS, INPUT_MODES, execute, format_data, format_length, pdcp_header_from_fields
 from .bits import Bits, from_result
 from .errors import SecurityToolsError
+from .pdcp import HEADER_SOURCES, PDU_TYPES, SN_LENGTHS
 
 ALGORITHMS = ["0 — Null (no protection)", "1 — SNOW 3G (128-bit)", "2 — AES (128-bit)", "3 — ZUC (128-bit)",
               "4 — SNOW 5G (256-bit)", "5 — AES (256-bit)", "6 — ZUC (256-bit)"]
 SHARED_SETTINGS = ("cipher_enabled", "integrity_enabled", "ciphering", "integrity", "enc_key", "int_key",
                    "enc_format", "int_format", "count", "count_format", "bearer", "direction",
-                   "extra_iv", "extra_format", "mac_bytes", "mode")
+                   "extra_iv", "extra_format", "mac_bytes", "mode", "pdcp_header", "sdap_header", "sdap_present",
+                   "pdcp_source", "pdcp_pdu_type", "pdcp_sn_bits", "pdcp_dc", "pdcp_generated_header",
+                   "pdcp_poll", "pdcp_ailc", "pdcp_slrb_prefix")
 
 
 def enable_windows_dpi():
@@ -39,13 +42,14 @@ class Panel(ttk.Frame):
         self.result = None
         self.variables = dict(settings or {})
         self.columnconfigure(1, weight=1)
-        for name, default in [("cipher_enabled", True), ("integrity_enabled", True), ("sdap_present", False)]:
+        for name, default in [("cipher_enabled", True), ("integrity_enabled", True), ("sdap_present", False), ("pdcp_poll", False), ("pdcp_ailc", False)]:
             if name not in self.variables:
                 self.variables[name] = tk.BooleanVar(value=default)
         defaults = dict(ciphering=ALGORITHMS[2], integrity=ALGORITHMS[2], enc_key="", int_key="",
                         enc_format="Hex", int_format="Hex", count="0", count_format="Decimal", bearer="0", direction="0 — UL",
                         extra_iv="00 00 00 00 00 00", extra_format="Hex", mac_bytes="4",
-                        data_format="Hex", output_format="Hex", mode="PDCP", pdcp_header="", sdap_header="")
+                        data_format="Hex", output_format="Hex", mode="PDCP", pdcp_header="", sdap_header="",
+                        pdcp_source="Automatic", pdcp_pdu_type="NR DRB", pdcp_sn_bits="12", pdcp_dc="1", pdcp_generated_header="", pdcp_slrb_prefix="")
         for name, default in defaults.items():
             if name not in self.variables:
                 self.variables[name] = tk.StringVar(value=default)
@@ -72,49 +76,69 @@ class Panel(ttk.Frame):
         self.mac_bytes_combo = ttk.Combobox(self, textvariable=self.variables["mac_bytes"],
                                            values=[str(n) for n in range(4, 17)], width=8, state="readonly")
         self.mac_bytes_combo.grid(row=9, column=1, sticky="w", pady=3)
-        self.pdcp_entry, _ = self.entry_row(10, "PDCP header (Hex, required)", "pdcp_header")
+        ttk.Label(self, text="PDCP header source").grid(row=10, column=0, sticky="w", pady=3)
+        self.pdcp_source_combo = ttk.Combobox(self, textvariable=self.variables["pdcp_source"], values=HEADER_SOURCES, state="readonly")
+        self.pdcp_source_combo.grid(row=10, column=1, sticky="ew", pady=3)
+        ttk.Label(self, text="PDCP format").grid(row=11, column=0, sticky="w", pady=3)
+        self.pdcp_type_combo = ttk.Combobox(self, textvariable=self.variables["pdcp_pdu_type"], values=PDU_TYPES, state="readonly")
+        self.pdcp_type_combo.grid(row=11, column=1, sticky="ew", pady=3)
+        ttk.Label(self, text="PDCP SN length (bits)").grid(row=12, column=0, sticky="w", pady=3)
+        self.pdcp_sn_combo = ttk.Combobox(self, textvariable=self.variables["pdcp_sn_bits"], values=["12", "18"], width=8, state="readonly")
+        self.pdcp_sn_combo.grid(row=12, column=1, sticky="w", pady=3)
+        ttk.Label(self, text="D/C (DRB only)").grid(row=13, column=0, sticky="w", pady=3)
+        self.pdcp_dc_combo = ttk.Combobox(self, textvariable=self.variables["pdcp_dc"], values=["1", "0"], width=8, state="readonly")
+        self.pdcp_dc_combo.grid(row=13, column=1, sticky="w", pady=3)
+        self.pdcp_aux = ttk.Frame(self)
+        self.pdcp_aux.grid(row=14, column=0, columnspan=3, sticky="w", pady=3)
+        self.pdcp_poll_check = ttk.Checkbutton(self.pdcp_aux, text="LTE P (DL / 18-bit)", variable=self.variables["pdcp_poll"])
+        self.pdcp_poll_check.pack(side="left", padx=(0, 16))
+        self.pdcp_ailc_check = ttk.Checkbutton(self.pdcp_aux, text="LTE AILC (UL / 12-bit)", variable=self.variables["pdcp_ailc"])
+        self.pdcp_ailc_check.pack(side="left")
+        self.slrb_label = ttk.Label(self, text="SLRB prefix (Hex, 3 bytes)")
+        self.slrb_label.grid(row=15, column=0, sticky="w", pady=3)
+        self.slrb_entry = ttk.Entry(self, textvariable=self.variables["pdcp_slrb_prefix"], font="TkFixedFont")
+        self.slrb_entry.grid(row=15, column=1, sticky="ew", pady=3)
+        self.pdcp_entry, _ = self.entry_row(16, "PDCP header (Hex, required)", "pdcp_header")
         self.pdcp_length = ttk.Label(self, text=format_length(0))
-        self.pdcp_length.grid(row=10, column=2, padx=(6, 0))
+        self.pdcp_length.grid(row=16, column=2, padx=(6, 0))
         self.sdap_check = ttk.Checkbutton(self, text="SDAP header present", variable=self.variables["sdap_present"])
-        self.sdap_check.grid(row=11, column=0, columnspan=2, sticky="w", pady=3)
-        self.sdap_entry, _ = self.entry_row(12, "SDAP header (Hex, 1 byte)", "sdap_header")
+        self.sdap_check.grid(row=17, column=0, columnspan=2, sticky="w", pady=3)
+        self.sdap_entry, _ = self.entry_row(18, "SDAP header (Hex, 1 byte)", "sdap_header")
         self.sdap_length = ttk.Label(self, text=format_length(0))
-        self.sdap_length.grid(row=12, column=2, padx=(6, 0))
+        self.sdap_length.grid(row=18, column=2, padx=(6, 0))
         self.input_label = ttk.Label(self, text="Input data")
-        self.input_label.grid(row=13, column=0, sticky="w", pady=(6, 3))
+        self.input_label.grid(row=19, column=0, sticky="w", pady=(6, 3))
         formats = ttk.Frame(self)
-        formats.grid(row=13, column=1, sticky="e")
+        formats.grid(row=19, column=1, sticky="e")
         self.data_combo = ttk.Combobox(formats, textvariable=self.variables["data_format"], values=["Hex", "Bit"], width=6, state="readonly")
         self.data_combo.pack(side="left", padx=4)
         ttk.Button(formats, text="Convert Hex ↔ Bit", command=self.convert_input).pack(side="left")
         self.input = ScrolledText(self, height=4, wrap="word", font="TkFixedFont", undo=True)
-        self.input.grid(row=14, column=0, columnspan=3, sticky="nsew", pady=4)
-        self.rowconfigure(14, weight=1)
+        self.input.grid(row=20, column=0, columnspan=3, sticky="nsew", pady=4)
+        self.rowconfigure(20, weight=1)
         self.input.bind("<<Modified>>", self.input_changed)
         self.length_label = ttk.Label(self, text="Valid length: " + format_length(0), wraplength=780, justify="left")
-        self.length_label.grid(row=15, column=0, columnspan=3, sticky="ew")
+        self.length_label.grid(row=21, column=0, columnspan=3, sticky="ew")
         self.length_label.bind("<Configure>", self.fit_notice_width)
         self.execute_button = ttk.Button(self, command=self.calculate)
-        self.execute_button.grid(row=17, column=0, columnspan=3, sticky="ew", pady=6)
+        self.execute_button.grid(row=23, column=0, columnspan=3, sticky="ew", pady=6)
         self.status = ttk.Label(self, text="", wraplength=780, justify="left")
-        self.status.grid(row=18, column=0, columnspan=3, sticky="ew")
+        self.status.grid(row=24, column=0, columnspan=3, sticky="ew")
         self.status.bind("<Configure>", self.fit_notice_width)
         self.output_title = ttk.Label(self, text="Result")
-        self.output_title.grid(row=19, column=0, sticky="w", pady=(8, 4))
+        self.output_title.grid(row=25, column=0, sticky="w", pady=(8, 4))
         output_controls = ttk.Frame(self)
-        output_controls.grid(row=19, column=1, sticky="e")
+        output_controls.grid(row=25, column=1, sticky="e")
         self.output_combo = ttk.Combobox(output_controls, textvariable=self.variables["output_format"], values=["Hex", "Bit"], state="readonly", width=6)
         self.output_combo.pack(side="left", padx=4)
         self.copy_button = ttk.Button(output_controls, text="Copy result", command=self.copy_output, state="disabled")
         self.copy_button.pack(side="left")
         self.output = ScrolledText(self, height=4, wrap="word", font="TkFixedFont", state="disabled")
-        self.output.grid(row=20, column=0, columnspan=3, sticky="nsew")
-        self.rowconfigure(20, weight=1)
+        self.output.grid(row=26, column=0, columnspan=3, sticky="nsew")
+        self.rowconfigure(26, weight=1)
         self.details = ScrolledText(self, height=3, wrap="word", font="TkDefaultFont", state="disabled")
-        self.details.grid(row=21, column=0, columnspan=3, sticky="ew", pady=(6, 0))
+        self.details.grid(row=27, column=0, columnspan=3, sticky="ew", pady=(6, 0))
         for name in SHARED_SETTINGS:
-            self.variables[name].trace_add("write", lambda *_: self.refresh())
-        for name in ("pdcp_header", "sdap_header", "sdap_present"):
             self.variables[name].trace_add("write", lambda *_: self.refresh())
         self.data_combo.bind("<<ComboboxSelected>>", lambda _: self.update_length())
         self.output_combo.bind("<<ComboboxSelected>>", lambda _: self.render())
@@ -144,6 +168,17 @@ class Panel(ttk.Frame):
                 int(v["integrity"].get()[0]) if v["integrity_enabled"].get() else None)
 
     def refresh(self):
+        # Shared variable traces may update the generated preview and the second
+        # panel synchronously. Each panel completes one refresh at a time.
+        if getattr(self, "_refreshing", False):
+            return
+        self._refreshing = True
+        try:
+            self._refresh()
+        finally:
+            self._refreshing = False
+
+    def _refresh(self):
         c, i = self.selection()
         for combo, enabled in [(self.cip_combo, c is not None), (self.itg_combo, i is not None)]:
             combo.configure(state="readonly" if enabled else "disabled")
@@ -151,19 +186,57 @@ class Panel(ttk.Frame):
                                      (self.int_entry, self.int_fmt, i not in (None, 0))]:
             entry.configure(state="normal" if needed else "disabled")
             combo.configure(state="readonly" if needed else "disabled")
+        headers_enabled = self.variables["mode"].get() == "PDCP" and i is not None
+        automatic = self.variables["pdcp_source"].get() == "Automatic"
         needs_params = c not in (None, 0) or i not in (None, 0)
         for entry in (self.count_entry, self.bearer_entry):
             entry.configure(state="normal" if needs_params else "disabled")
-        self.count_fmt.configure(state="readonly" if needs_params else "disabled")
-        self.direction_combo.configure(state="readonly" if needs_params else "disabled")
+        if headers_enabled and automatic:
+            self.count_entry.configure(state="normal")
+        self.count_fmt.configure(state="readonly" if needs_params or headers_enabled and automatic else "disabled")
+        self.direction_combo.configure(state="readonly" if needs_params or headers_enabled and automatic else "disabled")
         newer = c in (4, 5, 6) or i in (4, 5, 6)
         self.extra_entry.configure(state="normal" if newer else "disabled")
         self.extra_fmt.configure(state="readonly" if newer else "disabled")
         self.mac_bytes_combo.configure(state="readonly" if i in (4, 5, 6) else "disabled")
         if i not in (4, 5, 6) and self.variables["mac_bytes"].get() != "4":
             self.variables["mac_bytes"].set("4")
-        headers_enabled = self.variables["mode"].get() == "PDCP" and i is not None
-        self.pdcp_entry.configure(state="normal" if headers_enabled else "disabled")
+        self.pdcp_source_combo.configure(state="readonly" if headers_enabled else "disabled")
+        self.pdcp_type_combo.configure(state="readonly" if headers_enabled and automatic else "disabled")
+        pdu_type = self.variables["pdcp_pdu_type"].get()
+        lengths = SN_LENGTHS.get(pdu_type, ())
+        if headers_enabled and automatic and lengths and self.variables["pdcp_sn_bits"].get() not in tuple(str(n) for n in lengths):
+            self.variables["pdcp_sn_bits"].set(str(lengths[0]))
+        self.pdcp_sn_combo.configure(values=[str(n) for n in lengths],
+                                      state="readonly" if headers_enabled and automatic and len(lengths) > 1 else "disabled")
+        self.pdcp_dc_combo.configure(state="readonly" if headers_enabled and automatic and pdu_type.endswith("DRB") else "disabled")
+        lte_drb = headers_enabled and automatic and pdu_type == "LTE DRB"
+        if lte_drb:
+            self.pdcp_aux.grid()
+        else:
+            self.pdcp_aux.grid_remove()
+        dl = self.variables["direction"].get().startswith("1")
+        sn_bits = self.variables["pdcp_sn_bits"].get()
+        self.pdcp_poll_check.configure(state="normal" if lte_drb and sn_bits == "18" and dl else "disabled")
+        self.pdcp_ailc_check.configure(state="normal" if lte_drb and sn_bits == "12" and not dl else "disabled")
+        slrb = headers_enabled and automatic and pdu_type == "LTE SLRB"
+        for widget in (self.slrb_label, self.slrb_entry):
+            if slrb:
+                widget.grid()
+            else:
+                widget.grid_remove()
+        header_error = None
+        if headers_enabled and automatic:
+            try:
+                header = pdcp_header_from_fields({name: var.get() for name, var in self.variables.items()})
+                preview = format_data(Bits(header, len(header) * 8))
+            except SecurityToolsError as e:
+                preview, header_error = "", str(e)
+            if self.variables["pdcp_generated_header"].get() != preview:
+                self.variables["pdcp_generated_header"].set(preview)
+        header_name = "pdcp_generated_header" if automatic else "pdcp_header"
+        self.pdcp_entry.configure(textvariable=self.variables[header_name],
+                                  state=("readonly" if automatic else "normal") if headers_enabled else "disabled")
         self.sdap_check.configure(state="normal" if headers_enabled else "disabled")
         self.sdap_entry.configure(state="normal" if headers_enabled and self.variables["sdap_present"].get() else "disabled")
         input_label = "Input data"
@@ -172,7 +245,7 @@ class Panel(ttk.Frame):
             if self.receiving and i is not None:
                 input_label = "Payload + MAC-I" + (" (ciphertext)" if c is not None else "")
         self.input_label.configure(text=input_label)
-        for name, label, active in (("pdcp_header", self.pdcp_length, headers_enabled),
+        for name, label, active in ((header_name, self.pdcp_length, headers_enabled),
                                     ("sdap_header", self.sdap_length, headers_enabled and self.variables["sdap_present"].get())):
             try:
                 length = Bits.parse(self.variables[name].get(), "Hex").length if active else 0
@@ -192,8 +265,11 @@ class Panel(ttk.Frame):
         self.copy_button.configure(state="disabled")
         self.set_text(self.output, "")
         self.set_text(self.details, "")
-        if headers_enabled and i != 0:
-            self.status.configure(text="Enter the actual PDCP header. Select SDAP if present. Headers are authenticated and excluded from the payload input/output and Ciphering.")
+        if header_error:
+            self.status.configure(text=f"PDCP header error: {header_error}")
+        elif headers_enabled and i != 0:
+            self.status.configure(text=("PDCP header uses COUNT's low SN bits; HFN stays outside the header. " if automatic else "Enter the actual PDCP header. ") +
+                                  "Header settings and SDAP Hex are shared by both tabs. Payloads remain separate.")
         elif i == 0:
             self.status.configure(text="Null Integrity — No authentication protection. A matching MAC does not authenticate the data.")
         elif c == 0:
@@ -356,7 +432,7 @@ class Application(tk.Tk):
         notebook.add(self.tx, text="  Transmit  ")
         notebook.add(self.rx, text="  Receive  ")
         self.notebook = notebook
-        self.footer = ttk.Label(self, text="PDCP: supply actual headers separately · Raw: algorithm input · COUNT is manual · NCA and automatic PDU parsing excluded", padding=(12, 8))
+        self.footer = ttk.Label(self, text="PDCP: LTE/NR header from COUNT/SN or Manual Hex · SDAP: manual Hex · Settings shared across tabs · NCA and PDU parsing excluded", padding=(12, 8))
         self.footer.pack(anchor="w")
 
 
