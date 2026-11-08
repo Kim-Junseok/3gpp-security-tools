@@ -11,11 +11,11 @@ import zipfile
 
 root = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--tag', default='v0.1.0-rc7')
-parser.add_argument('--evidence', default='validation/shared-pdcp/windows')
+parser.add_argument('--tag', default='v0.1.0')
+parser.add_argument('--evidence', default='validation/v0.1.0/windows-ci')
 args = parser.parse_args()
 if not re.fullmatch(r'v\d+\.\d+\.\d+(?:-rc\d+)?', args.tag):
-    parser.error('Use a version tag such as v0.1.0-rc7.')
+    parser.error('Use a version tag such as v0.1.0.')
 for options in (['diff', '--quiet'], ['diff', '--cached', '--quiet']):
     subprocess.run(['git', *options], cwd=root, check=True)
 
@@ -76,7 +76,7 @@ manifest = dict(tag=args.tag, release_commit=commit, verified_build_commit=build
                 exe_sha256=sha256, official_passed=135, windows_gui_passed=277,
                 evidence=args.evidence, windows_environment=deployment['os'],
                 build_input_verification=verified_files,
-                limitations=['Windows 11 visual/DPI testing was not repeated for rc7.',
+                limitations=['See docs/VALIDATION.md for tested Windows and display settings.',
                              'COUNT is entered manually; RRC configuration and Manual Hex/SLRB prefix semantics are supplied by the user.',
                              'Fresh-PC/VM, mixed-DPI, Windows 10 and ARM64 testing remain unverified.'])
 (dist / 'release-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
@@ -84,7 +84,7 @@ shutil.copy2(dist / 'release-manifest.json', stage / 'release-manifest.json')
 (stage / 'RUNNING.txt').write_text(
     f'3GPP Security Tools {args.tag}\n\n'
     'Run 3GPP-Security-Tools.exe. No Python or additional library installation is required.\n'
-    'The GUI is in English. README.md and docs/ are written in Korean.\n'
+    'The GUI, README.md and public documentation are in English.\n'
     'Choose Transmit or Receive, enable Ciphering and/or Integrity, and select algorithms independently.\n'
     'PDCP is the default mode. Its header source defaults to Automatic; the generated Hex is read-only.\n'
     'Choose the actual LTE/NR format, SN length and D/C when applicable. The low SN bits of COUNT form the header; HFN remains outside it.\n'
@@ -106,12 +106,12 @@ shutil.copy2(dist / 'release-manifest.json', stage / 'release-manifest.json')
     'With Ciphering enabled too, enter the ciphertext of Data + MAC-I. Use the same MAC length as the sender.\n'
     'Lengths show exact bits and bytes, e.g. 128 bit (16 bytes) or 43 bit (5 bytes + 3 bits); no padding is added.\n'
     'Hex output uses uppercase letters and spaces between bytes. Use the right scrollbar on short screens.\n'
-    'Existing Markdown documentation is preserved from rc5; use this file and release-manifest.json for rc7 changes and scope.\n\n'
+    'See README.md for usage, docs/VALIDATION.md for test scope, and release-manifest.json for build identity.\n\n'
     f"Verified EXE: {official['passed']}/{official['required']} official vectors and {gui['passed']}/{gui['total']} GUI checks.\n"
     'The 135 vectors comprise 36 legacy, 72 NEA/NIA, and 27 primitive cases.\n'
     f"Verified Windows environment: {deployment['os']['Caption']} ({deployment['os']['Version']}, {deployment['os']['OSArchitecture']}).\n"
     f"Deployment test scope: {deployment['scope']}\n"
-    'Windows 11 visual/DPI testing was not repeated for rc7.\n'
+    'See docs/VALIDATION.md for the actual Windows 11 visual/DPI checks.\n'
     'Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10, and ARM64 testing remain unverified.\n'
     f'EXE SHA-256: {sha256}\n', encoding='utf-8')
 zip_path = dist / (name + '.zip')

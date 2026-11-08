@@ -1,0 +1,14 @@
+The first stable release of 3GPP Security Tools for Windows x64.
+
+Download the Windows ZIP, extract it, and run 3GPP-Security-Tools.exe. No Python or additional library installation is required.
+
+- Independent Ciphering and Integrity selection for algorithms 0-6, including 128-bit legacy and 256-bit NEA/NIA algorithms.
+- Encrypt/decrypt, generate/verify MAC-I, and combined MAC-then-encrypt transmit/receive processing.
+- Raw mode for direct algorithm inputs; PDCP mode for separate LTE/NR headers, optional SDAP, and payload.
+- Automatic LTE/NR PDCP header generation from COUNT/SN, with Manual Hex available for actual captured headers.
+- Shared transmit/receive settings, exact Hex/Bit lengths, uppercase byte-spaced Hex, and Decimal/Hex/Bit COUNT input.
+- Shorter GUI guidance, removal of the footer explanation, and English README and public documentation.
+
+Validation and build identity are recorded in docs/VALIDATION.md and release-manifest.json. The release packager checks the EXE hash and all recorded build inputs against the committed source.
+
+This is a calculation tool with explicit input boundaries. RRC configuration, captured-header semantics and SLRB prefix contents are supplied by the user. Full PDU parsing/state machines, automatic UDC variants and AEAD/NCA are excluded. Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10 and ARM64 testing remain unverified.

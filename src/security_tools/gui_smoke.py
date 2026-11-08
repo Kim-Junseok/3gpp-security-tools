@@ -43,12 +43,13 @@ def run(output):
             check("default-pdcp-mode", lambda: equal(app.tx.variables["mode"].get(), "PDCP"))
             app.tx.variables["mode"].set("Raw")
             def layout_check():
-                assert app.footer.winfo_ismapped()
-                assert app.footer.winfo_y() + app.footer.winfo_height() <= app.winfo_height(), app.geometry()
+                assert app.canvas.winfo_ismapped()
+                canvas_bottom = app.canvas.winfo_rooty() + app.canvas.winfo_height()
+                assert canvas_bottom <= app.winfo_rooty() + app.winfo_height(), app.geometry()
                 app.canvas.yview_moveto(1)
                 app.update_idletasks()
                 bottom = app.tx.details.winfo_rooty() + app.tx.details.winfo_height()
-                assert bottom <= app.footer.winfo_rooty(), (bottom, app.footer.winfo_rooty(), app.geometry())
+                assert bottom <= canvas_bottom, (bottom, canvas_bottom, app.geometry())
                 app.canvas.yview_moveto(0)
             check("new-fields-fit-window", layout_check)
             def single_input_check():

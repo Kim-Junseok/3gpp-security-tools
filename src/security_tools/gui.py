@@ -268,8 +268,7 @@ class Panel(ttk.Frame):
         if header_error:
             self.status.configure(text=f"PDCP header error: {header_error}")
         elif headers_enabled and i != 0:
-            self.status.configure(text=("PDCP header uses COUNT's low SN bits; HFN stays outside the header. " if automatic else "Enter the actual PDCP header. ") +
-                                  "Header settings and SDAP Hex are shared by both tabs. Payloads remain separate.")
+            self.status.configure(text=("PDCP header uses COUNT's low SN bits; HFN stays outside the header. " if automatic else "Enter the actual PDCP header. "))
         elif i == 0:
             self.status.configure(text="Null Integrity — No authentication protection. A matching MAC does not authenticate the data.")
         elif c == 0:
@@ -432,8 +431,6 @@ class Application(tk.Tk):
         notebook.add(self.tx, text="  Transmit  ")
         notebook.add(self.rx, text="  Receive  ")
         self.notebook = notebook
-        self.footer = ttk.Label(self, text="PDCP: LTE/NR header from COUNT/SN or Manual Hex · SDAP: manual Hex · Settings shared across tabs · NCA and PDU parsing excluded", padding=(12, 8))
-        self.footer.pack(anchor="w")
 
 
 def main():
