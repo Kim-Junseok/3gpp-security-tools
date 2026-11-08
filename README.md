@@ -1,115 +1,119 @@
 # 3GPP Security Tools
 
-Windows GUI에서 legacy Ciphering·Integrity 0~3과 256-bit NEA/NIA 4~6을 계산한다.
-GUI는 영문이며, 사용법과 검증 문서는 한글로 제공한다.
-GUI와 공식 테스트 실행기는 동일한 Python 계산 코어를 사용한다.
+A Windows GUI for Ciphering and Integrity calculations with legacy algorithms 0–3 and 256-bit NEA/NIA algorithms 4–6. The GUI and official-vector runner use the same Python calculation core.
 
-## 실행
+## Download and run
 
-[최신 배포 후보 v0.1.0-rc5](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0-rc5)에서 Windows ZIP을 받아 압축을 푼다.
-`3GPP-Security-Tools.exe`를 실행한다. Python이나 별도 라이브러리를 설치할 필요가 없다.
-단일 EXE에 CPython·Tcl/Tk·계산 코어·공식 검증 데이터를 포함한다.
-배포 ZIP의 `RUNNING.txt`는 영문 실행 안내이며, `README.md`와 `docs/`는 한글 문서다.
-런타임 이용 조건은 배포 ZIP의 `licenses/`와 저장소의 [packaging/licenses/](https://github.com/Kim-Junseok/3gpp-security-tools/tree/main/packaging/licenses)에서 확인할 수 있다.
+Download the Windows x64 ZIP from [v0.1.0](https://github.com/Kim-Junseok/3gpp-security-tools/releases/tag/v0.1.0), extract it, and run `3GPP-Security-Tools.exe`. No Python or additional library installation is required.
 
-## 사용법
+The standalone EXE includes CPython, Tcl/Tk, the calculation core, and official test data. The GUI, this README, and the public documentation are in English. Runtime license notices are included in `licenses/` in the Windows ZIP and [packaging/licenses/](https://github.com/Kim-Junseok/3gpp-security-tools/tree/v0.1.0/packaging/licenses) in the repository.
 
-1. `Transmit`(송신) 또는 `Receive`(수신) 탭을 선택한다.
-2. `Enable Ciphering`·`Enable Integrity`에서 기능 사용 여부와 알고리즘을 각각 선택한다.
-3. 활성화된 키와 COUNT·BEARER·DIRECTION을 입력한다.
-4. 알고리즘 4~6을 사용하면 EXTRA_IV를 입력한다. Integrity 4~6에서는 MAC-I 길이도 선택한다.
-5. 입력 데이터 형식을 Hex 또는 Bit로 선택하고 데이터를 입력한다. 길이는 자동 계산한다.
-6. 실행 버튼을 누르고 결과를 확인한다. `Copy result`로 결과를 복사한다.
+## Use the GUI
 
-| 기능 선택 | 송신 | 수신 |
+1. Choose `Transmit` or `Receive`.
+2. Enable Ciphering and/or Integrity, and select each algorithm independently.
+3. Enter the enabled keys, COUNT, BEARER, and radio DIRECTION.
+4. For algorithms 4–6, enter EXTRA_IV. For Integrity 4–6, select the MAC-I length.
+5. Choose `PDCP` or `Raw` input mode. In PDCP mode with Integrity enabled, configure the separate headers described below.
+6. Enter the payload as Hex or Bit, run the calculation, and use `Copy result` to copy the output.
+
+| Selection | Transmit | Receive input and operation |
 |---|---|---|
-| Ciphering만 | 암호화 | 복호화 |
-| Integrity만 | MAC-I 생성 | Data + MAC-I 입력 → 끝부분 분리 → 검증 |
-| 두 기능 모두 | MAC-I 생성 → 데이터 뒤에 추가 → 전체 암호화 | 전체 복호화 → MAC-I 분리 → 검증 |
-| 두 기능 해제 | 실행 비활성화 | 실행 비활성화 |
+| Ciphering only | Encrypt the payload | Ciphertext → decrypt |
+| Integrity only | Generate MAC-I | Payload + MAC-I → extract MAC-I → verify |
+| Both | Generate MAC-I → append to payload → encrypt | Ciphertext of Payload + MAC-I → decrypt → extract → verify |
+| Neither | Calculation disabled | Calculation disabled |
 
-| 번호 | Ciphering | Integrity | 키 길이 | 기반 |
+In Integrity-only transmit mode, the main output is the MAC-I. Append it to the original payload to prepare a receive input. On receive, select the same MAC length as the sender. `Valid length` counts the entire input, including the appended MAC-I. The receive output excludes MAC-I; the details show `Extracted MAC-I` and `Calculated MAC-I`.
+
+### Algorithms and parameters
+
+| ID | Ciphering | Integrity | Key length | Primitive |
 |---|---|---|---:|---|
-| 0 | EEA0 / NEA0 | EIA0 / NIA0 | 불필요 | Null |
-| 1 | 128-EEA1 / 128-NEA1 | 128-EIA1 / 128-NIA1 | 128 bit | SNOW 3G |
-| 2 | 128-EEA2 / 128-NEA2 | 128-EIA2 / 128-NIA2 | 128 bit | AES |
-| 3 | 128-EEA3 / 128-NEA3 | 128-EIA3 / 128-NIA3 | 128 bit | ZUC |
-| 4 | 256-NEA4 | 256-NIA4 | 256 bit | SNOW 5G |
-| 5 | 256-NEA5 | 256-NIA5 | 256 bit | AES |
-| 6 | 256-NEA6 | 256-NIA6 | 256 bit | ZUC |
+| 0 | EEA0 / NEA0 | EIA0 / NIA0 | None | Null |
+| 1 | 128-EEA1 / 128-NEA1 | 128-EIA1 / 128-NIA1 | 128 bits | SNOW 3G |
+| 2 | 128-EEA2 / 128-NEA2 | 128-EIA2 / 128-NIA2 | 128 bits | AES |
+| 3 | 128-EEA3 / 128-NEA3 | 128-EIA3 / 128-NIA3 | 128 bits | ZUC |
+| 4 | 256-NEA4 | 256-NIA4 | 256 bits | SNOW 5G |
+| 5 | 256-NEA5 | 256-NIA5 | 256 bits | AES |
+| 6 | 256-NEA6 | 256-NIA6 | 256 bits | ZUC |
 
-- **키:** K_enc와 K_int는 독립 입력이다. 128-bit 키는 16 byte, 256-bit 키는 32 byte다. Hex 공백·붙여쓰기를 모두 허용한다.
-- **COUNT:** Decimal(기본)·Hex·Bit를 지원한다. 범위는 0~4,294,967,295이며 선택한 형식으로 입력값을 해석한다.
-- **BEARER:** 10진수 0~31이다.
-- **DIRECTION:** 0=UL, 1=DL이다. 탭을 바꿔도 값이 반전되지 않는다.
-- **EXTRA_IV:** 알고리즘 4~6에 적용하는 48-bit 값이다. 기본값은 6-byte 0이다.
-- **MAC-I 길이:** Integrity 0~3은 4 byte로 고정한다. Integrity 4~6은 4~16 byte를 선택한다.
+- **Keys:** K_enc and K_int are independent. Hex accepts spaced or continuous bytes. A 128-bit key has 16 bytes; a 256-bit key has 32 bytes.
+- **COUNT:** Decimal by default; Hex and Bit are also supported. Range: 0–4,294,967,295.
+- **BEARER:** Decimal, 0–31.
+- **DIRECTION:** 0 = UL, 1 = DL. Changing tabs does not reverse the direction.
+- **EXTRA_IV:** 48 bits for algorithms 4–6; defaults to six zero bytes.
+- **MAC-I length:** 4 bytes for Integrity 0–3; selectable from 4 to 16 bytes for Integrity 4–6.
 
-송신·수신 탭은 기능 사용 여부·알고리즘·키와 형식·COUNT와 형식·BEARER·DIRECTION·EXTRA_IV·MAC 길이를 공유한다.
-입력 데이터와 결과 표시 형식은 탭마다 따로 유지한다.
-작은 창에서는 오른쪽 스크롤바로 나머지 입력과 결과를 확인한다.
+Both tabs share protection selections, keys and their formats, radio settings, EXTRA_IV, MAC length, input mode, and all PDCP/SDAP settings. Payload text and output format remain separate. Use the right scrollbar when the window cannot show all controls.
 
-수신 입력은 `Input data` 한 칸으로 통일한다. 별도의 `Received MAC-I` 입력 칸은 없다.
+Null Ciphering preserves the input. Null Integrity generates a 32-bit zero MAC. A matching Null MAC does not authenticate data; its state remains `unprotected`. Disabling a function skips that stage.
 
-| 수신 설정 | 입력 데이터 |
-|---|---|
-| Ciphering만 | 암호문 |
-| Integrity만 | Data + MAC-I |
-| Ciphering + Integrity | Data + MAC-I 전체의 암호문 |
+### PDCP and Raw modes
 
-Integrity를 켠 수신에서는 송신과 같은 MAC 길이를 선택한다.
-필요하면 먼저 복호화한 뒤 끝에서 해당 길이만큼 MAC-I를 분리한다.
-`Valid length`는 MAC-I를 포함한 전체 입력 길이이고, 최종 결과는 MAC-I를 제외한 데이터다.
-결과 상세에는 `Extracted MAC-I`와 `Calculated MAC-I`를 표시한다.
-송신의 Integrity만 사용한 주출력은 MAC-I다. 이를 수신에서 검사하려면 원본 데이터 뒤에 붙여 입력한다.
+`PDCP` is the default GUI mode. With Integrity enabled, supply the PDCP header separately and optionally supply a one-byte SDAP header.
 
-## 입력·결과 형식
+| Region | Integrity input | Ciphering input |
+|---|---|---|
+| PDCP header | Included | Excluded |
+| Optional SDAP header | Included | Excluded |
+| Plaintext payload | Included | Included |
+| Generated MAC-I | Excluded from its own calculation | Appended when both functions are enabled |
 
-Hex 입력은 공백·탭·줄바꿈을 제외한 짝수 개 digit를 byte로 해석한다.
-Bit 입력은 공백을 제외한 0·1 개수로 길이를 계산한다.
-GUI의 Hex 출력·복사·Bit→Hex 변환은 `00 01 AB CD`처럼 대문자와 byte 사이 공백을 사용한다.
-Hex→Bit 변환은 선행 0을 보존한다. Bit→Hex 변환은 유효 길이가 8의 배수일 때만 허용한다.
-비정렬 결과는 Bit 문자열로 표시하며 padding을 추가하지 않는다.
+The payload input and output exclude both headers. On receive with Integrity enabled, the payload field includes the trailing MAC-I, encrypted together with the payload when Ciphering is also enabled.
 
-결합 송신의 출력 길이는 데이터 길이 + MAC 길이다.
-예를 들어 11-bit 데이터에 4-byte MAC을 붙이면 43 bit, 8-byte MAC을 붙이면 75 bit다.
-결합 수신에서는 선택한 MAC 길이만큼 끝부분을 분리한다.
-MAC 검증 실패 시 출력은 `Data failed authentication`으로 표시한다.
+`Automatic` header generation uses COUNT's low SN bits. HFN remains outside the header; the security algorithms still use the full 32-bit COUNT. Select the actual bearer format and SN length:
 
-기능을 끄면 해당 단계를 생략한다. 알고리즘 0은 Null 연산이다.
-Null Ciphering은 데이터를 보존하고 Null Integrity는 `00 00 00 00`을 생성한다.
-Null의 MAC 값 비교는 인증 성공을 뜻하지 않으며 상태는 `unprotected`다.
+| PDCP format | SN length | Additional fields |
+|---|---|---|
+| NR SRB | 12 bits | No D/C field |
+| NR DRB | 12 or 18 bits | D/C = 1 |
+| LTE SRB | 5 bits | No D/C field |
+| LTE DRB | 7, 12, 15, or 18 bits | D/C = 1; P for DL/18-bit SN; AILC for UL/12-bit SN |
+| LTE SLRB | 16 bits | Actual 3-byte SDU-type/identity prefix |
 
-## 개발·검증
+The generated header is read-only. Reserved bits are zero. D/C = 0 identifies a Control PDU and is rejected by this automatic Data PDU calculation. Inactive P/AILC selections are retained without affecting the generated bytes.
 
-계산 코어와 공식·통합 테스트에는 외부 Python 패키지가 필요 없다.
-소스 GUI 실행에는 Tkinter·Tcl/Tk가 필요하다.
+Choose `Manual Hex` to enter an actual captured header or another supported use case with explicit header bytes. Manual Hex checks byte encoding and presence; it does not validate the header's protocol meaning. Its value is retained when switching header sources. SDAP always uses manual Hex and is not regenerated when direction or PDCP format changes.
+
+`Raw` mode passes the entered bits directly to the selected algorithms, without separate headers. Use Raw mode to reproduce official algorithm vectors.
+
+### Hex, Bit, and lengths
+
+Hex accepts an even number of hexadecimal digits after whitespace is removed. Bit accepts only 0, 1, and whitespace. Leading zeros and non-byte-aligned valid lengths are preserved.
+
+Hex output, copying, and Bit-to-Hex conversion use uppercase bytes separated by spaces, for example `00 01 AB CD`. Bit-to-Hex conversion requires a multiple of eight valid bits. Non-byte-aligned results remain in Bit format; no padding is added.
+
+Lengths show exact bits and bytes, for example `128 bit (16 bytes)` or `43 bit (5 bytes + 3 bits)`. Combined transmit adds the MAC length: an 11-bit payload plus a 4-byte MAC produces 43 bits. Failed MAC verification marks the output `Data failed authentication`.
+
+## Develop and validate
+
+The calculation core, official-vector tests, and integration tests require no external Python packages. Running the source GUI requires Tkinter and Tcl/Tk.
 
 ```bash
-PYTHONPATH=src python3 -m security_tools.validation --all --output validation/local/linux
+PYTHONPATH=src python3 -m security_tools --validate --output validation/local/linux
 PYTHONPATH=src python3 tools/run_tests.py --output validation/local/integration-report.json
 PYTHONPATH=src python3 -m security_tools.gui
+# On Linux with Tk and Xvfb installed:
+PYTHONPATH=src xvfb-run -a python3 -m security_tools --gui-smoke-report validation/local/gui-report.json
 ```
 
-특정 suite는 `--suite Cip2 --suite NEA5 --suite NIA5`처럼 선택한다.
-공식 기대값은 추적 중인 원문 전사 파일이며 계산 결과로 생성하지 않는다.
-공식 실행기는 원문의 유효 bit 길이를 보존한다.
+Use `--suite Cip2 --suite NEA5 --suite NIA5` to select official suites. The expected values are transcribed from the original documents and tracked separately from inputs. They are not generated from implementation outputs.
 
-| 검증 구분 | 케이스 수 |
+| Validation category | Cases |
 |---|---:|
-| Legacy 알고리즘 입출력 | 36 |
-| 256-bit NEA/NIA 입출력 | 72 |
-| Release 20 primitive | 27 |
-| 공식 벡터 합계 | **135** |
+| Legacy algorithm vectors | 36 |
+| 256-bit NEA/NIA vectors | 72 |
+| Release 20 primitive vectors | 27 |
+| **Official vector total** | **135** |
 
-내부 상태 snapshot 63건은 primitive 케이스 안의 하위 검사이며 합계에 더하지 않는다.
-자체 통합 테스트와 GUI 검사는 공식 벡터와 별도로 집계한다.
-원문 버전·해시는 [SOURCES.md](docs/SOURCES.md), 환경별 결과와 배포 EXE 해시는 [VALIDATION.md](docs/VALIDATION.md)에 기록한다.
+The 63 internal-state snapshots are subchecks within primitive cases. Integration tests and GUI checks are counted separately. PDCP header-layout checks use standard layout references and are not additional official algorithm vectors.
 
-## Windows 빌드
+See [SOURCES.md](docs/SOURCES.md) for fixed references and hashes, and [VALIDATION.md](docs/VALIDATION.md) for results and tested environments.
 
-Windows Python 3.12 x64와 Tcl/Tk를 사용하는 개발 환경에서 실행한다.
-PyInstaller와 빌드 의존성은 `packaging/requirements-windows.txt`로 고정한다.
+## Build on Windows
+
+Use a Windows Python 3.12 x64 development environment with Tcl/Tk. Packaging dependencies are pinned in `packaging/requirements-windows.txt`.
 
 ```powershell
 & C:\Python312\python.exe -m pip install -r packaging/requirements-windows.txt
@@ -117,12 +121,9 @@ powershell -NoProfile -File packaging/build-windows.ps1 -Python C:\Python312\pyt
 powershell -NoProfile -File packaging/verify-windows.ps1 -ReportDirectory validation/local/windows
 ```
 
-공식 테스트는 135건, Windows GUI 검사는 201건을 기준으로 확인한다.
-프로젝트의 개발용 `.build/windows-python/python.exe`가 있으면 `-Python`을 생략할 수 있다.
-Windows Git이 없으면 빌드 전에 WSL에서 `python3 tools/stamp_source.py`를 실행한다.
-EXE에는 빌드 입력 commit과 파일 해시를 포함한다.
+The verifier requires 135 official cases and 277 Windows GUI checks. The build script defaults to the project development runtime if `-Python` is omitted. If Windows Git is unavailable, run `python3 tools/stamp_source.py` from WSL before building. The EXE includes its build commit and input-file hashes.
 
-패키징된 EXE의 공식·GUI 검사는 다음처럼 실행한다.
+Run the packaged tests directly with:
 
 ```powershell
 $p = Start-Process .\dist\3GPP-Security-Tools.exe -ArgumentList '--validate --output C:\Temp\3gpp-validation' -Wait -PassThru
@@ -131,11 +132,10 @@ $p = Start-Process .\dist\3GPP-Security-Tools.exe -ArgumentList '--gui-smoke-rep
 $p.ExitCode
 ```
 
-릴리스 ZIP과 소스 ZIP은 Git이 있는 개발 환경에서 생성한다.
-검증 보고서의 EXE 해시가 실제 파일과 일치해야 하며 문서·검증 기록을 먼저 커밋한다.
+Create release archives from a clean Git checkout after committing the matching validation evidence. The packager checks the EXE hash and the recorded build inputs before producing the Windows ZIP, source ZIP, release manifest, and checksums.
 
 ```bash
-python3 tools/package_release.py --tag v0.1.0-rc5 --evidence validation/rc5/windows
+python3 tools/package_release.py --tag v0.1.0 --evidence validation/v0.1.0/windows-ci
 ```
 
 ## Python API
@@ -147,29 +147,28 @@ from security_tools.core import transmit, receive
 options = dict(ciphering=5, integrity=5,
                enc_key=bytes(range(32)), int_key=bytes(range(32, 64)),
                count=123456789, bearer=17, direction=1,
-               extra_iv=bytes(6), mac_bytes=8)
+               extra_iv=bytes(6), mac_bytes=8,
+               mode="PDCP", pdcp_header=bytes.fromhex("0D 15"))
 sent = transmit(Bits.parse("00 01 AB CD"), **options)
 received = receive(from_result(sent["data"]), **options)
 assert received["data"]["hex"] == "0001abcd"
 assert received["authentication"] == "passed"
 ```
 
-`receive`는 Integrity를 사용하는 경우, 별도 MAC 인자가 없으면 입력 끝에서 MAC-I를 분리한다. 기존 `received_mac=` 인자를 사용하는 독립 검증 API도 유지한다.
-`transmit`·`receive`·`verify`는 dictionary, `cipher`·`mac`은 `Bits`를 반환한다.
-`Bits.to_dict()`로 직렬화할 수 있다. Core JSON의 Hex는 공백 없는 소문자이며 GUI 표시와 구분한다.
-비정렬 결과의 `hex`는 `null`이고 `bits`와 `bit_length`를 사용한다.
+The Python API defaults to `mode="Raw"`; the GUI defaults to PDCP. Pass `pdcp_header` and optional `sdap_header` as bytes in PDCP mode. With Integrity enabled, `receive` extracts the trailing MAC-I unless an explicit MAC is supplied to an Integrity-only call. The existing `received_mac=` API remains available.
 
-## 폴더·범위
+`transmit`, `receive`, and `verify` return dictionaries; `cipher` and `mac` return `Bits`. Use `Bits.to_dict()` for serialization. Core JSON uses lowercase continuous Hex. For non-byte-aligned data, `hex` is `null`; use `bits` and `bit_length`.
 
-- `src/`: 계산 코어·GUI·공식 테스트 실행기
-- `tests/`: 통합·경계값 테스트
-- `testdata/`: 공식 테스트 목록·입력값·기대값
-- `validation/`: 계산 결과·검증 보고서
-- `packaging/`: Windows 빌드·배포 검증 스크립트
-- `tools/`: 데이터 전사·배포물 생성 도구
-- `docs/`: 출처·검증 결과·릴리스 기록·후속 계획
+## Repository and scope
 
-입력 데이터 전체를 MAC 대상으로 삼고 결합 처리에서는 Data || MAC-I 전체를 암호화한다.
-이 도구의 결합 처리는 표준 NCA 기능이 아니다.
-AEAD/NCA와 NAS/PDCP PDU 파싱·보호 영역 자동 구성은 범위에서 제외한다.
-남은 검증은 [FOLLOW_UP.md](docs/FOLLOW_UP.md)에 기록한다.
+- `src/`: Calculation core, GUI, and official-vector runners.
+- `tests/`: Integration and boundary tests.
+- `testdata/`: Official manifests, inputs, and expected values.
+- `validation/`: Results and validation evidence.
+- `packaging/`: Windows build and deployment checks.
+- `tools/`: Transcription, validation, and packaging utilities.
+- `docs/`: Sources, validation, release history, and follow-up work.
+
+This tool calculates protection over explicitly supplied regions. It does not infer COUNT, RRC configuration, or captured-header semantics. Automatic UDC variants, full NAS/PDCP PDU parsing, PDCP/SDAP state machines, and AEAD/NCA are excluded. Combined MAC-then-encrypt processing is not standard NCA.
+
+Untested environments and follow-up checks are listed in [FOLLOW_UP.md](docs/FOLLOW_UP.md).

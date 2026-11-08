@@ -1,18 +1,18 @@
-# 후속 작업
+# Follow-up work
 
-## 남은 검증
+## Remaining environment checks
 
-- 새 Windows PC/VM에서 Python·개발 도구를 설치한 적 없는 상태로 실행한다.
-- 서로 다른 DPI 배율의 모니터 사이에서 창을 이동하며 선명도와 배치를 확인한다.
-- Windows 10·ARM64는 아직 실행 검증 범위에 포함하지 않는다.
+- Run the standalone EXE on a fresh Windows PC/VM without a previous Python or development-tool installation.
+- Move the window between monitors with different DPI settings and check clarity, layout, and copy controls.
+- Test any display scaling settings not recorded in [VALIDATION.md](VALIDATION.md).
+- Windows 10 and ARM64 remain outside the verified execution scope.
 
-## 반영 완료
+## Implemented
 
-- 수신 입력을 Data + MAC-I 한 칸으로 통일하고 별도 MAC 입력 칸 제거.
-- GUI 영문 전환과 작은 화면용 스크롤.
-- 256-bit NEA4/NIA4·NEA5/NIA5·NEA6/NIA6.
-- 48-bit EXTRA_IV와 4~16-byte MAC-I 선택.
-- TS 35.240~35.248 v20.0.0 원문 기반 공식 벡터와 primitive 검사.
+- Algorithms 0–6, including 256-bit NEA4/NIA4, NEA5/NIA5, and NEA6/NIA6.
+- Exact Hex/Bit lengths, independent keys, variable MAC lengths, and a shared calculation core.
+- A single receive input containing payload plus MAC-I.
+- PDCP/Raw modes, separate headers, shared header settings, and LTE/NR header generation from COUNT/SN.
+- A shorter GUI without the footer explanation, and English public documentation.
 
-검증한 환경과 실제 결과는 [VALIDATION.md](VALIDATION.md)를 따른다.
-AEAD/NCA와 NAS/PDCP PDU 파싱·보호 영역 자동 구성은 구현 범위에서 제외한다.
+AEAD/NCA, full PDU parsing/state machines, and automatic UDC variants remain excluded. Tested behavior and environments are recorded in [VALIDATION.md](VALIDATION.md).

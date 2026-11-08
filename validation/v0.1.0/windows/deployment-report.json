@@ -1,0 +1,22 @@
+{
+  "category": "windows_portable_isolation",
+  "os": {
+    "Caption": "Microsoft Windows 11 Home",
+    "Version": "10.0.26200",
+    "OSArchitecture": "64\ube44\ud2b8"
+  },
+  "exe_sha256": "b0ddb3db01310c37d267a311898aa24b35f6e70558089e7d664e169138802dcd",
+  "copied_files": [
+    "3GPP-Security-Tools.exe"
+  ],
+  "working_directory": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-security-tools-52c40f5fe191476abb9acede8894c5cb\\different-working-directory",
+  "development_runtime_renamed": true,
+  "python_environment_cleared": true,
+  "path": "C:\\Windows\\System32;C:\\Windows",
+  "official_required": 135,
+  "official_passed": 135,
+  "gui_total": 277,
+  "gui_passed": 277,
+  "scope": "Windows x64 host; standalone EXE copied alone and run from a different directory with Python/Tcl/Tk environment and PATH cleared. Other installed runtimes have not necessarily been removed.",
+  "test_directory": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-security-tools-52c40f5fe191476abb9acede8894c5cb"
+}

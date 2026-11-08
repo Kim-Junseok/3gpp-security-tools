@@ -9,6 +9,14 @@ Download the Windows ZIP, extract it, and run 3GPP-Security-Tools.exe. No Python
 - Shared transmit/receive settings, exact Hex/Bit lengths, uppercase byte-spaced Hex, and Decimal/Hex/Bit COUNT input.
 - Shorter GUI guidance, removal of the footer explanation, and English README and public documentation.
 
-Validation and build identity are recorded in docs/VALIDATION.md and release-manifest.json. The release packager checks the EXE hash and all recorded build inputs against the committed source.
+Validation: official vectors 135/135 PASS; Linux and Windows integration/boundary tests 48 PASS; Linux GUI 275/275 PASS; Windows source/EXE GUI 277/277 PASS. Official expected values are fixed source transcriptions. PDCP layout and framing checks are counted separately from official algorithm vectors.
+
+The CI-built EXE also passes 135 official and 277 GUI checks on Windows 11 with the project development runtime temporarily isolated and PATH/Python/Tcl/Tk environment settings cleared. The actual packaged GUI was visually inspected at 192 DPI (200% scaling). This does not establish testing on a fresh PC/VM.
+
+Build commit: c442272baafafd51f2f329a74dc7bbc53ff46f95.
+Successful validation: https://github.com/Kim-Junseok/3gpp-security-tools/actions/runs/42485290515
+EXE SHA-256: b0ddb3db01310c37d267a311898aa24b35f6e70558089e7d664e169138802dcd.
+
+Validation and build identity are recorded in docs/VALIDATION.md and release-manifest.json. The packager checks the EXE hash and all 35 recorded build inputs against the committed source.
 
 This is a calculation tool with explicit input boundaries. RRC configuration, captured-header semantics and SLRB prefix contents are supplied by the user. Full PDU parsing/state machines, automatic UDC variants and AEAD/NCA are excluded. Fresh-PC/VM, mixed-DPI monitor transitions, Windows 10 and ARM64 testing remain unverified.

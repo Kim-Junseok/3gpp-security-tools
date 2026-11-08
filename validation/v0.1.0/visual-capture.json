@@ -1,0 +1,18 @@
+{
+  "category": "packaged_exe_visual_capture",
+  "executable": "C:\\Users\\jjuns\\AppData\\Local\\Temp\\3gpp-stable-visual-6e9aa25c190b4434a9794d5670b411d6\\3GPP-Security-Tools.exe",
+  "exe_sha256": "b0ddb3db01310c37d267a311898aa24b35f6e70558089e7d664e169138802dcd",
+  "width": 2026,
+  "height": 1711,
+  "dpi": 192,
+  "screenshot": "gui-preview.png",
+  "window_title": "3GPP Security Tools",
+  "process_id": 108348,
+  "printed": true,
+  "scope": "Actual packaged EXE default PDCP window; visual inspection recorded separately from GUI widget checks.",
+  "inspection": {
+    "text": "Visible English labels, numeric fields and guidance are legible at 192 DPI (200%).",
+    "layout": "Footer explanation is absent. Input/format/action/output controls are visible; lower result details remain reachable by the scrollbar, checked separately by GUI tests.",
+    "scope": "Default packaged EXE window on Windows 11; no mixed-DPI movement or other scaling settings were visually checked."
+  }
+}
